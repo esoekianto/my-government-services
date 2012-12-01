@@ -1,0 +1,268 @@
+﻿/*
+ | Version 10.1.1
+ | Copyright 2012 Esri
+ |
+ | Licensed under the Apache License, Version 2.0 (the "License");
+ | you may not use this file except in compliance with the License.
+ | You may obtain a copy of the License at
+ |
+ |    http://www.apache.org/licenses/LICENSE-2.0
+ |
+ | Unless required by applicable law or agreed to in writing, software
+ | distributed under the License is distributed on an "AS IS" BASIS,
+ | WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ | See the License for the specific language governing permissions and
+ | limitations under the License.
+ */
+#divLeftPanelBackground
+{
+    width: 320px;
+    height: 100%;
+    bottom:0px;
+    position: absolute;
+    top: 55px;
+    z-index: 100;
+    left:-400px;
+    background: rgba(0,0,0,0.9);
+    -pie-background: rgba(0,0,0,0.9);
+    behavior: url("PIE.htc");
+}
+#divSearchDetailsPanel
+{
+    background-color: transparent !important;
+    width: 320px;
+    height: 100%;
+    position: absolute;
+    top: 55px;
+    z-index: 100;
+    left:-400px;
+}
+.divInstructions
+{
+    height: 170px;
+    color: White;
+    overflow: hidden;
+    position: relative;
+}
+/* styles for tab container */
+.tabContent
+{
+    background: transparent;
+    color: white;
+}
+.tab-header
+{
+    height: 32px;
+    margin-bottom: 0px;
+    padding-bottom: 0px;
+}
+/* hover on a background tab */
+.tab-header ul.tab-list a:hover
+{
+    background-color: transparent;
+    background-image: url("images/tab.png") !important;
+    color: #fff;
+}
+/*styles for accordian container*/
+
+.divAccordionTitle, .divAccordionContent, .divDataContainer
+{
+    position: relative;
+    width: 400px;
+}
+.divAccordionTitle
+{
+    height: 30px;
+    overflow: hidden;
+    cursor: pointer;
+    font-family: Verdana;
+    color: White;
+    font-weight: bold;
+    vertical-align: middle;
+    background-repeat: repeat-x;
+    display: table-cell;
+    background-image: url(images/titlebar.png) !important;
+    background-color: Black !important;
+    -moz-user-select: none;
+}
+.divAccordionContent
+{
+    display: none;
+    height: 0px;
+    overflow: hidden;
+}
+#dialogAlertMessage
+{
+    width: 300px;
+    height: 120px;
+}
+
+#dialogAlertMessage .dijitContentPane
+{
+    background-color: Black;
+}
+
+#divMessage
+{
+    border: none;
+    font-family: Verdana;
+    font-size: 11px;
+    color: White;
+    background-color: Black;
+    height: 40px;
+    width: 250px;
+}
+
+#dialogLoadMessage_underlay
+{
+    background-color: #000;
+    filter: alpha(opacity=20);
+    -moz-opacity: 0.20;
+    -khtml-opacity: 0.20;
+    opacity: 0.20;
+}
+
+#dialogAlertMessage_underlay
+{
+    background-color: #000;
+    filter: alpha(opacity=20);
+    -moz-opacity: 0.20;
+    -khtml-opacity: 0.20;
+    opacity: 0.20;
+}
+#divAppContainer
+{
+    position: absolute;
+    z-index: 100;
+    top: 46px;
+    right: 35px;
+}
+.imgSocialMediaIcon
+{
+    height: 25px;
+    width: 25px;
+    cursor: pointer;
+}
+.claro .dijitTextBox
+{
+    border:none !important;
+    width:226px;
+}
+.infoTitle
+{
+    color: white;
+    font-size: 13px;
+}
+.selectedBaseMap
+{
+    -webkit-box-shadow: 0 0 15px #FFE771;
+    -moz-box-shadow: 0 0 15px #FFE771;
+    box-shadow: 0 0 15px #FFE771;
+}
+
+#divGradient
+{
+    height: 0px;
+    width: 100%;
+    position: absolute;
+    bottom: 0px;
+    z-index: 100;
+    text-align: middle;
+}
+
+.transparentBackground
+{
+     background: rgba(0,0,0,0.9);
+    -pie-background: rgba(0,0,0,0.9);
+    behavior: url("PIE.htc");
+    vertical-align: middle;
+}
+#divServiceData
+{
+    height: 200px;
+    width: 100%;
+    background-color: transparent;
+    position: relative;
+    overflow: hidden;
+    z-index: 100;
+    float: left;
+}
+#carouselServicescroll
+{
+    float: left;
+    z-index: 100;
+    position: absolute;
+    left: 0px;
+    vertical-align: middle;
+}
+.showHide
+{
+    background-color: transparent !important;
+    position: absolute;
+    z-index: 100;
+    left: 47px;
+}
+.divImageBackground
+{
+    height: 40px;
+    width: 60px;
+    background-image: url("images/imageBackground.png");
+}
+.divContentStyle
+{
+    background-color: #585858;
+    height: 150px;
+    color: White;
+    font-family: Verdana;
+    font-size: 11px;
+}
+div#divTriangle
+{
+    width: 0;
+    height: 0;
+    border-right: 10px solid Transparent;
+    border-bottom: 25px solid black;
+    border-left: 20px solid Transparent;
+    margin-right: 4px;
+}
+.t1
+{
+    height:1px;
+    margin:0px 7px;
+    background-color:#393939;
+}
+.t2
+{
+    height:1px;
+    margin:0px 5px;
+    background-color:#393939;
+}
+.t3
+{
+    height:1px;
+    margin:0px 3px;
+    background-color:#393939;
+}
+.t4
+{
+    height:1px;
+    margin:0px 2px;
+    background-color:#393939;
+}
+.t5
+{
+    height:1px;
+    margin:0px 2px;
+    background-color:#393939;
+}
+.t6
+{
+    height:1px;
+    margin:0px 1px;
+    background-color:#393939;
+}
+.titlebar
+{
+    height:18px;
+    overflow:hidden;
+}
