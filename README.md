@@ -4,7 +4,7 @@ My Government Services is a configuration of ArcGIS Server and a JavaScript appl
 
 [Try the My Government Services application](http://localgovtemplates2.esri.com/mygovernmentservices/)
 
-[![Image of My Government Services application](https://raw.github.com/Esri/my-government-services/master/my-government-services.png "Election Results application")](http://localgovtemplates2.esri.com/mygovernmentservices/)
+[![Image of My Government Services application](https://raw.github.com/Esri/my-government-services/master/my-government-services.png "My Government Services application")](http://localgovtemplates2.esri.com/mygovernmentservices/)
 
 ## Features
 
