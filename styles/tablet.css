@@ -1,5 +1,5 @@
 ﻿/*
- | Version 10.1.1
+  | Version 10.2
  | Copyright 2012 Esri
  |
  | Licensed under the Apache License, Version 2.0 (the "License");
@@ -114,6 +114,7 @@ html, body
 .divLayerHolder
 {
     width: 225px;
+     height:100px;
      background: rgba(0,0,0,0.9);
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
@@ -209,4 +210,8 @@ html, body
 .esriSimpleSlider
 {
     top: 90px !important;
+}
+.divAddressScrollContent
+{
+    height: 160px !important;
 }

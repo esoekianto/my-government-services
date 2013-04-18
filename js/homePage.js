@@ -1,5 +1,5 @@
 ﻿/** @license
- | Version 10.1.1
+  | Version 10.2
  | Copyright 2012 Esri
  |
  | Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,80 +17,71 @@
 dojo.require("dojo.date.locale");
 dojo.require("dojo.window");
 dojo.require("dojo.number");
-
 dojo.require("dojox.mobile");
 dojo.require("dojox.mobile.parser");
-
 dojo.require("esri.map");
 dojo.require("esri.tasks.geometry");
 dojo.require("esri.layers.FeatureLayer");
 dojo.require("esri.tasks.query");
 dojo.require("esri.tasks.locator");
 dojo.require("esri.tasks.route");
-
 dojo.require("js.Config");
 dojo.require("js.date");
-dojo.require("js.InfoWindow");
+dojo.require("mobile.InfoWindow");
 
 /*Global variables*/
-var baseMapLayers;  //Variable for storing base map layers
+var map; //variable to store map object
+var isBrowser = false; //This variable is set to true when the app is running on desktop browsers
+var isiOS = false; //flag set for ios devices(ipad, iphone)
+var isMobileDevice = false; //This variable is set to true when the app is running on mobile device
+var isTablet = false; //This variable is set to true when the app is running on tablets
+var baseMapLayers; //Variable for storing base map layers
 var fontSize; //variable for storing font sizes for all devices.
 var infoBoxWidth; //variable to store the width of the carousel pod
-
-var isBrowser = false;
-var isiOS = false; //flag set for ios devices(ipad, iphone)
-var isMobileDevice = false;
-var isTablet = false;
-
-var locatorFields; //Variable for storing configurable address fields
-var locatorMarkupSymbolPath; //variable for storing the locator marker image URL
-var locatorURL; //variable to store locator object for geo-coding
-
-var map;    //variable to store map object
-var mapPoint;
-var selectedGraphic = null;
+var mapPoint; //variable to store map point
+var selectedGraphic = null; //variable to store selected graphics
 var mapSharingOptions; //variable for storing the tiny service URL
-
+var geometryService; //variable to store the Geometry service
 var messages; //variable used for storing the error messages
 var showNullValueAs; //variable to store the default value for replacing null values
-var tempGraphicsLayerId = 'tempGraphicsLayerID';  //variable to store graphics layer ID
-
+var tempGraphicsLayerId = 'tempGraphicsLayerID'; //variable to store graphics layer ID
 var services; //variable to store services from the config file
-var numberOfServices = 0;
-
-var zoomLevel;
-
-var routeparams; // variable for storing the route parameters
+var numberOfServices = 0; //number of services
+var routeParams; // variable for storing the route parameters
 var routeLayerId = "routeLayerId"; //variable to store graphics layer ID for routing
 var routeSymbol; //Symbol to mark the route.
 var routeTask; //Route Task to find the route.
-
-var rendererColor;
-var intervalIDs = new Array(); //Array of IntervalID of glow-effect.
+var routeLayer; //variable for storing the particular layer id when you click on directions button
+var rendererColor; //variable to set renderer color
+var referenceOverlayLayer; //variable to store the reference overlay layer
+var intervalIDs = []; //Array of IntervalID of glow-effect.
 var highlightPollLayerId = "highlightPollLayerId"; //Graphics layer object for displaying selected service
-
-var rippleSize;
-var infoPopupFieldsCollection;
-var infoWindowHeader;
-
-var selectedFieldName;
+var infoPopupFieldsCollection; //variable to Set the content to be displayed on the info-Popup
+var infoWindowHeader; //variable used to store the info window header
+var searchforDirections; //variable used to store directions to be displayed on map
+var locatorSettings; //variable used to store address search setting
 var firstClick = true; //check for the first click on the map used in order to destroy the Dom elements
+var selectedMapPoint; // variable to store selected map point
+var lastSearchTime; //variable for store the time of last search
+var stagedSearch; //variable for store the time limit for search
+var lastSearchString; //variable for store the last search string
+var infoPopupHeight; //variable used for storing the info window height
+var shareFlag = false; //variable to store sharing flag
+var infoPopupWidth; //variable used for storing the info window width
+var zoomLevel; //variable to set required zoom level.
+var rippleSize; //variable to set ripple Size
+var callOutAddress; //variable to set Address to be displayed on mobile callout.
+var featureLayerID; //variable to store ID for feature layer
+var startExtent; //variable to store current extent of map
+var selectedFieldName;
 
-var infoPopupHeight;
-var infoPopupWidth;
-var locatorNameFields;
-var callOutAddress;
+//This initialization function is called when the DOM elements are ready
 
-var locationFields;
-var locationName;
-//Function to initialize the map and read data from Configuration file
 function Init() {
-    esri.config.defaults.io.proxyUrl = "proxy.ashx";        //Setting to use proxy file
+    esri.config.defaults.io.proxyUrl = "proxy.ashx"; //Setting to use proxy file
     esriConfig.defaults.io.alwaysUseProxy = false;
-    esriConfig.defaults.io.timeout = 180000;    //esri request timeout value
-
+    esriConfig.defaults.io.timeout = 180000; //esri request timeout value
     var userAgent = window.navigator.userAgent; //used to detect the type of devices
-
     if (userAgent.indexOf("iPhone") >= 0 || userAgent.indexOf("iPad") >= 0) {
         isiOS = true;
     }
@@ -98,69 +89,84 @@ function Init() {
         fontSize = 15;
         isMobileDevice = true;
         dojo.byId('dynamicStyleSheet').href = "styles/mobile.css";
-    }
-    else if (userAgent.indexOf("iPad") >= 0) {
+    } else if (userAgent.indexOf("iPad") >= 0) {
         fontSize = 14;
         isTablet = true;
         dojo.byId('dynamicStyleSheet').href = "styles/tablet.css";
-    }
-    else {
+    } else {
         fontSize = 11;
         isBrowser = true;
         dojo.byId('dynamicStyleSheet').href = "styles/browser.css";
-
     }
-
+    ShowProgressIndicator();
     dojo.byId("divSplashContent").style.fontSize = fontSize + "px";
     var eventFired = false;
+
+    // Identify the key presses while implementing auto-complete and assign appropriate actions
     dojo.connect(dojo.byId("txtAddress"), 'onkeyup', function (evt) {
         if (evt) {
-
             var keyCode = evt.keyCode;
-            if (keyCode == 27) {
-                dojo.byId('txtAddress').focus();
-                RemoveChildren(dojo.byId('tblAddressResults'));
-                RemoveScrollBar(dojo.byId('divAddressScrollContainer'));
-                return;
+            if (keyCode == dojo.keys.ENTER) {
+                if (dojo.byId("txtAddress").value.trim() != '') {
+                    dojo.byId("imgSearchLoader").style.display = "block";
+                    LocateAddress();
+                    return;
+                }
             }
-            if (!((keyCode > 46 && keyCode < 58) || (keyCode > 64 && keyCode < 91) || (keyCode > 95 && keyCode < 105) || keyCode == 8 || keyCode == 110 || keyCode == 188)) {
+            if ((!((keyCode >= 46 && keyCode < 58) || (keyCode > 64 && keyCode < 91) || (keyCode > 95 && keyCode < 106) || keyCode == 8 || keyCode == 110 || keyCode == 188)) || (keyCode == 86 && evt.ctrlKey) || (keyCode == 88 && evt.ctrlKey)) {
                 evt = (evt) ? evt : event;
                 evt.cancelBubble = true;
                 if (evt.stopPropagation) evt.stopPropagation();
                 return;
             }
-            eventFired = true;
-            dojo.byId("imgLocate").src = "images/searchLoader.gif";
-            setTimeout(function () {
-                if (eventFired) {
-                    eventFired = false;
-                    LocateAddress();
+            if (dojo.coords("divAddressHolder").h > 0) {
+                if (dojo.byId("txtAddress").value.trim() != '') {
+                    if (lastSearchString !== dojo.byId("txtAddress").value.trim()) {
+                        lastSearchString = dojo.byId("txtAddress").value.trim();
+                        RemoveChildren(dojo.byId('tblAddressResults'));
+                        // Clear any staged search
+                        clearTimeout(stagedSearch);
+                        if (dojo.byId("txtAddress").value.trim().length > 0) {
+                            // Stage a new search, which will launch if no new searches show up
+                            // before the timeout
+                            stagedSearch = setTimeout(function () {
+                                dojo.byId("imgSearchLoader").style.display = "block";
+                                LocateAddress();
+                                lastSearchString = dojo.byId("txtAddress").value.trim();
+                            }, 500);
+                        }
+                    }
+                } else {
+                    lastSearchString = dojo.byId("txtAddress").value.trim();
+                    dojo.byId("imgSearchLoader").style.display = "none";
+                    dojo.empty(dojo.byId('tblAddressResults'));
+                    RemoveScrollBar(dojo.byId('divAddressScrollContainer'));
                 }
-            }, 1000);
+            }
         }
     });
 
     dojo.connect(dojo.byId("imgLocate"), 'onclick', function (evt) {
+
         if (dojo.byId('txtAddress').value.trim() == "") {
             alert(messages.getElementsByTagName("addressToLocate")[0].childNodes[0].nodeValue);
             dojo.byId("imgLocate").src = "images/locate.png";
             return;
         }
-        dojo.byId("imgLocate").src = "images/searchLoader.gif";
         LocateAddress();
+
     });
 
     if (!Modernizr.geolocation) {
         dojo.byId("tdGeolocation").style.display = "none"; //geo location icon is made invisible for the non supported browsers
     }
-
     var responseObject = new js.Config();
     Initialize(responseObject);
 }
 
-//function calls at the initialize state
-function Initialize(responseObject) {
+//This function is called at the initialize state
 
+function Initialize(responseObject) {
     if (isMobileDevice) {
         dojo.replaceClass("divAddressHolder", "hideContainer", "hideContainerHeight");
         dojo.byId('divAddressContainer').style.display = "none";
@@ -170,8 +176,7 @@ function Initialize(responseObject) {
         dojo.byId("divLogo").style.display = "none";
         dojo.byId("lblAppName").style.display = "none";
         dojo.byId("lblAppName").style.width = "80%";
-    }
-    else {
+    } else {
         var imgBasemap = dojo.create('img');
         imgBasemap.src = "images/imgBaseMap.png";
         imgBasemap.className = "imgOptions";
@@ -180,7 +185,7 @@ function Initialize(responseObject) {
         imgBasemap.style.cursor = "pointer";
         imgBasemap.onclick = function () {
             ShowBaseMaps();
-        }
+        };
         dojo.byId("tdBaseMap").appendChild(imgBasemap);
         dojo.byId("tdBaseMap").className = "tdHeader";
         dojo.byId('divSplashScreenContent').style.width = "350px";
@@ -188,74 +193,100 @@ function Initialize(responseObject) {
         dojo.byId('divAddressContainer').style.display = "block";
         dojo.byId("divLogo").style.display = "block";
     }
-
     infoBoxWidth = responseObject.InfoBoxWidth;
     dojo.byId('imgApp').src = responseObject.ApplicationIcon;
     dojo.byId("lblAppName").innerHTML = responseObject.ApplicationName;
     dojo.byId('divSplashContent').innerHTML = responseObject.SplashScreenMessage;
 
-    dojo.xhrGet(
-                    {
-                        url: "ErrorMessages.xml",
-                        handleAs: "xml",
-                        preventCache: true,
-                        load: function (xmlResponse) {
-                            messages = xmlResponse;
-                        }
-                    });
-    var infoWindow = new js.InfoWindow({
-        domNode: dojo.create("div", null, dojo.byId("map"))
+    dojo.xhrGet({
+        url: "ErrorMessages.xml",
+        handleAs: "xml",
+        preventCache: true,
+        load: function (xmlResponse) {
+            messages = xmlResponse;
+        }
     });
 
+    var infoWindow = new mobile.InfoWindow({
+        domNode: dojo.create("div", null, dojo.byId("map"))
+    });
     map = new esri.Map("map", {
         slider: true,
         infoWindow: infoWindow
     });
 
     ShowProgressIndicator();
-
-    locatorFields = responseObject.LocatorFields.split(",");
     geometryService = new esri.tasks.GeometryService(responseObject.GeometryService);
-    locatorURL = responseObject.LocatorURL;
     baseMapLayers = responseObject.BaseMapLayers;
     mapSharingOptions = responseObject.MapSharingOptions;
-    locatorMarkupSymbolPath = responseObject.LocatorMarkupSymbolPath;
     showNullValueAs = responseObject.ShowNullValueAs;
     services = responseObject.Services;
-    zoomLevel = responseObject.ZoomLevel;
-    routeTask = new esri.tasks.RouteTask(responseObject.RouteServiceURL);
+    searchforDirections = responseObject.SearchforDirections;
+    if (searchforDirections) {
+        routeTask = new esri.tasks.RouteTask(responseObject.RouteServiceURL);
+    }
     rendererColor = responseObject.RendererColor;
     rippleSize = responseObject.RippleSize;
+    referenceOverlayLayer = responseObject.ReferenceOverlayLayer;
     infoPopupFieldsCollection = responseObject.InfoPopupFieldsCollection;
     infoWindowHeader = responseObject.InfoWindowHeader;
     infoPopupWidth = responseObject.InfoPopupWidth;
     infoPopupHeight = responseObject.InfoPopupHeight;
     callOutAddress = responseObject.CallOutAddress;
-    locatorNameFields = responseObject.LocatorNameFields;
-
+    locatorSettings = responseObject.LocatorSettings;
+    zoomLevel = responseObject.ZoomLevel;
     dojo.connect(routeTask, "onSolveComplete", ShowRoute);
     dojo.connect(routeTask, "onError", ErrorHandler);
     routeSymbol = new esri.symbol.SimpleLineSymbol().setColor(responseObject.RouteColor).setWidth(responseObject.RouteWidth);
-
     CreateBaseMapComponent();
-
     if (!isMobileDevice) {
         CreateCarousel();
     }
-
     dojo.connect(map, "onLoad", function () {
+        dojo.byId("divInfowindowContent").style.display = "block";
         var zoomExtent;
         var extent = GetQuerystring('extent');
-        if (extent != "") {
+
+        if (extent !== "") {
             zoomExtent = extent.split(',');
-        }
-        else {
+        } else {
             zoomExtent = responseObject.DefaultExtent.split(",");
         }
-        var startExtent = new esri.geometry.Extent(parseFloat(zoomExtent[0]), parseFloat(zoomExtent[1]), parseFloat(zoomExtent[2]), parseFloat(zoomExtent[3]), map.spatialReference);
-        map.setExtent(startExtent);
+
+        if (zoomExtent[3].split("$point=").length > 0) {
+            zoomExtent[3] = zoomExtent[3].split("$point=")[0];
+        }
         MapInitFunction();
+        var url = esri.urlToObject(window.location.toString());
+        if (extent !== "") {
+            if (window.location.toString().split("$point=").length > 1) {
+                if (window.location.toString().split("$point=")[1].split("$selectedPod=").length >= 1) {
+                    if (window.location.toString().split("$point=")[1].split("$selectedPod=")[1]) {
+                        mapPoint = new esri.geometry.Point(window.location.toString().split("$point=")[1].split(",")[0], window.location.toString().split("$point=")[1].split("$selectedPod=")[0].split(",")[1], map.spatialReference);
+                        if (isMobileDevice) {
+                            shareFlag = true;
+                            CreateCarousel();
+                            GetServices(mapPoint, true);
+                        }
+                        else {
+                            shareFlag = true;
+                            GetServices(mapPoint, true);
+                        }
+                    } else {
+                        mapPoint = new esri.geometry.Point(Number(window.location.toString().split("$point=")[1].split(",")[0]), Number(window.location.toString().split("$point=")[1].split(",")[1]), map.spatialReference);
+                        if (isMobileDevice) {
+                            CreateCarousel();
+                        }
+                        GetServices(mapPoint, true);
+                    }
+                }
+            }
+        }
+        startExtent = new esri.geometry.Extent(parseFloat(zoomExtent[0]), parseFloat(zoomExtent[1]), parseFloat(zoomExtent[2]), parseFloat(zoomExtent[3]), map.spatialReference);
+        map.setExtent(startExtent);
+
     });
+
     dojo.connect(map, "onExtentChange", function (evt) {
         if (dojo.coords("divAppContainer").h > 0) {
             ShareLink(false);
@@ -269,23 +300,34 @@ function Initialize(responseObject) {
             return;
         }
     });
-    dojo.byId("txtAddress").setAttribute("defaultAddress", responseObject.LocatorDefaultAddress);
-    dojo.byId('txtAddress').value = responseObject.LocatorDefaultAddress;
+
+    dojo.byId("tdSearchAddress").innerHTML = responseObject.LocatorSettings.Locators[0].DisplayText;
+    dojo.byId("txtAddress").setAttribute("defaultAddress", responseObject.LocatorSettings.Locators[0].DefaultValue);
+    dojo.byId('txtAddress').value = responseObject.LocatorSettings.Locators[0].DefaultValue;
+    lastSearchString = dojo.byId("txtAddress").value.trim();
+    dojo.byId("txtAddress").setAttribute("defaultAddressTitle", responseObject.LocatorSettings.Locators[0].DefaultValue);
+    dojo.byId("txtAddress").style.color = "gray";
+    dojo.connect(dojo.byId('txtAddress'), "ondblclick", ClearDefaultText);
+    dojo.connect(dojo.byId('txtAddress'), "onfocus", function () {
+        this.style.color = "#FFF";
+    });
+    dojo.connect(dojo.byId('txtAddress'), "onblur", ReplaceDefaultText);
+
     dojo.connect(dojo.byId('imgHelp'), "onclick", function () {
+
         window.open(responseObject.HelpURL);
     });
 }
 
-//function called when map is initialized
+//initialize map
+
 function MapInitFunction() {
     if (dojo.query('.logo-med', dojo.byId('map')).length > 0) {
         dojo.query('.logo-med', dojo.byId('map'))[0].id = "imgesriLogo";
-    }
-    else if (dojo.query('.logo-sm', dojo.byId('map')).length > 0) {
+    } else if (dojo.query('.logo-sm', dojo.byId('map')).length > 0) {
         dojo.query('.logo-sm', dojo.byId('map'))[0].id = "imgesriLogo";
     }
     dojo.addClass("imgesriLogo", "esriLogo");
-
     var gLayer = new esri.layers.GraphicsLayer();
     gLayer.id = tempGraphicsLayerId;
     map.addLayer(gLayer);
@@ -301,28 +343,58 @@ function MapInitFunction() {
     routeParams.directionsLengthUnits = esri.Units.MILES;
     routeParams.outSpatialReference = map.spatialReference;
 
-    var routeLayer = new esri.layers.GraphicsLayer();
+    routeLayer = new esri.layers.GraphicsLayer();
     routeLayer.id = routeLayerId;
     map.addLayer(routeLayer);
 
     dojo.byId('divSplashScreenContainer').style.display = "block";
     dojo.replaceClass("divSplashScreenContent", "showContainer", "hideContainer");
     SetHeightSplashScreen();
-    if (!isMobileDevice) {
-        window.onresize = function () {
-            ResizeHandler();
-            ResetSlideControls();
+
+    if (referenceOverlayLayer.DisplayOnLoad) {
+        var overlaymap;
+        var layerType = referenceOverlayLayer.ServiceUrl.substring(((referenceOverlayLayer.ServiceUrl.lastIndexOf("/")) + 1), (referenceOverlayLayer.ServiceUrl.length));
+        if (!isNaN(layerType)) {
+            overlaymap = new esri.layers.FeatureLayer(referenceOverlayLayer.ServiceUrl, {
+                mode: esri.layers.FeatureLayer.MODE_SNAPSHOT,
+                outFields: ["*"]
+            });
+            map.addLayer(overlaymap);
+        } else {
+            var url1 = referenceOverlayLayer.ServiceUrl + "?f=json";
+            esri.request({
+                url: url1,
+                handleAs: "json",
+                load: function (data) {
+                    if (!data.singleFusedMapCache) {
+                        var imageParameters = new esri.layers.ImageParameters();
+                        //Takes a URL to a non cached map service.
+                        overlaymap = new esri.layers.ArcGISDynamicMapServiceLayer(referenceOverlayLayer.ServiceUrl, {
+                            "imageParameters": imageParameters
+                        });
+                        map.addLayer(overlaymap);
+                    } else {
+                        overlaymap = new esri.layers.ArcGISTiledMapServiceLayer(referenceOverlayLayer.ServiceUrl);
+                        map.addLayer(overlaymap);
+                    }
+                }
+            });
         }
     }
-    else {
-        SetHeightAddressResults();
-    }
+    window.onresize = function () {
+        if (!isMobileDevice) {
+            ResizeHandler();
+            ResetSlideControls();
+        } else {
+            orientationChanged();
+        }
+    };
     HideProgressIndicator();
     if (!isMobileDevice) {
         dojo.connect(map, "onClick", "GetServices");
-    }
-    else {
+    } else {
         dojo.connect(map, "onClick", function (evt) {
+
             map.infoWindow.hide();
             mapPoint = null;
             selectedGraphic = null;
@@ -330,14 +402,12 @@ function MapInitFunction() {
             GetServices(evt);
         });
     }
-
     for (var i in services) {
         if (services[i].LayerVisibility) {
             var featureLayer;
             if (!services[i].distance) {
                 featureLayer = CreateFeatureLayerSelectionMode(services[i].ServiceUrl, i, '*', services[i].Color, services[i].HasRendererImage, services[i].isRendererColor);
-            }
-            else {
+            } else {
                 featureLayer = CreatePointFeatureLayer(services[i].ServiceUrl, i, '*', services[i].Image, services[i].HasRendererImage);
             }
             map.addLayer(featureLayer);
@@ -346,8 +416,9 @@ function MapInitFunction() {
     }
 }
 
-function GetServices(evt) {
+//Get services on map
 
+function GetServices(evt, share) {
     newLeft = 0;
     if (!isMobileDevice) {
         dojo.byId("divCarouselDataContent").style.left = "0px";
@@ -355,8 +426,7 @@ function GetServices(evt) {
         map.infoWindow.hide();
         mapPoint = null;
         selectedGraphic = null;
-    }
-    else {
+    } else {
         if (!firstClick) {
             RemoveChildren(dojo.byId('divRepresentativeDataContainer'));
             dojo.byId('goBack').style.display = "none";
@@ -368,64 +438,68 @@ function GetServices(evt) {
         }
         firstClick = false;
     }
-
-    if (evt) {
+    if (share) {
         map.getLayer(tempGraphicsLayerId).clear();
-        mapPoint = new esri.geometry.Point(evt.mapPoint.x, evt.mapPoint.y, map.spatialReference);
+        mapPoint = new esri.geometry.Point(evt.x, evt.y, map.spatialReference);
         map.centerAndZoom(mapPoint, zoomLevel);
         SelectedPointAddress();
+    } else {
+        if (evt) {
+            map.getLayer(tempGraphicsLayerId).clear();
+            mapPoint = new esri.geometry.Point(evt.mapPoint.x, evt.mapPoint.y, map.spatialReference);
+            map.centerAndZoom(mapPoint, zoomLevel);
+            SelectedPointAddress();
+        }
     }
     ShowProgressIndicator();
-
     QueryService(mapPoint);
-
     if (isMobileDevice) {
         CallOutAddressDisplay(evt);
         CreateListLayOut();
     }
 }
 
+//Reverse geocoding to display address in mobile mode
 
 function CallOutAddressDisplay(evt) {
-    var locator = new esri.tasks.Locator(locatorURL);
+    var locator = new esri.tasks.Locator(locatorSettings.Locators[0].LocatorURL);
     if (evt) {
         locator.locationToAddress(mapPoint, 100);
-    }
-    else {
+    } else {
         locator.locationToAddress(mapPoint, 1);
     }
     var infoTemplate = new esri.InfoTemplate("Location", callOutAddress);
     dojo.connect(locator, "onLocationToAddressComplete", function (candidate) {
         if (candidate.address) {
             var infoData = new esri.Graphic(candidate.location, candidate.address, infoTemplate).symbol.Address;
-            if (infoData != null) {
+            if (infoData !== null) {
+                infoContent = dojo.string.substitute(infoData).trimString(16);
+                map.infoWindow.setContent(infoContent);
+                dojo.byId("tdListHeader").innerHTML = infoContent;
+            } else {
+                infoData = showNullValueAs;
                 infoContent = dojo.string.substitute(infoData).trimString(16);
                 map.infoWindow.setContent(infoContent);
                 dojo.byId("tdListHeader").innerHTML = infoContent;
             }
-            else {
-                var infoData = showNullValueAs;
-                infoContent = dojo.string.substitute(infoData).trimString(16);
-                map.infoWindow.setContent(infoContent);
-                dojo.byId("tdListHeader").innerHTML = infoContent;
-            }
-
         }
     });
-
 }
 
+//Reverse geocoding to get address
+
 function SelectedPointAddress() {
-    var locator = new esri.tasks.Locator(locatorURL);
+    var locator = new esri.tasks.Locator(locatorSettings.Locators[0].LocatorURL);
     locator.locationToAddress(mapPoint, 100);
     dojo.connect(locator, "onLocationToAddressComplete", function (candidate) {
         if (candidate.address) {
-            var symbol = new esri.symbol.PictureMarkerSymbol(locatorMarkupSymbolPath, 25, 25);
+            var symbol = new esri.symbol.PictureMarkerSymbol(locatorSettings.LocatorMarkupSymbolPath, locatorSettings.MarkupSymbolSize.width, locatorSettings.MarkupSymbolSize.height, locatorSettings.MarkupSymbolSize.width, locatorSettings.MarkupSymbolSize.height);
             var attr = [];
-            if (candidate.address.Loc_name == "US_Zipcode") {
-                attr = { Address: candidate.address.Zip };
-            }
-            else {
+            if (candidate.address.Loc_name === "US_Zipcode") {
+                attr = {
+                    Address: candidate.address.Zip
+                };
+            } else {
                 var address = [];
                 var fields = "Address,City,State,Zip";
                 for (var att = 0; att < fields.split(",").length; att++) {
@@ -433,13 +507,14 @@ function SelectedPointAddress() {
                         address.push(candidate.address[fields.split(",")[att]]);
                     }
                 }
-                attr = { Address: address.join(',') };
+                attr = {
+                    Address: address.join(',')
+                };
             }
             var graphic = new esri.Graphic(mapPoint, symbol, attr, null);
             map.getLayer(tempGraphicsLayerId).add(graphic);
         }
     });
-
 }
 
 dojo.addOnLoad(Init);

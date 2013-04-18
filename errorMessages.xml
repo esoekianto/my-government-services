@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <!--
- | Version 10.1.1
+  | Version 10.2
  | Copyright 2012 Esri
  |
  | Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,13 +16,13 @@
  | limitations under the License.
 -->
 <Messages>
-  <addressToLocate>Enter address to locate.</addressToLocate>
-  <tinyURLEngine>Bitly API engine is not working, Please try again after some time.</tinyURLEngine>
-  <geoLocation>You are currently outside the supported area.</geoLocation>
-  <geolocationTimeout>Request timed out.</geolocationTimeout>
-  <geolocationPositionUnavailable>Unable to locate the position.</geolocationPositionUnavailable>
-  <geolocationPermissionDenied>Permission denied.</geolocationPermissionDenied>
-  <geolocationUnKnownError>Unknown error.</geolocationUnKnownError>
-  <servicesNotAvailable>No Services are available for the current location.</servicesNotAvailable>
-  <invalidSearch>No results found</invalidSearch>
+    <addressToLocate>Enter address to locate.</addressToLocate>
+    <tinyURLEngine>Bitly API engine is not working, Please try again after some time.</tinyURLEngine>
+    <geoLocation>You are currently outside the supported area.</geoLocation>
+    <geolocationTimeout>Request timed out.</geolocationTimeout>
+    <geolocationPositionUnavailable>Unable to locate the position.</geolocationPositionUnavailable>
+    <geolocationPermissionDenied>Permission denied.</geolocationPermissionDenied>
+    <geolocationUnKnownError>Unknown error.</geolocationUnKnownError>
+    <servicesNotAvailable>No Services are available for the current location.</servicesNotAvailable>
+    <invalidSearch>No results found</invalidSearch>
 </Messages>

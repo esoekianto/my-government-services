@@ -1,5 +1,5 @@
 ﻿/** @license
- | Version 10.1.1
+  | Version 10.2
  | Copyright 2012 Esri
  |
  | Licensed under the Apache License, Version 2.0 (the "License");
@@ -52,4 +52,4 @@ dojo.declare("js.date", null, {
         return new Date(utcTimestamp.getTime() - (utcTimestamp.getTimezoneOffset() * 60000));
     }
 
-})
+});

@@ -1,5 +1,5 @@
 ﻿/** @license
- | Version 10.1.1
+  | Version 10.2
  | Copyright 2012 Esri
  |
  | Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,31 +14,32 @@
  | See the License for the specific language governing permissions and
  | limitations under the License.
  */
+//Create base-map components
 
 function CreateBaseMapComponent() {
+    var layerInfo;
     for (var i = 0; i < baseMapLayers.length; i++) {
-        map.addLayer(CreateBaseMapLayer(baseMapLayers[i].MapURL, baseMapLayers[i].Key, (i == 0) ? true : false));
-        if (i == 0) {
-            dojo.connect(map.getLayer(baseMapLayers[i].Key), "onLoad", function (e) {
-            });
+        map.addLayer(CreateBaseMapLayer(baseMapLayers[i].MapURL, baseMapLayers[i].Key, (i === 0) ? true : false));
+        if (i === 0) {
+            dojo.connect(map.getLayer(baseMapLayers[i].Key), "onLoad", function () { });
         }
     }
-
     var layerList = dojo.byId('layerList');
-
-    for (var i = 0; i < Math.ceil(baseMapLayers.length / 2); i++) {
+    for (i = 0; i < Math.ceil(baseMapLayers.length / 2); i++) {
         if (baseMapLayers[(i * 2) + 0]) {
-            var layerInfo = baseMapLayers[(i * 2) + 0];
+            layerInfo = baseMapLayers[(i * 2) + 0];
             layerList.appendChild(CreateBaseMapElement(layerInfo));
         }
 
         if (baseMapLayers[(i * 2) + 1]) {
-            var layerInfo = baseMapLayers[(i * 2) + 1];
+            layerInfo = baseMapLayers[(i * 2) + 1];
             layerList.appendChild(CreateBaseMapElement(layerInfo));
         }
     }
     dojo.addClass(dojo.byId("imgThumbNail" + baseMapLayers[0].Key), "selectedBaseMap");
 }
+
+//Create elements to toggle the maps
 
 function CreateBaseMapElement(baseMapLayerInfo) {
     var divContainer = dojo.create("div");
@@ -61,10 +62,11 @@ function CreateBaseMapElement(baseMapLayerInfo) {
     return divContainer;
 }
 
+//Toggle Basemap
+
 function ChangeBaseMap(spanControl) {
     HideMapLayers();
     var key = spanControl.getAttribute('layerId');
-
     for (var i = 0; i < baseMapLayers.length; i++) {
         dojo.removeClass(dojo.byId("imgThumbNail" + baseMapLayers[i].Key), "selectedBaseMap");
         if (dojo.isIE) {
@@ -72,7 +74,7 @@ function ChangeBaseMap(spanControl) {
             dojo.byId("imgThumbNail" + baseMapLayers[i].Key).style.marginLeft = "0px";
             dojo.byId("spanBaseMapText" + baseMapLayers[i].Key).style.marginTop = "0px";
         }
-        if (baseMapLayers[i].Key == key) {
+        if (baseMapLayers[i].Key === key) {
             dojo.addClass(dojo.byId("imgThumbNail" + baseMapLayers[i].Key), "selectedBaseMap");
             var layer = map.getLayer(baseMapLayers[i].Key);
             layer.show();
@@ -80,10 +82,17 @@ function ChangeBaseMap(spanControl) {
     }
 }
 
+//Create basemap layer on map
+
 function CreateBaseMapLayer(layerURL, layerId, isVisible) {
-    var layer = new esri.layers.ArcGISTiledMapServiceLayer(layerURL, { id: layerId, visible: isVisible });
+    var layer = new esri.layers.ArcGISTiledMapServiceLayer(layerURL, {
+        id: layerId,
+        visible: isVisible
+    });
     return layer;
 }
+
+//Hide Layers
 
 function HideMapLayers() {
     for (var i = 0; i < baseMapLayers.length; i++) {
@@ -93,6 +102,8 @@ function HideMapLayers() {
         }
     }
 }
+
+//Animate base map panel with wipe-in and wipe-out animation
 
 function ShowBaseMaps() {
     if (dojo.coords("divAppContainer").h > 0) {
@@ -105,15 +116,17 @@ function ShowBaseMaps() {
             dojo.byId('divAddressHolder').style.height = '0px';
         }
     }
-
+    var cellHeight = (isTablet) ? 100 : 115;
     if (dojo.coords("divLayerContainer").h > 0) {
         dojo.replaceClass("divLayerContainer", "hideContainerHeight", "showContainerHeight");
         dojo.byId("divLayerContainer").style.height = "0px";
-    }
-    else {
-        dojo.byId('divLayerContainer').style.height = Math.ceil(baseMapLayers.length / 2) * (dojo.coords("divLayerHolder").h) + ((isTablet) ? 10 : 8) + "px";
+    } else {
+        dojo.byId('divLayerContainer').style.height = cellHeight + "px";
+        dojo.byId('divLayerContentHolder').style.height = (cellHeight - 10) + "px";
+        dojo.byId('divLayerContentHolder').style.top = "0px";
         dojo.replaceClass("divLayerContainer", "showContainerHeight", "hideContainerHeight");
     }
+    setTimeout(function () {
+        CreateScrollbar(dojo.byId("divLayerContainerHolder"), dojo.byId("divLayerContentHolder"));
+    }, 500);
 }
-
-

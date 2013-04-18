@@ -1,5 +1,5 @@
 ﻿/** @license
- | Version 10.1.1
+  | Version 10.2
  | Copyright 2012 Esri
  |
  | Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,12 +17,12 @@
 var horizontalPosition = 0; //variable for storing the scrolling position of scrolling container
 var newLeft = 0; //variable for storing the left position of the carousel content
 var touchStart = false; //flag for setting the touch events
-var routeLayer; //variable for storing the particular layer id when you click on directions button
 var discnt; //variable used for disconnecting the dojo connect event
 var infoContent; //variable to store info content details
 var counter = 0;
 
-/* function used to create Dom node elements for the carousel and to style the carousel */
+//Create Dom node elements for carousel and style carousel
+
 function CreateCarousel() {
     var divDataContainer;
     if (!isMobileDevice) {
@@ -81,7 +81,7 @@ function CreateCarousel() {
         imgToggle.style.cursor = "pointer";
         imgToggle.onclick = function () {
             ShowHideResult(this);
-        }
+        };
         tdImageContainer.appendChild(imgToggle);
 
         var divCarousel = dojo.create("div");
@@ -117,7 +117,6 @@ function CreateCarousel() {
         tdLeftArrow.align = "left";
         tdLeftArrow.style.width = "37px";
 
-
         var divLeftArrow = dojo.create("div");
         divLeftArrow.id = "divLeftArrow";
         divLeftArrow.style.zIndex = 1000;
@@ -131,12 +130,9 @@ function CreateCarousel() {
         imgLeftArrow.className = "imgShare";
         imgLeftArrow.onclick = function () {
             SlideLeft();
-        }
+        };
         divLeftArrow.appendChild(imgLeftArrow);
-
         var tdDataContainer = trContent.insertCell(1);
-
-
         var divDataHolder = dojo.create("div");
         divDataHolder.id = "divCarouselDataContainer";
         divDataHolder.className = "divCarouselDataContainer";
@@ -151,11 +147,9 @@ function CreateCarousel() {
     divDataContent.style.height = "100%";
     if (!isMobileDevice) {
         divDataContainer.appendChild(divDataContent);
-    }
-    else {
+    } else {
         dojo.byId("listDatacontent").appendChild(divDataContent);
     }
-
     var tblDataContent = dojo.create("table");
     tblDataContent.style.height = "100%";
     divDataContent.appendChild(tblDataContent);
@@ -171,12 +165,9 @@ function CreateCarousel() {
     trLinkContent.id = "trLinkContent";
     if (!isMobileDevice) {
         tbodyCarousel.appendChild(trLinkContent);
-    }
-    else {
-
+    } else {
         dojo.byId("listDatacontent").appendChild(trLinkContent);
     }
-
     var tdDataLink = dojo.create("td");
     dojo.byId("trLinkContent").appendChild(tdDataLink);
     tdDataLink.style.borderTop = "1px solid white";
@@ -219,17 +210,15 @@ function CreateCarousel() {
         imgRightArrow.className = "imgShare";
         imgRightArrow.onclick = function () {
             SlideRight();
-        }
+        };
         divRightArrow.appendChild(imgRightArrow);
     }
     CreateCarouselPod();
-
     if (!isMobileDevice) {
         dojo.connect(dojo.byId('divCarouselDataContainer'), "touchstart", function (e) {
             horizontalPosition = e.touches[0].pageX;
             touchStart = true;
         });
-
         dojo.connect(dojo.byId('divCarouselDataContainer'), "touchmove", function (e) {
             if (touchStart) {
                 touchStart = false;
@@ -250,28 +239,26 @@ function CreateCarousel() {
             }
         });
         dojo.connect(dojo.byId('divCarouselDataContainer'), "touchend", function (e) {
-            horizontalPosition = 0
+            horizontalPosition = 0;
             touchStart = false;
         });
     }
 }
 
-//function to set width of shortcut links in ipad orientation change
 function FixBottomPanelWidth() {
     var width = ((dojo.window.getBox().w) / numberOfServices) - 5;
+    var charWidth;
     if (isBrowser) {
-        var charWidth = "a".getWidth(11);
-    }
-    else {
-        var charWidth = "a".getWidth(13.5);
+        charWidth = "a".getWidth(11);
+    } else {
+        charWidth = "a".getWidth(13.5);
     }
     var numberChar = Math.floor(width / charWidth) - 2;
     for (var i in services) {
         dojo.byId("divService" + i).style.width = width + "px";
         if (isBrowser) {
             dojo.byId("divService" + i).style.fontSize = "11px";
-        }
-        else {
+        } else {
             dojo.byId("divService" + i).style.fontSize = "14px";
         }
         dojo.byId("divService" + i).innerHTML = services[i].Name.trimString(numberChar);
@@ -279,7 +266,8 @@ function FixBottomPanelWidth() {
     }
 }
 
-/* function used for displaying the result in the carousel pods*/
+//Display result in carousel pods
+
 function ShowHideResult(imgToggle) {
     if (mapPoint) {
         var layerCount = 0;
@@ -295,18 +283,16 @@ function ShowHideResult(imgToggle) {
             alert(messages.getElementsByTagName("tinyURLEngine")[0].childNodes[0].nodeValue);
             return;
         }
-
         if (imgToggle.getAttribute("state") == "minimized") {
-            WipeInResults();   // maximize
+            WipeInResults(); // maximize
+        } else {
+            WipeOutResults(); //minimize
         }
-        else {
-            WipeOutResults();  //minimize
-        }
-
     }
 }
 
-/*function used for wiping in bottom panel on click of down arrow button*/
+//Show bottom panel with Wipe-in animation
+
 function WipeInResults() {
     dojo.byId('divImageBackground').style.display = "block";
     dojo.byId('imgToggleResults').setAttribute("state", "maximized");
@@ -318,7 +304,8 @@ function WipeInResults() {
     dojo.byId('imgToggleResults').src = "images/down.png";
 }
 
-/*function used for wiping out bottom panel on click of up arrow button*/
+//Hide bottom panel with Wipe-out animation
+
 function WipeOutResults() {
     dojo.byId('imgToggleResults').setAttribute("state", "minimized");
     dojo.byId('imgToggleResults').title = "Show Panel";
@@ -329,11 +316,12 @@ function WipeOutResults() {
     dojo.byId('imgToggleResults').src = "images/up.png";
 }
 
-/* function used for creating the information pods to display in the carousel */
+//Create information pods to display in the carousel
+
 function CreateCarouselPod() {
     for (var i in services) {
         var tdDataContent = dojo.create("td");
-        tdDataContent.id = "td"+i;
+        tdDataContent.id = "td" + i;
         dojo.byId("trDataContent").appendChild(tdDataContent);
 
         var divTemplate = dojo.create("div");
@@ -341,7 +329,7 @@ function CreateCarouselPod() {
         divTemplate.style.display = "block";
         divTemplate.id = "div" + i;
         divTemplate.style.width = infoBoxWidth + "px";
-        divTemplate.style.marginRight = "5px";
+        divTemplate.style.marginRight = "5.1px";
         tdDataContent.appendChild(divTemplate);
 
         var divHeader = dojo.create("div");
@@ -364,13 +352,13 @@ function CreateCarouselPod() {
         tbodyHeader.appendChild(trHeader);
 
         var tdHeaderImage = dojo.create("td");
-        tdHeaderImage.className = "imgCarouselHeader"
+        tdHeaderImage.className = "imgCarouselHeader";
         tdHeaderImage.style.margin = "2px";
         trHeader.appendChild(tdHeaderImage);
 
         var serviceImages = dojo.create("img");
         serviceImages.src = services[i].Image;
-        serviceImages.className = "imgCarouselHeader"
+        serviceImages.className = "imgCarouselHeader";
         tdHeaderImage.appendChild(serviceImages);
 
         var tdHeader = dojo.create("td");
@@ -408,6 +396,7 @@ function CreateCarouselPod() {
         var serviceLinktd = dojo.create("td");
         serviceLinktd.setAttribute("serviceLinkId", i);
         serviceLinktd.setAttribute("position", numberOfServices);
+        serviceLinktd.id = "serviceLinktdId" + i;
         numberOfServices++;
         serviceLinktd.style.borderRight = "1px solid white";
         serviceLinktd.style.fontSize = "10px";
@@ -417,46 +406,59 @@ function CreateCarouselPod() {
         divServiceLink.innerHTML = services[i].Name;
         serviceLinktd.appendChild(divServiceLink);
 
-        serviceLinktd.onclick = function () {
-            map.infoWindow.hide();
-            selectedGraphic = null;
-            var key = this.getAttribute("serviceLinkId");
-            if (dojo.byId('div' + key).style.display == "block") {
-                var hiddenContests = 0;
-                for (var index in services) {
-                    if (index == key)
-                        break;
-                    if (dojo.byId('div' + index).style.display == "none") {
-                        hiddenContests++;
-                    }
-                }
-                var position = Number(this.getAttribute("position")) - hiddenContests;
-                Slide(((position * (infoBoxWidth + 5)) + (position * 4)));
-            }
-            ShowServiceLayer(index);
-        }
+        serviceLinktd.onclick = function (evt) {
+            ShowServicePods(this, false);
+        };
         dojo.byId("trLink").appendChild(serviceLinktd);
     }
     FixBottomPanelWidth();
 }
 
-//function to create polygon services information
-/* this function is used to create polygon layers ex(trash pickup, recycling pickup etc) information and display it in the pods*/
+//Position bottom Pods
+
+function ShowServicePods(_this, share) {
+    map.infoWindow.hide();
+    selectedGraphic = null;
+    var key;
+    var position;
+    if (share) {
+        key = _this.split("$", 1)[0];
+    } else {
+        key = _this.getAttribute("serviceLinkId");
+    }
+    if (dojo.byId('div' + key).style.display == "block") {
+        var hiddenContests = 0;
+        for (var index in services) {
+            if (index == key)
+                break;
+            if (dojo.byId('div' + index).style.display == "none") {
+                hiddenContests++;
+            }
+        }
+        if (share) {
+            position = Number(window.location.toString().split("$pos=")[1]) - hiddenContests;
+        } else {
+            position = Number(_this.getAttribute("position")) - hiddenContests;
+        }
+        Slide(((position * (infoBoxWidth + 5)) + (position * 4.1)));
+    }
+    ShowServiceLayer(index);
+}
+
+//Create polygon service information
+
 function CreateServicePolygonInfo(service, feature, key) {
     RemoveChildren(dojo.byId("divContent" + key));
     var tableInfo = dojo.create("table");
     tableInfo.id = "tableInfo" + key;
     if (!isMobileDevice) {
         tableInfo.style.marginLeft = "10px";
-    }
-    else {
+    } else {
         tableInfo.style.paddingLeft = "8px";
     }
     var tableInfoBody = dojo.create("tbody");
     tableInfo.appendChild(tableInfoBody);
-
     for (var i = 0; i < service.FieldNames.length; i++) {
-
         var tr = dojo.create("tr");
         tableInfoBody.appendChild(tr);
 
@@ -500,12 +502,10 @@ function CreateServicePolygonInfo(service, feature, key) {
                             selectedGraphic = null;
                         }
                         ShowServiceLayer(key);
-                    }
+                    };
                 }
             }
-        }
-
-        else if (service.FieldNames[i].Links) {
+        } else if (service.FieldNames[i].Links) {
             var tdLink = dojo.create("td");
             tr.appendChild(tdLink);
             var tableLink = dojo.create("table");
@@ -526,29 +526,25 @@ function CreateServicePolygonInfo(service, feature, key) {
                 tdHref.onclick = function () {
                     if (this.getAttribute("type") == "Website") {
                         OpenWebSite(feature.attributes[this.getAttribute("web")]);
-                    }
-                    else {
+                    } else {
                         OpenServiceMail(feature.attributes[this.getAttribute("web")]);
                     }
-                }
+                };
                 trLink.appendChild(tdHref);
                 tdHref.innerHTML = service.FieldNames[i].Links[m].DisplayText;
             }
             var span = trLink.insertCell(1);
             span.style.borderLeft = "1px solid white";
             span.style.paddingRight = "5px";
-        }
-
-        else {
-
-            //service.FieldNames[i].Field]
+        } else {
+            var attribute_switch;
             var tdDisplayText = dojo.create("td");
             tr.appendChild(tdDisplayText);
             try{
-                var attribute_switch = dojo.string.substitute(service.FieldNames[i].Field, feature.attributes);
+                attribute_switch = dojo.string.substitute(service.FieldNames[i].Field, feature.attributes);
             }
             catch(err){
-                var attribute_switch = "";
+                attribute_switch = "";
             }
             tdDisplayText.innerHTML = attribute_switch
         }
@@ -558,8 +554,8 @@ function CreateServicePolygonInfo(service, feature, key) {
 
 }
 
-//function to create point services information
-/* this function is used to create point services ex(library, post office, etc) information and display it in the pods*/
+//Create point service information
+
 function CreateServicePointInfo(service, feature, key, distance, featureGeometry) {
     if (!isMobileDevice) {
         dojo.byId("divDirectionsContainer" + key).style.display = "none";
@@ -568,8 +564,7 @@ function CreateServicePointInfo(service, feature, key, distance, featureGeometry
     tableInfo.id = "tableInfo" + key;
     if (!isMobileDevice) {
         tableInfo.style.marginLeft = "10px";
-    }
-    else {
+    } else {
         tableInfo.style.paddingLeft = "8px";
     }
     tableInfo.style.width = "93%";
@@ -581,12 +576,16 @@ function CreateServicePointInfo(service, feature, key, distance, featureGeometry
     tableInfo.setAttribute('y', featureGeometry.y);
     tableInfo.setAttribute('layer', key);
     if (!isMobileDevice) {
-        tableInfo.onmouseover = function (evt) {
-            if (map.getLayer(this.getAttribute('layer')).visible) {
-                GlowRipple(this, rendererColor);
-            }
+        if (!isTablet) {
+            tableInfo.onmouseover = function (evt) {
+                if (map.getLayer(this.getAttribute('layer')).visible) {
+                    GlowRipple(this, rendererColor);
+                }
+            };
+            tableInfo.onmouseout = function (evt) {
+                HideRipple();
+            };
         }
-        tableInfo.onmouseout = function (evt) { HideRipple(); }
     }
     var tableInfoBody = dojo.create("tbody");
     tableInfo.appendChild(tableInfoBody);
@@ -601,6 +600,16 @@ function CreateServicePointInfo(service, feature, key, distance, featureGeometry
     tableData.setAttribute('x', featureGeometry.x);
     tableData.setAttribute('y', featureGeometry.y);
     tableData.setAttribute('layer', key);
+    if (isTablet) {
+        tableData.onmouseover = function (evt) {
+            if (map.getLayer(this.getAttribute('layer')).visible) {
+                GlowRipple(this, rendererColor);
+            }
+        };
+        tableData.onmouseout = function (evt) {
+            HideRipple();
+        };
+    }
     tableData.onclick = function () {
         if (!isMobileDevice) {
             ShowProgressIndicator();
@@ -614,125 +623,74 @@ function CreateServicePointInfo(service, feature, key, distance, featureGeometry
                 HideProgressIndicator();
             }, 500);
         }
-    }
+    };
     var tableDataBody = dojo.create("tbody");
     tableData.appendChild(tableDataBody);
 
     for (var i = 0; i < service.FieldNames.length; i++) {
         var trData = dojo.create("tr");
         tableDataBody.appendChild(trData);
-
         tdData = dojo.create("td");
         tdData.align = "left";
         trData.appendChild(tdData);
-        if (feature[service.FieldNames[i].FieldName] == null) {
+        if (feature[service.FieldNames[i].FieldName] === null) {
             tdData.innerHTML = showNullValueAs;
-        }
-        else {
+        } else {
             if (i == 0) {
-                tdData.innerHTML = feature[service.FieldNames[i].FieldName] + " (" + FormatDistance(distance , "miles)");
-            }
-            else {
+                tdData.innerHTML = feature[service.FieldNames[i].FieldName] + " (" + FormatDistance(distance, "miles)");
+            } else {
                 tdData.innerHTML = feature[service.FieldNames[i].FieldName];
             }
-
         }
     }
     var tdImage = dojo.create("td");
     tdImage.align = "right";
     tr.appendChild(tdImage);
-
     var image = dojo.create("img");
 
     if (!isMobileDevice) {
-        tdImage.appendChild(image);
-        image.src = "images/imgDirections.png"
+        if (searchforDirections) {
+            var divImage = dojo.create("div", {
+                "style": "display:block"
+            });
+        } else {
+            var divImage = dojo.create("div", {
+                "style": "display:none"
+            });
+        }
+        tdImage.appendChild(divImage);
+        if (isTablet) {
+            divImage.onclick = function (evt) {
+                HideRipple();
+            };
+        }
+        divImage.appendChild(image);
+        image.src = "images/imgDirections.png";
         image.className = "imgCarouselHeader";
 
         dojo.addClass(dojo.byId("divContent" + key), "fadeIn");
-
         dojo.addClass(dojo.byId("divDirectionsContainer" + key), "fadeIn");
-
         dojo.replaceClass(dojo.byId("divContent" + key), "fadeIn", "fadeOut");
         dojo.replaceClass(dojo.byId("divDirectionsContainer" + key), "fadeIn", "fadeOut");
-    }
-    else {
+    } else {
         var divImage = dojo.create("div");
         divImage.className = "mblListItemIcon";
         tdImage.appendChild(divImage);
         divImage.appendChild(image);
         image.src = "images/arrow.png";
     }
+
     image.id = 'imgDirections' + i + "$" + key;
     image.title = "Get directions";
     image.pointer = "cursor";
     image.style.cursor = "pointer";
     image.setAttribute('x', featureGeometry.x);
     image.setAttribute('y', featureGeometry.y);
+    image.setAttribute('routeObjectId', feature[map.getLayer(key).objectIdField]);
     image.setAttribute('featureName', feature[service.FieldNames[0].FieldName]);
-
     image.onclick = function (evt) {
-
-        RemoveScrollBar(dojo.byId("divContentHolder" + key));
-        if (!isMobileDevice) {
-            ShowProgressIndicator();
-            map.infoWindow.hide();
-            selectedGraphic = null;
-            hidePreviousDirections(key);
-        }
-        ShowServiceLayer(key);
-        routeLayer = this.id.split("$", 2)[1];
-        var featurePoint = new esri.geometry.Point(Number(this.getAttribute('x')), Number(this.getAttribute('y')), map.spatialReference);
-        if (isMobileDevice) {
-            dojo.byId("divContent" + selectedFieldName).style.display = "none";
-        }
-        else {
-            fadeOut(dojo.byId("divContent" + key));
-            fadeIn(dojo.byId("divDirectionsContainer" + key));
-            setTimeout(function () {
-                dojo.byId("divContent" + key).style.display = "none";
-                dojo.byId("divDirectionsContainer" + key).style.display = "block";
-            }, 500);
-        }
-
-        DisplayDirections(this);
-        if (!isMobileDevice) {
-            if (this.getAttribute('featureName')) {
-                dojo.byId("tdDirectionsListName" + key).innerHTML = 'Directions to ' + this.getAttribute('featureName');
-            }
-            else {
-                dojo.byId("tdDirectionsListName" + key).innerHTML = 'Directions to ' + showNullValueAs;
-            }
-            ConfigureRoute(mapPoint, featurePoint);
-          setTimeout(function () {
-            HideProgressIndicator();
-        }, 1000);
-        }
-        else {
-            dojo.byId("tblToggleHeader" + key).style.display = "none";
-            dojo.byId("divRepresentativeScrollContent" + key).style.display = "none";
-            RemoveScrollBar(dojo.byId("divRepresentativeScrollContainer" + key));
-            ShowInfoWindow(feature, featureGeometry, service, key);
-            if (discnt) {
-                dojo.disconnect(discnt);
-            }
-            discnt = dojo.connect(dojo.byId("getDirection"), "onclick", function () {
-
-                dojo.destroy("divRepresentativeDataPointDetails" + key);
-                dojo.destroy(dojo.byId("divRepresentativeDataPointContainer" + key));
-                ConfigureRoute(mapPoint, featurePoint);
-                setTimeout(function () {
-                    selectedGraphic = featurePoint;
-                    DisplayMblInfo(selectedGraphic, routeLayer, feature[service.FieldNames[0].FieldName]);
-                }, 500);
-                dojo.byId("divListContainer").style.display = "none";
-                dojo.byId('divMobileContainerView').style.display = "none";
-
-                dojo.replaceClass("divMobileContainerView", "opacityShowAnimation", "opacityHideAnimation");
-                dojo.replaceClass("divMobileContainerDetails", "hideContainer", "showContainer");
-            });
-        }
-    }
+        ShowRouteServices(key, this, feature, featureGeometry, service, false);
+    };
     dojo.byId("divContent" + key).appendChild(tableInfo);
     if (!isMobileDevice) {
         dojo.byId("divContent" + key).style.display = "block";
@@ -740,16 +698,91 @@ function CreateServicePointInfo(service, feature, key, distance, featureGeometry
     CreateScrollbar(dojo.byId("divContentHolder" + key), dojo.byId("divContent" + key));
 }
 
-/* function used to hide the directions container of the previously opened pod*/
+//Show route on PC browser
+
+function ShowRouteServices(key, _this, feature, featureGeometry, service, share) {
+    RemoveScrollBar(dojo.byId("divContentHolder" + key));
+    if (!isMobileDevice) {
+        ShowProgressIndicator();
+        map.infoWindow.hide();
+        selectedGraphic = null;
+        hidePreviousDirections(key);
+    }
+    ShowServiceLayer(key);
+    routeLayer = _this.id.split("$", 2)[1];
+    if (share) {
+        routeLayer = key;
+        var featurePoint = new esri.geometry.Point(Number(featureGeometry.x), Number(featureGeometry.y), map.spatialReference);
+    } else {
+        var featurePoint = new esri.geometry.Point(Number(_this.getAttribute('x')), Number(_this.getAttribute('y')), map.spatialReference);
+        routeID = _this.getAttribute('routeObjectId');
+    }
+    if (isMobileDevice) {
+        dojo.byId("divContent" + key).style.display = "none";
+    } else {
+        fadeOut(dojo.byId("divContent" + key));
+        fadeIn(dojo.byId("divDirectionsContainer" + key));
+        setTimeout(function () {
+            dojo.byId("divContent" + key).style.display = "none";
+            dojo.byId("divDirectionsContainer" + key).style.display = "block";
+        }, 500);
+    }
+    DisplayDirections(this);
+    if (!isMobileDevice) {
+        if (feature[service.FieldNames[0].FieldName]) {
+            dojo.byId("tdDirectionsListName" + key).innerHTML = 'Directions to ' + feature[service.FieldNames[0].FieldName];
+        } else {
+            if (_this.getAttribute('featureName')) {
+                dojo.byId("tdDirectionsListName" + key).innerHTML = 'Directions to ' + _this.getAttribute('featureName');
+            } else {
+                dojo.byId("tdDirectionsListName" + key).innerHTML = 'Directions to ' + showNullValueAs;
+            }
+        }
+        ConfigureRoute(mapPoint, featurePoint);
+    } else {
+        dojo.byId("tblToggleHeader" + key).style.display = "none";
+        dojo.byId("divRepresentativeScrollContent" + key).style.display = "none";
+        RemoveScrollBar(dojo.byId("divRepresentativeScrollContainer" + key));
+        ShowInfoWindow(feature, featureGeometry, service, key);
+        if (searchforDirections) {
+            dojo.byId("getDirection").style.display = "block";
+        } else {
+            dojo.byId("getDirection").style.display = "none";
+        }
+        if (discnt) {
+            dojo.disconnect(discnt);
+        }
+        discnt = dojo.connect(dojo.byId("getDirection"), "onclick", function (evt) {
+
+            ShowMblRouteService(key, featurePoint, feature[service.FieldNames[0].FieldName]);
+        });
+    }
+}
+
+//Show route on mobile browser
+
+function ShowMblRouteService(key, featurePoint, destName) {
+    dojo.destroy("divRepresentativeDataPointDetails" + key);
+    dojo.destroy(dojo.byId("divRepresentativeDataPointContainer" + key));
+    ConfigureRoute(mapPoint, featurePoint, key, destName);
+    dojo.byId("divListContainer").style.display = "none";
+    dojo.byId('divMobileContainerView').style.display = "none";
+    dojo.replaceClass("divMobileContainerView", "opacityShowAnimation", "opacityHideAnimation");
+    dojo.replaceClass("divMobileContainerDetails", "hideContainer", "showContainer");
+
+}
+
+//Hide the directions container
+
 function hidePreviousDirections(key) {
     for (var index in services) {
         if (index != key) {
             if (dojo.byId("divDirectionsContainer" + index).style.display == "block") {
-                    fadeOut(dojo.byId("divDirectionsContainer" + index));
-                    dojo.byId("divDirectionsContainer" + index).style.display = "none";
-                    fadeIn(dojo.byId("divContent" + index));
-                    dojo.byId("divContent" + index).style.display = "block";
-                    CreateScrollbar(dojo.byId("divContentHolder" + index), dojo.byId("divContent" + index));
+                fadeOut(dojo.byId("divDirectionsContainer" + index));
+                dojo.byId("divDirectionsContainer" + index).style.display = "none";
+                fadeIn(dojo.byId("divContent" + index));
+                dojo.byId("divContent" + index).style.display = "block";
+                CreateScrollbar(dojo.byId("divContentHolder" + index), dojo.byId("divContent" + index));
             }
         }
     }
@@ -763,18 +796,25 @@ function fadeOut(container) {
     dojo.replaceClass(container, "fadeOut", "fadeIn");
 }
 
-/* function for displaying the layers on the map*/
+//Display map layers
+
 function ShowServiceLayer(layer) {
     if (!layer) {
         return;
     }
     HideServiceLayers();
+    dojo.byId("imgShare").setAttribute("selectedPod", layer);
     map.getLayer(layer).show();
     map.infoWindow.hide();
     if (map.getLayer(layer).geometryType != "esriGeometryPoint") {
         if (map.getLayer(layer).getSelectedFeatures().length > 0) {
-            map.setExtent(GetExtentFromPolygon(map.getLayer(layer).getSelectedFeatures()[0].geometry.getExtent().expand(3)));
-            dojo.byId(layer + "_layer").style.visibility="visible";
+            if (shareFlag) {
+
+                map.setExtent(startExtent);
+            } else {
+                map.setExtent(GetExtentFromPolygon(map.getLayer(layer).getSelectedFeatures()[0].geometry.getExtent().expand(3)));
+            }
+            dojo.byId(layer + "_layer").style.visibility = "visible";
             dojo.byId(layer + "_layer").style.display = "block";
             if (isMobileDevice) {
                 var center = map.getLayer(layer).graphics[0].geometry.getExtent().getCenter();
@@ -782,19 +822,22 @@ function ShowServiceLayer(layer) {
                 DisplayMblInfo(selectedGraphic, layer);
                 map.centerAt(selectedGraphic);
             }
-
         }
-
-    }
-    else {
+    } else {
         dojo.byId(layer + "_layer").style.visibility = "visible";
     }
 }
 
-//function for hiding the layers on the map
+//Hide map layers
+
 function HideServiceLayers() {
+    dojo.byId("imgShare").setAttribute("selectedPod", null);
     map.graphics.clear();
     map.getLayer(routeLayerId).hide();
+    if (!shareFlag) {
+        routeID = null;
+        featureID = null;
+    }
     for (var index in services) {
         if (map.getLayer(index)) {
             map.getLayer(index).hide();
@@ -802,7 +845,8 @@ function HideServiceLayers() {
     }
 }
 
-//Function to get the extent of polygon
+//Get extent of polygon
+
 function GetExtentFromPolygon(extent) {
     var width = extent.getWidth();
     var height = extent.getHeight();
@@ -813,7 +857,8 @@ function GetExtentFromPolygon(extent) {
     return new esri.geometry.Extent(xmin, ymin, xmax, ymax, map.spatialReference);
 }
 
-/*this function is used to show the ripple when ever mouse is over the name and address container of point services in browser mode*/
+//Show ripple on mouse over in desktop and tablet browser
+
 function GlowRipple(control, rippleColor) {
     HideRipple();
     var glowPoint = new esri.geometry.Point(Number(control.getAttribute('x')), Number(control.getAttribute('y')), map.spatialReference);
@@ -824,14 +869,13 @@ function GlowRipple(control, rippleColor) {
         layer.clear();
         if (i == rippleSize) {
             flag = false;
-        }
-        else if (i == (rippleSize - 4)) {
+        } else if (i == (rippleSize - 4)) {
             flag = true;
         }
         var symbol = new esri.symbol.SimpleMarkerSymbol(esri.symbol.SimpleMarkerSymbol.STYLE_CIRCLE, (i - 1) * 2,
-                           new esri.symbol.SimpleLineSymbol(esri.symbol.SimpleLineSymbol.STYLE_SOLID,
-                           new dojo.Color(rippleColor), 6),
-                           new dojo.Color([0, 0, 0, 0])).setOffset(0, -4);
+        new esri.symbol.SimpleLineSymbol(esri.symbol.SimpleLineSymbol.STYLE_SOLID,
+        new dojo.Color(rippleColor), 6),
+        new dojo.Color([0, 0, 0, 0])).setOffset(0, -4);
 
         var graphic = new esri.Graphic(glowPoint, symbol, null, null);
         var features = [];
@@ -858,14 +902,12 @@ function ClearAllIntervals() {
     intervalIDs.length = 0;
 }
 
-/*  this function displays distance, time,
-and the way to go to the target location from the user selected point (only applicable for point services)*/
+//Displays directions to go to the target location
+
 function DisplayDirections(evt) {
     map.getLayer(routeLayerId).clear();
-    var key = evt.id.split("$", 2)[1];
-
+    var key = evt.routeLayer;
     if (!dojo.byId('tblDirectionsList' + key)) {
-
         if (isMobileDevice) {
             var divDataContainer = dojo.create('div');
             divDataContainer.id = "divDataDirectionsContainer" + key;
@@ -897,12 +939,11 @@ function DisplayDirections(evt) {
             };
         }
         var divContainer = dojo.create('div');
-        divContainer.id = "divDataDirectionsContent"+key;
+        divContainer.id = "divDataDirectionsContent" + key;
         divContainer.style.marginTop = "10px";
         if (!isMobileDevice) {
             dojo.byId("divDirectionsContainer" + key).appendChild(divContainer);
-        }
-        else {
+        } else {
             divDataContainer.appendChild(divContainer);
             dojo.byId("divDataDirectionsContainer" + key).style.display = 'none';
             divContainer.style.bottom = "2px";
@@ -910,29 +951,19 @@ function DisplayDirections(evt) {
 
         var directionsListName = dojo.create('table');
         directionsListName.style.width = "87%";
-        if (!isMobileDevice){
-        directionsListName.style.marginLeft = "10px";
-        directionsListName.cellPadding = "0";
-        directionsListName.cellSpacing = "0";
+        if (!isMobileDevice) {
+            directionsListName.style.marginLeft = "10px";
+            directionsListName.cellPadding = "0";
+            directionsListName.cellSpacing = "0";
         }
-    divContainer.appendChild(directionsListName);
+        divContainer.appendChild(directionsListName);
 
-    var tbodyDirectionsListName = dojo.create('tbody');
-    directionsListName.appendChild(tbodyDirectionsListName);
-
-    var trDirectionsListName = dojo.create('tr');
-    tbodyDirectionsListName.appendChild(trDirectionsListName);
-
-    var tdDirectionsList = dojo.create('td');
-    tdDirectionsList.id = 'tdDirectionsListName' + key;
-    tdDirectionsList.style.verticalAlign = "top";
-    trDirectionsListName.appendChild(tdDirectionsList);
-
-    var tbodyDirectionsListName = dojo.create('tbody');
-    directionsListName.appendChild(tbodyDirectionsListName);
+        var tbodyDirectionsListName = dojo.create('tbody');
+        directionsListName.appendChild(tbodyDirectionsListName);
 
         var trDirectionsListName = dojo.create('tr');
         tbodyDirectionsListName.appendChild(trDirectionsListName);
+
         var tdDirectionsList = dojo.create('td');
         tdDirectionsList.id = 'tdDirectionsListName' + key;
         tdDirectionsList.style.verticalAlign = "top";
@@ -945,8 +976,7 @@ function DisplayDirections(evt) {
             directionsList.style.marginLeft = '10px';
             directionsList.style.width = "95%";
             directionsList.style.borderBottom = "White 1px dashed";
-        }
-        else {
+        } else {
             directionsList.style.paddingLeft = '10px';
             directionsList.style.width = "97%";
             directionsList.style.borderBottom = "solid gray 1px";
@@ -961,8 +991,8 @@ function DisplayDirections(evt) {
         var trDirectionsList = dojo.create('tr');
         tbodyDirectionsList.appendChild(trDirectionsList);
         if (isMobileDevice) {
-              trDirectionsList.style.paddingLeft = '10px';
-          }
+            trDirectionsList.style.paddingLeft = '10px';
+        }
 
         var trDirectionsTime = dojo.create('tr');
         tbodyDirectionsList.appendChild(trDirectionsTime);
@@ -974,30 +1004,25 @@ function DisplayDirections(evt) {
         var tdDirectionsTime = dojo.create('td');
         tdDirectionsTime.id = 'tdDirectionsListTime' + key;
         trDirectionsTime.appendChild(tdDirectionsTime);
-    }
-    else {
+    } else {
         if (!isMobileDevice) {
             dojo.byId("divDirectionsContainer" + key).style.display = 'block';
-        }
-        else {
+        } else {
             dojo.byId("divDataDirectionsContainer" + key).style.display = "block";
             dojo.byId("divRepresentativeScrollContent" + key).style.display = "block";
         }
-
     }
 
     if (!dojo.byId("divRouteListContainer" + key)) {
         var divRouteListContainer = dojo.create('div');
         divRouteListContainer.id = "divRouteListContainer" + key;
 
-
         if (!isMobileDevice) {
             divRouteListContainer.style.marginTop = '2px';
             divRouteListContainer.style.position = "relative";
             dojo.byId("divDirectionsContainer" + key).appendChild(divRouteListContainer);
             dojo.byId("divDirectionsContainer" + key).appendChild(divRouteListContainer);
-        }
-        else {
+        } else {
             divRouteListContainer.className = "divRepresentativeDataContainer";
             divDataContainer.appendChild(divRouteListContainer);
         }
@@ -1008,30 +1033,27 @@ function DisplayDirections(evt) {
             divRouteListContent.style.width = "390px";
             divRouteListContent.style.position = "absolute";
             divRouteListContent.style.overflow = "hidden";
-
             divRouteListContent.style.marginLeft = "10px";
             if (isTablet) {
                 divRouteListContent.style.height = "80px";
-            }
-            else {
+            } else {
                 divRouteListContent.style.height = "95px";
-             }
-        }
-        else {
+            }
+        } else {
             divRouteListContent.className = "divRepresentativeDirectionScrollContent";
         }
         divRouteListContainer.appendChild(divRouteListContent);
-    }
-    else {
+    } else {
         dojo.byId("divRouteListContainer" + key).style.display = 'block';
     }
     map.getLayer(routeLayerId).show();
 }
 
-//Function to open web site
+//Open website on click of URL link
+
 function OpenWebSite(webURL) {
-    var url = (webURL == null) ? "" : webURL;
-    if (url != "") {
+    var url = (webURL === null) ? "" : webURL;
+    if (url !== "") {
         if (url.indexOf('http://') == -1) {
             url = "http://" + url;
         }
@@ -1039,37 +1061,39 @@ function OpenWebSite(webURL) {
     }
 }
 
-//Function to open mail
+//Open email application
+
 function OpenServiceMail(email) {
-    (email == null) ? "" : window.location = "mailto:" + email;
+    (email === null) ? "" : window.location = "mailto:" + email;
 }
+
+//Query point and polygon services
 
 function QueryService(mapPoint) {
     counter = 0;
     for (var i in services) {
-        counter++;
         if (!services[i].distance) {
+            counter++;
             QueryRecords(i, services[i], mapPoint);
-        }
-        else {
-            BufferRadius(mapPoint, i, services[i])
+        } else {
+            counter++;
+            BufferRadius(mapPoint, i, services[i]);
         }
     }
 }
 
+//Query polygon services
+
 function QueryRecords(key, service, mapPoint) {
     var queryTask = new esri.tasks.QueryTask(service.ServiceUrl);
     var query = new esri.tasks.Query();
-
     query.geometry = mapPoint;
     query.spatialRelationship = esri.tasks.Query.SPATIAL_REL_WITHIN;
-
     query.outFields = ["*"];
     query.returnGeometry = true;
     map.getLayer(key).selectFeatures(query, esri.layers.FeatureLayer.SELECTION_NEW, function (features) {
         dojo.byId(key + "_layer").style.visibility = "hidden";
         counter--;
-
         if (features.length > 0) {
             if (!isMobileDevice) {
                 dojo.byId('td' + key).style.display = "";
@@ -1081,8 +1105,7 @@ function QueryRecords(key, service, mapPoint) {
                 dojo.byId("li_" + key).style.display = "block";
             }
             CreateServicePolygonInfo(service, features[0], key);
-        }
-        else {
+        } else {
             if (!isMobileDevice) {
                 dojo.byId('td' + key).style.display = "none";
             }
@@ -1093,18 +1116,15 @@ function QueryRecords(key, service, mapPoint) {
                 dojo.byId("li_" + key).style.display = "none";
             }
         }
-        if (counter == 0) {
+        if (counter === 0) {
             ValidateResults(mapPoint);
+            ShareServices();
         }
     });
 }
 
-//Function to set Buffer parameters to the geometry service
-/* this function takes the buffer distance from the config file and calculates the distance from the users selected point
-and displays the point services information, if a particular point services is not there in the buffer it takes the hole layer
-according to the flag (ShowBeyondBuffer) set true or false in the config file if no point service is available in the layer than
-the pod is disabled in the ipad and browser and it is disabled in the list in mobile devices
-*/
+//Query Point services
+
 function BufferRadius(mapPoint, index, serviceInfo) {
     RemoveChildren(dojo.byId("divContent" + index));
     var params = new esri.tasks.BufferParameters();
@@ -1113,7 +1133,6 @@ function BufferRadius(mapPoint, index, serviceInfo) {
     params.unit = esri.tasks.GeometryService.UNIT_STATUTE_MILE;
     params.bufferSpatialReference = map.spatialReference;
     params.outSpatialReference = map.spatialReference;
-
     geometryService.buffer(params, function (geometry) {
         var query = new esri.tasks.Query();
         query.geometry = geometry[0];
@@ -1121,10 +1140,11 @@ function BufferRadius(mapPoint, index, serviceInfo) {
         query.outFields = ["*"];
         query.spatialRelationship = esri.tasks.Query.SPATIAL_REL_CONTAINS;
         query.returnGeometry = true;
-
         map.getLayer(index).selectFeatures(query, esri.layers.FeatureLayer.SELECTION_NEW, function (featureset) {
             counter--;
-            dojo.byId(index + "_layer").style.visibility = "hidden";
+            if (dojo.byId(index + "_layer")) {
+                dojo.byId(index + "_layer").style.visibility = "hidden";
+            }
             var featureSet = [];
             for (var i = 0; i < featureset.length; i++) {
                 for (var j in featureset[i].attributes) {
@@ -1137,8 +1157,12 @@ function BufferRadius(mapPoint, index, serviceInfo) {
                     var dist = GetDistance(mapPoint, featureset[i].geometry);
                     var distanceMiles = dojo.number.format(dist);
                 }
-
-                featureSet.push({ name: serviceInfo.Name, attributes: featureset[i].attributes, geometry: featureset[i].geometry, distance: distanceMiles });
+                featureSet.push({
+                    name: serviceInfo.Name,
+                    attributes: featureset[i].attributes,
+                    geometry: featureset[i].geometry,
+                    distance: distanceMiles
+                });
             }
 
             featureSet.sort(function (a, b) {
@@ -1146,7 +1170,6 @@ function BufferRadius(mapPoint, index, serviceInfo) {
             });
 
             if (featureSet.length > 0) {
-
                 for (var i = 0; i < featureSet.length; i++) {
                     dojo.byId('div' + index).style.display = "block";
                     dojo.byId("divService" + index).style.color = "white";
@@ -1154,18 +1177,14 @@ function BufferRadius(mapPoint, index, serviceInfo) {
                     if (isMobileDevice) {
                         dojo.byId("li_" + index).style.display = "block";
                     }
-
                     CreateServicePointInfo(serviceInfo, featureSet[i].attributes, index, featureSet[i].distance, featureSet[i].geometry);
                 }
-            }
-            else {
+            } else {
                 if (serviceInfo.ShowBeyondBuffer) {
-
                     var query = new esri.tasks.Query();
                     query.where = "1=1";
                     query.outFields = ["*"];
                     query.returnGeometry = true;
-
                     map.getLayer(index).selectFeatures(query, esri.layers.FeatureLayer.SELECTION_NEW, function (feature) {
                         var Feature = [];
                         for (var i = 0; i < feature.length; i++) {
@@ -1178,7 +1197,12 @@ function BufferRadius(mapPoint, index, serviceInfo) {
                                 var dist = GetDistance(mapPoint, feature[i].geometry);
                                 var distanceMiles = dojo.number.format(dist);
                             }
-                            Feature.push({ name: serviceInfo.Name, attributes: feature[i].attributes, geometry: feature[i].geometry, distance: distanceMiles });
+                            Feature.push({
+                                name: serviceInfo.Name,
+                                attributes: feature[i].attributes,
+                                geometry: feature[i].geometry,
+                                distance: distanceMiles
+                            });
                         }
                         Feature.sort(function (a, b) {
                             return a.distance - b.distance;
@@ -1193,9 +1217,7 @@ function BufferRadius(mapPoint, index, serviceInfo) {
                             CreateServicePointInfo(serviceInfo, Feature[i].attributes, index, Feature[i].distance, Feature[i].geometry);
                         }
                     });
-                }
-
-                else {
+                } else {
                     dojo.byId('div' + index).style.display = "none"
                     dojo.byId("divService" + index).style.color = "gray";
                     dojo.byId("divService" + index).style.cursor = "default";
@@ -1204,18 +1226,16 @@ function BufferRadius(mapPoint, index, serviceInfo) {
                     }
                 }
             }
-
-            if (counter == 0) {
+            if (counter === 0) {
                 ValidateResults(mapPoint);
+                ShareServices();
             }
         });
-
     });
-
 }
 
-/* this function is used to validate availability of services in the user selected area. if services are present display the
-carousel in browser and Ipad mode and the info callout in mobile*/
+//Validate availability of services in the user selected area
+
 function ValidateResults(mapPoint) {
     HideServiceLayers();
     HideProgressIndicator();
@@ -1236,48 +1256,90 @@ function ValidateResults(mapPoint) {
     }
     if (!isMobileDevice) {
         WipeInResults();
-    }
-    else {
+    } else {
         selectedGraphic = mapPoint;
         map.infoWindow.resize(225, 60);
         map.setExtent(GetBrowserMapExtent(selectedGraphic));
-        setTimeout(function () {
-            selectedMapPoint = mapPoint;
-            var screenPoint = map.toScreen(selectedMapPoint);
-            screenPoint.y = map.height - screenPoint.y;
-            map.infoWindow.show(screenPoint);
-            if (isMobileDevice) {
-                map.infoWindow.setTitle("Address");
-                dojo.connect(map.infoWindow.imgDetailsInstance(), "onclick", function () {
-                    if (isMobileDevice) {
-                        map.infoWindow.hide();
-                        selectedMapPoint = null;
-                        dojo.byId('divListContainer').style.display = "block";
-                        dojo.byId('menuList').style.display = "none";
-                        dojo.byId('divMobileContainerView').style.display = "block";
-                        SetContentHeight("divDataListContent", 60);
-                        CreateScrollbar(dojo.byId("divDataListContainer"), dojo.byId("divDataListContent"));
-                        dojo.replaceClass("divMobileContainerView", "opacityShowAnimation", "opacityHideAnimation");
-                        dojo.replaceClass("divMobileContainerDetails", "showContainer", "hideContainer");
-                    }
-                    dojo.byId('divInfoContent').style.display = "block";
-
-                });
-            }
-        }, 500);
+        selectedMapPoint = mapPoint;
+        var screenPoint = map.toScreen(selectedMapPoint);
+        screenPoint.y = map.height - screenPoint.y;
+        map.infoWindow.show(screenPoint);
+        if (isMobileDevice) {
+            map.infoWindow.setTitle("Address");
+            dojo.connect(map.infoWindow.imgDetailsInstance(), "onclick", function () {
+                if (isMobileDevice) {
+                    map.infoWindow.hide();
+                    selectedMapPoint = null;
+                    dojo.byId('divListContainer').style.display = "block";
+                    dojo.byId('menuList').style.display = "none";
+                    dojo.byId('divMobileContainerView').style.display = "block";
+                    SetContentHeight("divDataListContent", 60);
+                    CreateScrollbar(dojo.byId("divDataListContainer"), dojo.byId("divDataListContent"));
+                    dojo.replaceClass("divMobileContainerView", "opacityShowAnimation", "opacityHideAnimation");
+                    dojo.replaceClass("divMobileContainerDetails", "showContainer", "hideContainer");
+                }
+                dojo.byId('divInfoContent').style.display = "block";
+            });
+        }
     }
 }
 
-/*this function is used to display mobile info callout based on the type of services */
+//Handle sharing functionality
+
+function ShareServices() {
+    var extent = GetQuerystring('extent');
+    if (shareFlag) {
+        if (window.location.toString().split("$point=").length > 1) {
+            if (window.location.toString().split("$point=")[1].split("$selectedPod=").length >= 1) {
+                if (window.location.toString().split("$point=")[1].split("$selectedPod=")[1]) {
+                    var url = esri.urlToObject(window.location.toString());
+                    if (isMobileDevice) {
+                        routeID = url.query.extent.split("$point=")[1].split("$routeID=")[1];
+                        if (routeID) {
+                            routeID = url.query.extent.split("$point=")[1].split("$routeID=")[1];
+                            ExecuteRouteQueryTask();
+                        } else {
+                            ShowServiceLayer(window.location.toString().split("$point=")[1].split("$selectedPod=")[1]);
+                        }
+                    } else {
+                        ShowServicePods(window.location.toString().split("$point=")[1].split("$selectedPod=")[1].split("$pos=")[0], true);
+                        featureID = url.query.extent.split("$point=")[1].split("$featureID=")[1];
+                        routeID = url.query.extent.split("$point=")[1].split("$routeID=")[1];
+                        if (featureID && !routeID) {
+                            featureID = url.query.extent.split("$point=")[1].split("$pos=")[0].split("$featureID=")[1];
+                            ExecuteQueryTask();
+                        }
+                        if (routeID && !featureID) {
+                            routeID = true;
+                            routeID = url.query.extent.split("$point=")[1].split("$routeID=")[1].split("$pos=")[0];
+                            ExecuteRouteQueryTask();
+                        }
+                        if (featureID && routeID) {
+                            featureID = url.query.extent.split("$point=")[1].split("$pos=")[0].split("$featureID=")[1].split("$routeID=")[0];
+                            routeID = url.query.extent.split("$point=")[1].split("$routeID=")[1].split("$pos=")[0];
+                            ExecuteRouteFeatureQueryTask();
+                        }
+                    }
+                }
+            }
+        }
+    }
+    if (!routeID) {
+
+        shareFlag = false;
+    }
+}
+
+//Display mobile info callout
+
 function DisplayMblInfo(mapPoint, layer, targetName) {
     var key = layer;
     map.infoWindow.resize(225, 60);
     if (map.getLayer(layer).geometryType == "esriGeometryPoint") {
-        targetName=dojo.string.substitute(targetName).trimString(14);
+        targetName = dojo.string.substitute(targetName).trimString(14);
         map.infoWindow.setTitle(targetName);
         map.infoWindow.setContent("Get directions");
-    }
-    else {
+    } else {
         map.infoWindow.setTitle(layer);
         map.infoWindow.setContent("");
     }
@@ -1294,65 +1356,61 @@ function DisplayMblInfo(mapPoint, layer, targetName) {
                         dojo.byId('divMobileContainerView').style.display = "block";
                         dojo.replaceClass("divMobileContainerView", "opacityShowAnimation", "opacityHideAnimation");
                         dojo.replaceClass("divMobileContainerDetails", "showContainer", "hideContainer");
-
                         dojo.byId('divListContainer').style.display = "none";
                         dojo.byId("divRepresentativeDataContainer").style.display = "block";
+                        dojo.byId("tblToggleHeader" + key).style.display = "block";
+                        dojo.byId("divRepresentativeScrollContainer" + key).style.display = "block";
+                        dojo.byId("divRepresentativeScrollContent" + key).style.display = "block";
 
                         SetContentHeight("divContent" + key, 80);
                         SetContentHeight("divRepresentativeScrollContent" + key, 80);
 
-                        CreateScrollbar(dojo.byId("divRepresentativeScrollContainer" + selectedFieldName), dojo.byId("divContent" + key));
+                        CreateScrollbar(dojo.byId("divRepresentativeScrollContainer" + key), dojo.byId("divContent" + key));
                         dojo.byId('menuList').style.display = "block";
                     }
-
                 });
-            }
-            else {
-
-                    dojo.connect(map.infoWindow.imgDetailsInstance(), "onclick", function () {
+            } else {
+                dojo.connect(map.infoWindow.imgDetailsInstance(), "onclick", function () {
                     map.infoWindow.hide();
                     dojo.byId("tdListHeader").innerHTML = targetName;
                     dojo.byId("divListContainer").style.display = "none";
                     dojo.byId('divMobileContainerView').style.display = "block";
                     dojo.replaceClass("divMobileContainerView", "opacityShowAnimation", "opacityHideAnimation");
                     dojo.replaceClass("divMobileContainerDetails", "showContainer", "hideContainer");
-
                     dojo.byId("divDataDirectionsContainer" + key).style.display = "block";
                     dojo.byId("divRepresentativeScrollContent" + key).style.display = "block";
+                    dojo.byId("divRepresentativeDataContainer").style.display = "block";
+                    dojo.byId("tblToggleHeader" + key).style.display = "block";
+                    dojo.byId("divRepresentativeScrollContainer" + key).style.display = "block";
                     dojo.byId('getDirection').style.display = "none";
                     dojo.byId('goBack').style.display = "none";
                     dojo.byId('pointMenuList').style.display = "block";
-
                     SetContentHeight("divRouteListContent" + key, 150);
                     CreateScrollbar(dojo.byId("divRouteListContainer" + key), dojo.byId("divRouteListContent" + key));
+
                     dojo.connect(dojo.byId("pointMenuList"), "onclick", function () {
                         dojo.byId("divDataDirectionsContainer" + key).style.display = "none";
                         dojo.byId("divRepresentativeScrollContent" + key).style.display = "none";
                         dojo.byId("tdListHeader").innerHTML = infoContent;
-                        dojo.byId("divContent" + selectedFieldName).style.display = "block";
-                        dojo.byId("divRepresentativeScrollContent" + selectedFieldName).style.display = "block";
-                        dojo.byId("tblToggleHeader" + selectedFieldName).style.display = "block";
-
+                        dojo.byId("divContent" + key).style.display = "block";
+                        dojo.byId("divRepresentativeScrollContent" + key).style.display = "block";
+                        dojo.byId("tblToggleHeader" + key).style.display = "block";
                         dojo.byId("pointMenuList").style.display = "none";
                         dojo.byId('menuList').style.display = "block";
-
                         SetContentHeight("divContent" + key, 80);
                         SetContentHeight("divRepresentativeScrollContent" + key, 80);
                         CreateScrollbar(dojo.byId("divRepresentativeScrollContainer" + key), dojo.byId("divContent" + key));
                     });
-
                 });
             }
         }
     }, 500);
 }
 
-/* this function is used to take the list of services available in the config file and arrange them in the order
-as is in the config file. if a particular service is not available it is not displayed */
+//Create list of services available for mobile
+
 function CreateListLayOut() {
-
-    if (isMobileDevice) {   //If mobile device, list items are created
-
+    if (isMobileDevice) { //If mobile device, list items are created
         var listServiceTypesContainer = dijit.byId("listContainer");
         for (var i in services) {
             var li = dojo.create("LI");
@@ -1363,10 +1421,8 @@ function CreateListLayOut() {
                 icon: "images/arrow.png"
             }, li);
             itemWidget.startup();
-
             itemWidget.domNode.setAttribute("key", i);
             MblDataDisplay(i);
-
             dojo.connect(itemWidget.domNode, "onclick", function (e) {
                 key = this.getAttribute("key");
                 dojo.byId('divListContainer').style.display = "none";
@@ -1380,22 +1436,21 @@ function CreateListLayOut() {
                 CreateScrollbar(dojo.byId("divRepresentativeScrollContainer" + key), dojo.byId("divContent" + key));
                 dojo.byId("menuList").style.display = "block";
                 selectedFieldName = key;
-
             });
-              dojo.connect(dojo.byId("menuList"), "onclick", function (e) {
-              ToggleHeaderIcons(selectedFieldName);
-});
+            dojo.connect(dojo.byId("menuList"), "onclick", function (e) {
+                for (var i in services) {
+                    ToggleHeaderIcons(i);
+                }
+            });
             if (listServiceTypesContainer.redrawBorders) {
                 listServiceTypesContainer.redrawBorders();
             }
         }
-
     }
-
 }
 
-/*this function is used to clear the layers and the data when ever the user click on close icon in the mobile header
-and makes the selected point on the map as still visible */
+//Clear the layers and the data when ever the user click on close icon in the mobile header
+
 function HideMainContainer() {
     map.infoWindow.hide();
     mapPoint = null;
@@ -1410,16 +1465,13 @@ function HideMainContainer() {
     dojo.replaceClass("divMobileContainerDetails", "hideContainer", "showContainer");
     dojo.byId('divListContainer').style.display = "block";
     dojo.byId("divRepresentativeDataContainer").style.display = "none";
-
 }
 
-/* this function creates the Dom elements and stores the data in the containers the data is created when the user selects
-particular location */
-function MblDataDisplay(key) {
+//Create Dom elements and store data in the containers
 
+function MblDataDisplay(key) {
     if (key) {
         var divDataHeader = dojo.byId("divRepresentativeDataContainer");
-
         var tblToggle = dojo.create("table");
         tblToggle.id = "tblToggleHeader" + key;
         tblToggle.style.paddingLeft = "12px";
@@ -1468,30 +1520,33 @@ function MblDataDisplay(key) {
     }
 }
 
-//function to toggle the header icons in mobile
+//Toggle the header icons in mobile
+
 function ToggleHeaderIcons(key) {
-        dojo.byId("divRepresentativeDataContainer").style.display = "none";
-        dojo.byId("tblToggleHeader" + key).style.display = "none";
-        dojo.byId("divRepresentativeScrollContainer" + key).style.display = "none";
-        dojo.byId("divRepresentativeScrollContent" + key).style.display = "none";
-        dojo.byId("menuList").style.display = "none";
-        dojo.byId('divListContainer').style.display = "block";
-        SetContentHeight("divDataListContent", 60);
-        CreateScrollbar(dojo.byId("divDataListContainer"), dojo.byId("divDataListContent"));
-    }
+    dojo.byId("divRepresentativeDataContainer").style.display = "none";
+    dojo.byId("tblToggleHeader" + key).style.display = "none";
+    dojo.byId("divRepresentativeScrollContainer" + key).style.display = "none";
+    dojo.byId("divRepresentativeScrollContent" + key).style.display = "none";
+    dojo.byId("menuList").style.display = "none";
+    dojo.byId('divListContainer').style.display = "block";
+    SetContentHeight("divDataListContent", 60);
+    CreateScrollbar(dojo.byId("divDataListContainer"), dojo.byId("divDataListContent"));
+}
 
- //function to get the extent based on the map point
- function GetBrowserMapExtent(mapPoint) {
-        var width = map.extent.getWidth();
-        var height = map.extent.getHeight();
-        var xmin = mapPoint.x - (width / 2);
-        var ymin = mapPoint.y - (height / 4);
-        var xmax = xmin + width;
-        var ymax = ymin + height;
-        return new esri.geometry.Extent(xmin, ymin, xmax, ymax, map.spatialReference);
-    }
+//Get the extent based on the map point
 
-//function to get the extent based on the map point
+function GetBrowserMapExtent(mapPoint) {
+    var width = map.extent.getWidth();
+    var height = map.extent.getHeight();
+    var xmin = mapPoint.x - (width / 2);
+    var ymin = mapPoint.y - (height / 4);
+    var xmax = xmin + width;
+    var ymax = ymin + height;
+    return new esri.geometry.Extent(xmin, ymin, xmax, ymax, map.spatialReference);
+}
+
+//Get the extent based on the map point for mobile
+
 function GetMobileMapExtent(mapPoint) {
     var width = map.extent.getWidth();
     var height = map.extent.getHeight();
@@ -1502,18 +1557,16 @@ function GetMobileMapExtent(mapPoint) {
     return new esri.geometry.Extent(xmin, ymin, xmax, ymax, map.spatialReference);
 }
 
-//Function to Calculate distance between two mapPoints
+//Calculate distance between two mapPoints
+
 function GetDistance(startPoint, endPoint) {
     var sPoint = esri.geometry.webMercatorToGeographic(startPoint);
     var ePoint = esri.geometry.webMercatorToGeographic(endPoint);
-
     var lon1 = sPoint.x;
     var lat1 = sPoint.y;
     var lon2 = ePoint.x;
     var lat2 = ePoint.y;
-
     var theta = lon1 - lon2;
-
     var dist = Math.sin(Deg2Rad(lat1)) * Math.sin(Deg2Rad(lat2)) + Math.cos(Deg2Rad(lat1)) * Math.cos(Deg2Rad(lat2)) * Math.cos(Deg2Rad(theta));
     dist = Math.acos(dist);
     dist = Rad2Deg(dist);
@@ -1521,17 +1574,19 @@ function GetDistance(startPoint, endPoint) {
     return (dist * 10) / 10;
 }
 
-//function for converting the degrees to radians
+//Convert degrees to radians
+
 function Deg2Rad(deg) {
     return (deg * Math.PI) / 180.0;
 }
 
-//function for converting the radians to degrees
+//Convert radians to degrees
+
 function Rad2Deg(rad) {
     return (rad / Math.PI) * 180.0;
 }
 
-//Function to get width of a control when text and font size are specified
+//Get width of a control when text and font size are specified
 String.prototype.getWidth = function (fontSize) {
     var test = dojo.create("span");
     document.body.appendChild(test);
@@ -1543,11 +1598,12 @@ String.prototype.getWidth = function (fontSize) {
     var w = test.offsetWidth;
     document.body.removeChild(test);
     return w;
-}
+};
 
-//function for sliding the carousel pods to the right
+//Slide the carousel pods to the right
+
 function SlideRight() {
-    difference = dojo.byId("divCarouselDataContainer").offsetWidth - dojo.byId("divCarouselDataContent").offsetWidth;
+    var difference = dojo.byId("divCarouselDataContainer").offsetWidth - dojo.byId("divCarouselDataContent").offsetWidth;
     if (newLeft > difference) {
         dojo.byId('divLeftArrow').style.display = "block";
         dojo.byId('divLeftArrow').style.cursor = "pointer";
@@ -1558,27 +1614,26 @@ function SlideRight() {
     }
 }
 
-//function for sliding the carousel pods to the left
+//Slide the carousel pods to the left
+
 function SlideLeft() {
     if (newLeft < 0) {
         if (newLeft > -(infoBoxWidth + 9)) {
             newLeft = 0;
-        }
-        else {
+        } else {
             newLeft = newLeft + (infoBoxWidth + 9);
         }
         if (newLeft >= -10) {
             newLeft = 0;
         }
-
         dojo.byId("divCarouselDataContent").style.left = (newLeft) + "px";
         dojo.addClass("divCarouselDataContent", "slidePanel");
         ResetSlideControls();
     }
-
 }
 
-//function to slide to the selected info box in the bottom panel
+//Slide to the selected info box in the bottom panel
+
 function Slide(position) {
     newLeft = -(position);
     if (position < 10) {
@@ -1593,22 +1648,20 @@ function Slide(position) {
     ResetSlideControls();
 }
 
-//function for resetting the slide controls
+//reset the slide controls
+
 function ResetSlideControls() {
     if (newLeft > dojo.byId("divCarouselDataContainer").offsetWidth - dojo.byId("divCarouselDataContent").offsetWidth) {
         dojo.byId('divRightArrow').style.display = "block";
         dojo.byId('divRightArrow').style.cursor = "pointer";
-    }
-    else {
+    } else {
         dojo.byId('divRightArrow').style.display = "none";
         dojo.byId('divRightArrow').style.cursor = "default";
     }
-
     if (newLeft == 0) {
         dojo.byId('divLeftArrow').style.display = "none";
         dojo.byId('divLeftArrow').style.cursor = "default";
-    }
-    else {
+    } else {
         dojo.byId('divLeftArrow').style.display = "block";
         dojo.byId('divLeftArrow').style.cursor = "pointer";
     }

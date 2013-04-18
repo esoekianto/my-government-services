@@ -1,5 +1,5 @@
 ﻿/*
- | Version 10.1.1
+  | Version 10.2
  | Copyright 2012 Esri
  |
  | Licensed under the Apache License, Version 2.0 (the "License");
@@ -344,14 +344,30 @@ body, html
     -moz-border-radius-topright: 10px;
     -moz-border-radius-bottomleft: 0px;
     -moz-border-radius-bottomright: 0px;
-    -webkit-border-top-left-radius: 7px;
-    -webkit-border-top-right-radius: 7px;
+    -webkit-border-top-left-radius: 10px;
+    -webkit-border-top-right-radius: 10px;
     -webkit-border-bottom-left-radius: 0px;
     -webkit-border-bottom-right-radius: 0px;
-    border-radius: 7px 7px 0px 0px;
+    border-radius: 10px 10px 0px 0px;
     border-bottom: gray 1px solid;
     behavior: url("styles/PIE.htc");
 }
+
+.infotblHeader
+{
+     background-color: #303030;
+    -moz-border-radius-topleft: 10px;
+    -moz-border-radius-topright: 10px;
+    -moz-border-radius-bottomleft: 0px;
+    -moz-border-radius-bottomright: 0px;
+    -webkit-border-top-left-radius: 10px;
+    -webkit-border-top-right-radius: 10px;
+    -webkit-border-bottom-left-radius: 0px;
+    -webkit-border-bottom-right-radius: 0px;
+     border-radius: 10px 10px 0px 0px;
+    border-bottom:gray 1px solid;
+}
+
 
 .divAddressPlaceHolder
 {
@@ -367,12 +383,13 @@ body, html
 {
     background-color: #333333;
     color: #fff;
-    width: 240px;
+    width: 260px;
     border: none !important;
     outline: none;
     padding: 0px !important;
     vertical-align: middle;
     font-family: Verdana !important;
+    font-size: 15px !important;
 }
 
 .imgLocate
@@ -721,6 +738,7 @@ body, html
     float: left;
 }
 
+
 /*---------------------------------------------------------------------------------------------------------*/
 /* Styles for custom scrollbar*/
 
@@ -771,4 +789,16 @@ body, html
     behavior: url("styles/PIE.htc");
 }
 
+ input:-moz-placeholder {
+      color: gray;
+ }
+textarea:-moz-placeholder {
+      color: gray;
+ }
 
+.imgSearchLoader
+{
+    vertical-align: middle;
+    display: none;
+    cursor: default;
+}

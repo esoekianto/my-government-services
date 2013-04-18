@@ -142,7 +142,7 @@ window.Modernizr = (function (window, document, undefined) {
         injectElementWithStyles('@media ' + mq + ' { #' + mod + ' { position: absolute; } }', function (node) {
             bool = (window.getComputedStyle ?
                   getComputedStyle(node, null) :
-                  node.currentStyle)['position'] == 'absolute';
+                  node.currentStyle)['position'] === 'absolute';
         });
 
         return bool;
@@ -289,7 +289,7 @@ window.Modernizr = (function (window, document, undefined) {
     function testProps(props, prefixed) {
         for (var i in props) {
             if (mStyle[props[i]] !== undefined) {
-                return prefixed == 'pfx' ? props[i] : true;
+                return prefixed === 'pfx' ? props[i] : true;
             }
         }
         return false;
@@ -423,7 +423,7 @@ window.Modernizr = (function (window, document, undefined) {
         return !!(Modernizr['canvas'] && is(document.createElement('canvas').getContext('2d').fillText, 'function'));
     };
 
-    // this test initiates a new webgl context. 
+    // this test initiates a new webgl context.
     // webk.it/70117 is tracking a legit feature detect proposal
 
     tests['webgl'] = function () {
@@ -478,7 +478,7 @@ window.Modernizr = (function (window, document, undefined) {
     };
 
 
-    // Chrome incognito mode used to throw an exception when using openDatabase 
+    // Chrome incognito mode used to throw an exception when using openDatabase
     // It doesn't anymore.
     tests['websqldatabase'] = function () {
         return !!window.openDatabase;
@@ -515,7 +515,7 @@ window.Modernizr = (function (window, document, undefined) {
     // FIXME: Once FF10 is sunsetted, we can drop prefixed MozWebSocket
     // bugzil.la/695635
     tests['websockets'] = function () {
-        for (var i = -1, len = cssomPrefixes.length; ++i < len; ) {
+        for (var i = -1, len = cssomPrefixes.length; ++i < len;) {
             if (window[cssomPrefixes[i] + 'WebSocket']) {
                 return true;
             }
@@ -607,7 +607,7 @@ window.Modernizr = (function (window, document, undefined) {
     };
 
 
-    // Note, Android < 4 will pass this test, but can only animate 
+    // Note, Android < 4 will pass this test, but can only animate
     //   a single property at a time
     //   daneden.me/2011/12/putting-up-with-androids-bullshit/
     tests['cssanimations'] = function () {
@@ -636,7 +636,7 @@ window.Modernizr = (function (window, document, undefined) {
         setCss(
         // legacy webkit syntax (FIXME: remove when syntax not in use anymore)
               (str1 + '-webkit- '.split(' ').join(str2 + str1)
-        // standard syntax             // trailing 'background-image:' 
+        // standard syntax             // trailing 'background-image:'
               + prefixes.join(str3 + str1)).slice(0, -str1.length)
         );
 
@@ -836,7 +836,7 @@ window.Modernizr = (function (window, document, undefined) {
         //   miketaylr.com/code/input-type-attr.html
         // spec: www.whatwg.org/specs/web-apps/current-work/multipage/the-input-element.html#input-type-attr-summary
 
-        // Only input placeholder is tested while textarea's placeholder is not. 
+        // Only input placeholder is tested while textarea's placeholder is not.
         // Currently Safari 4 and Opera 11 have support only for the input placeholder
         // Both tests are available in feature-detects/forms-placeholder.js
         Modernizr['input'] = (function (props) {
@@ -1194,7 +1194,7 @@ window.Modernizr = (function (window, document, undefined) {
     // A few important notes:
     //   * If a browser does not support media queries at all (eg. oldIE) the mq() will always return false
     //   * A max-width or orientation query will be evaluated against the current state, which may change later.
-    //   * You must specify values. Eg. If you are testing support for the min-width media query use: 
+    //   * You must specify values. Eg. If you are testing support for the min-width media query use:
     //       Modernizr.mq('(min-width:0)')
     // usage:
     // Modernizr.mq('only screen and (max-width:768)')
@@ -1214,7 +1214,7 @@ window.Modernizr = (function (window, document, undefined) {
     // Modernizr.testAllProps() investigates whether a given style property,
     //   or any of its vendor-prefixed variants, is recognized
     // Note that the property names must be provided in the camelCase variant.
-    // Modernizr.testAllProps('boxSizing')    
+    // Modernizr.testAllProps('boxSizing')
     Modernizr.testAllProps = testPropsAll;
 
 
@@ -1233,7 +1233,7 @@ window.Modernizr = (function (window, document, undefined) {
     //     str.replace(/([A-Z])/g, function(str,m1){ return '-' + m1.toLowerCase(); }).replace(/^ms-/,'-ms-');
 
     // If you're trying to ascertain which transition end event to bind to, you might do something like...
-    // 
+    //
     //     var transEndEventNames = {
     //       'WebkitTransition' : 'webkitTransitionEnd',
     //       'MozTransition'    : 'transitionend',

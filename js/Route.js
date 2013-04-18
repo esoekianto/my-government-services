@@ -1,5 +1,5 @@
 ﻿/** @license
- | Version 10.1.1
+  | Version 10.2
  | Copyright 2012 Esri
  |
  | Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,34 +16,49 @@
  */
 var routeDirections;
 
-//function for configuring the route between two points
-function ConfigureRoute(mapPoint, targetPoint) {
+//Configure the route between two points
+
+function ConfigureRoute(mapPoint, targetPoint, routeLayer, destName) {
     map.getLayer(routeLayerId).clear();
     routeParams.stops.features = [];
     routeParams.stops.features[0] = new esri.Graphic(mapPoint, null);
     routeParams.stops.features[1] = new esri.Graphic(targetPoint, null);
     //If both the "to" and the "from" addresses are set, solve the route
     if (routeParams.stops.features.length == 2) {
-        routeTask.solve(routeParams);
+        routeTask.solve(routeParams, function () {
+            HideProgressIndicator();
+            if (isMobileDevice) {
+                selectedGraphic = targetPoint;
+                DisplayMblInfo(selectedGraphic, routeLayer, destName);
+            }
+            //hide loading indicator
+        }, function (err) {
+            HideProgressIndicator();
+            alert(err.Message);
+            //hide loading indicator
+            //show error
+        });
     }
 }
 
-//function for displaying the route between two points
-function ShowRoute(solveResult) {
+//Display the route between two points
 
+function ShowRoute(solveResult) {
     routeDirections = solveResult.routeResults[0].directions;
     map.getLayer(routeLayerId).show();
     //Add route to the map
     map.getLayer(routeLayerId).add(new esri.Graphic(routeDirections.mergedGeometry, routeSymbol, null, null));
-
-    map.setExtent(routeDirections.mergedGeometry.getExtent().expand(5));
+    var url = esri.urlToObject(window.location.toString());
+    if (shareFlag) {
+        map.setExtent(startExtent);
+        shareFlag = false;
+    } else {
+        map.setExtent(routeDirections.mergedGeometry.getExtent().expand(5));
+    }
     //Display the total time and distance of the route
-
     dojo.byId("tdDirectionsListDirections" + routeLayer).innerHTML = "Total Distance: " + FormatDistance(routeDirections.totalLength, "mile(s)");
-
     dojo.byId("tdDirectionsListTime" + routeLayer).innerHTML = " Duration: " + FormatTime(routeDirections.totalTime);
     RemoveChildren(dojo.byId("divRouteListContent" + routeLayer));
-
     var dest = dojo.byId("tdDirectionsListName" + routeLayer).innerHTML.substring(14);
     var tableDir;
     var tBodyDir;
@@ -54,15 +69,13 @@ function ShowRoute(solveResult) {
         tableDir.id = 'tblDir' + routeLayer + dest;
         if (!isMobileDevice) {
             tableDir.style.width = "95%";
-        }
-        else {
+        } else {
             tableDir.style.width = "93%";
             tableDir.align = "left";
         }
         tBodyDir.id = 'tBodyDir' + routeLayer + dest;
         tableDir.appendChild(tBodyDir);
-    }
-    else {
+    } else {
         tableDir = dojo.byId('tblDir' + routeLayer + dest);
         tBodyDir = dojo.byId('tBodyDir' + routeLayer + dest);
     }
@@ -93,31 +106,29 @@ function ShowRoute(solveResult) {
         var tdDirVal = dojo.create('td');
         tdDirVal.style.height = "100%";
 
-        if (map.getLayer(tempGraphicsLayerId).graphics.length == 0) {
+        if (map.getLayer(tempGraphicsLayerId).graphics.length === 0) {
             var attr = [];
-            attr = { Address: "my location" };
-            var symbol = new esri.symbol.PictureMarkerSymbol(locatorMarkupSymbolPath, 25, 25);
+            attr = {
+                Address: "my location"
+            };
+            var symbol = new esri.symbol.PictureMarkerSymbol(locatorSettings.LocatorMarkupSymbolPath, locatorSettings.MarkupSymbolSize.width, locatorSettings.MarkupSymbolSize.height, locatorSettings.MarkupSymbolSize.width, locatorSettings.MarkupSymbolSize.height);
             var graphic = new esri.Graphic(mapPoint, symbol, attr, null);
             map.getLayer(tempGraphicsLayerId).add(graphic);
         }
-        if (i == 0) {
+        if (i === 0) {
             if (map.getLayer(tempGraphicsLayerId).graphics.length > 0) {
                 if (map.getLayer(tempGraphicsLayerId).graphics[0].attributes) {
                     tdDirVal.innerHTML = feature.attributes.text.replace('Location 1', map.getLayer(tempGraphicsLayerId).graphics[0].attributes.Address);
-                }
-                else {
+                } else {
                     tdDirVal.innerHTML = feature.attributes.text.replace('Location 1', dojo.byId("txtAddress").value);
                 }
             }
-        }
-        else if (i == (solveResult.routeResults[0].directions.features.length - 1)) {
+        } else if (i == (solveResult.routeResults[0].directions.features.length - 1)) {
             tdDirVal.innerHTML = feature.attributes.text.replace('Location 2', dest);
-        }
-        else {
+        } else {
             if (miles) {
                 tdDirVal.innerHTML = feature.attributes.text + " (" + FormatDistance(feature.attributes.length, "miles") + ")";
-            }
-            else {
+            } else {
                 tdDirVal.innerHTML = feature.attributes.text;
             }
         }
@@ -128,40 +139,42 @@ function ShowRoute(solveResult) {
         var div = dojo.create("div");
         div.appendChild(tableDir);
         dojo.byId("divRouteListContent" + routeLayer).innerHTML = div.innerHTML;
-    }
-    else {
+    } else {
         dojo.byId("divRouteListContent" + routeLayer).appendChild(tableDir);
     }
     if (!isMobileDevice) {
         setTimeout(function () {
-                CreateScrollbar(dojo.byId("divRouteListContainer" + routeLayer), dojo.byId("divRouteListContent" + routeLayer));
-            }, 1000)
+            CreateScrollbar(dojo.byId("divRouteListContainer" + routeLayer), dojo.byId("divRouteListContent" + routeLayer));
+        }, 1000);
     }
+
 }
 
-//Display any errors that were caught when attempting to solve the route
+//Display errors caught while attempting to solve the route
+
 function ErrorHandler(err) {
     HideProgressIndicator();
     alert(err.message + "\n" + err.details.join("\n"));
 }
 
-//Round the distance to the nearest hundredth of a unit
+//Round distance
+
 function FormatDistance(dist, units) {
     var d = Math.round(dist * 100) / 100;
-    if (d == 0) {
+    if (d === 0) {
         return "";
     }
     return d + " " + units;
 }
 
-//Format the time as hours and minutes
+//Format time as hours and minutes
+
 function FormatTime(time) {
-    var hr = Math.floor(time / 60);  //Important to use math.floor with hours
+    var hr = Math.floor(time / 60); //Important to use math.floor with hours
     var min = Math.round(time % 60);
     if (hr < 1 && min < 1) {
         return "30 second(s)";
-    }
-    else
+    } else
         if (hr < 1) {
             return min + " minute(s)";
         }
