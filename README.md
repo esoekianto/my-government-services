@@ -80,5 +80,5 @@ limitations under the License.
 A copy of the license is available in the repository's
 [license.txt](https://raw.github.com/Esri/my-government-services/master/license.txt) file.
 
-[](Esri Tags: Local Government My Government Services)
+[](Esri Tags: Local-Government Local Government My Government Services)
 [](Esri Language: JavaScript)
