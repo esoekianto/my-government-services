@@ -481,7 +481,7 @@ dojo.declare("js.Config", null, {
             }],
             LayerVisibility: true,
             ShowBeyondBuffer: true
-        },
+        }
 
     },
 
