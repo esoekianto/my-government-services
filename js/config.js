@@ -95,30 +95,30 @@ dojo.declare("js.Config", null, {
     // Info-popup is a popup dialog that gets displayed on selecting a feature
 
     //Field for Displaying the features as info window header.
-    InfoWindowHeader: "FacilitySitePoint.NAME",
+    InfoWindowHeader: "NAME",
 
     // Set the content to be displayed on the info-Popup. Define labels, field values, field types and field formats.
     InfoPopupFieldsCollection: [{
         DisplayText: "Name:",
-        FieldName: "FacilitySitePoint.NAME"
+        FieldName: "NAME"
     }, {
         DisplayText: "Address:",
-        FieldName: "FacilitySitePoint.FULLADDR"
+        FieldName: "FULLADDR"
     }, {
         DisplayText: "Contact:",
-        FieldName: "GovServiceInfo.CONTACT"
+        FieldName: "CONTACT"
     }, {
         DisplayText: "Phone:",
-        FieldName: "GovServiceInfo.PHONE"
+        FieldName: "PHONE"
     }, {
         DisplayText: "Email:",
-        FieldName: "GovServiceInfo.EMAIL"
+        FieldName: "EMAIL"
     }, {
         DisplayText: "Days Open:",
-        FieldName: "GovServiceInfo.OPERDAYS"
+        FieldName: "OPERDAYS"
     }, {
         DisplayText: "Hours of Operation:",
-        FieldName: "GovServiceInfo.OPERHOURS"
+        FieldName: "OPERHOURS"
     }
 
     ],
@@ -377,11 +377,11 @@ dojo.declare("js.Config", null, {
             ServiceUrl: "http://arcgis-tenone2012-1974758903.us-west-1.elb.amazonaws.com/arcgis/rest/services/GovernmentServices/MapServer/4",
             distance: 4,
             FieldNames: [{
-                FieldName: "FacilitySitePoint.NAME"
+                FieldName: "NAME"
             }, {
-                FieldName: "FacilitySitePoint.FULLADDR"
+                FieldName: "FULLADDR"
             }, {
-                FieldName: "GovServiceInfo.PHONE"
+                FieldName: "PHONE"
             }],
             LayerVisibility: true,
             ShowBeyondBuffer: true
@@ -393,11 +393,11 @@ dojo.declare("js.Config", null, {
             ServiceUrl: "http://arcgis-tenone2012-1974758903.us-west-1.elb.amazonaws.com/arcgis/rest/services/GovernmentServices/MapServer/3",
             distance: 4,
             FieldNames: [{
-                FieldName: "FacilitySitePoint.NAME"
+                FieldName: "NAME"
             }, {
-                FieldName: "FacilitySitePoint.FULLADDR"
+                FieldName: "FULLADDR"
             }, {
-                FieldName: "GovServiceInfo.PHONE"
+                FieldName: "PHONE"
             }],
             LayerVisibility: true,
             ShowBeyondBuffer: true
@@ -409,11 +409,11 @@ dojo.declare("js.Config", null, {
             ServiceUrl: "http://arcgis-tenone2012-1974758903.us-west-1.elb.amazonaws.com/arcgis/rest/services/GovernmentServices/MapServer/1",
             distance: 4,
             FieldNames: [{
-                FieldName: "FacilitySitePoint.NAME"
+                FieldName: "NAME"
             }, {
-                FieldName: "FacilitySitePoint.FULLADDR"
+                FieldName: "FULLADDR"
             }, {
-                FieldName: "GovServiceInfo.PHONE"
+                FieldName: "PHONE"
             }],
             LayerVisibility: true,
             ShowBeyondBuffer: true
@@ -425,11 +425,11 @@ dojo.declare("js.Config", null, {
             ServiceUrl: "http://arcgis-tenone2012-1974758903.us-west-1.elb.amazonaws.com/arcgis/rest/services/GovernmentServices/MapServer/2",
             distance: 4,
             FieldNames: [{
-                FieldName: "FacilitySitePoint.NAME"
+                FieldName: "NAME"
             }, {
-                FieldName: "FacilitySitePoint.FULLADDR"
+                FieldName: "FULLADDR"
             }, {
-                FieldName: "GovServiceInfo.PHONE"
+                FieldName: "PHONE"
             }],
             LayerVisibility: true,
             ShowBeyondBuffer: true
@@ -441,11 +441,11 @@ dojo.declare("js.Config", null, {
             ServiceUrl: "http://arcgis-tenone2012-1974758903.us-west-1.elb.amazonaws.com/arcgis/rest/services/GovernmentServices/MapServer/0",
             distance: 4,
             FieldNames: [{
-                FieldName: "FacilitySitePoint.NAME"
+                FieldName: "NAME"
             }, {
-                FieldName: "FacilitySitePoint.FULLADDR"
+                FieldName: "FULLADDR"
             }, {
-                FieldName: "GovServiceInfo.PHONE"
+                FieldName: "PHONE"
             }],
             LayerVisibility: true,
             ShowBeyondBuffer: true
