@@ -190,7 +190,7 @@ dojo.declare("js.Config", null, {
             Name: "Trash Pickup",
             Image: "images/trash.png",
             HasRendererImage: false,
-            ServiceUrl: "http://arcgis-tenone2012-1974758903.us-west-1.elb.amazonaws.com/arcgis/rest/services/GovernmentServices/MapServer/5",
+            ServiceUrl: "http://ec2-54-214-140-9.us-west-2.compute.amazonaws.com:6080/arcgis/rest/services/MyGovServicesPublicWorks/MapServer/7",
             FieldNames: [{
                 ServiceAvailability: [{
                     FieldName: "MONDAY",
@@ -240,7 +240,7 @@ dojo.declare("js.Config", null, {
             Name: "Recycling Pickup",
             Image: "images/recycling.png",
             HasRendererImage: false,
-            ServiceUrl: "http://arcgis-tenone2012-1974758903.us-west-1.elb.amazonaws.com/arcgis/rest/services/GovernmentServices/MapServer/6",
+            ServiceUrl: "http://ec2-54-214-140-9.us-west-2.compute.amazonaws.com:6080/arcgis/rest/services/MyGovServicesPublicWorks/MapServer/8",
             FieldNames: [{
                 ServiceAvailability: [{
                     FieldName: "MONDAY",
@@ -289,7 +289,7 @@ dojo.declare("js.Config", null, {
             Name: "Yard Waste Pickup",
             Image: "images/yardWaste.png",
             HasRendererImage: false,
-            ServiceUrl: "http://arcgis-tenone2012-1974758903.us-west-1.elb.amazonaws.com/arcgis/rest/services/GovernmentServices/MapServer/8",
+            ServiceUrl: "http://ec2-54-214-140-9.us-west-2.compute.amazonaws.com:6080/arcgis/rest/services/MyGovServicesPublicWorks/MapServer/10",
             FieldNames: [{
                 ServiceAvailability: [{
                     FieldName: "MONDAY",
@@ -336,7 +336,7 @@ dojo.declare("js.Config", null, {
             Name: "Street Cleaning",
             Image: "images/streetCleaning.png",
             HasRendererImage: false,
-            ServiceUrl: "http://arcgis-tenone2012-1974758903.us-west-1.elb.amazonaws.com/arcgis/rest/services/GovernmentServices/MapServer/7",
+            ServiceUrl: "http://ec2-54-214-140-9.us-west-2.compute.amazonaws.com:6080/arcgis/rest/services/MyGovServicesPublicWorks/MapServer/9",
             FieldNames: [{
                 ServiceAvailability: [{
                     FieldName: "WEEKONE",
@@ -370,11 +370,75 @@ dojo.declare("js.Config", null, {
             isRendererColor: true,
             LayerVisibility: true
         },
-        Libraries: {
-            Name: "Libraries",
-            Image: "images/library.png",
+        RailroadStations: {
+            Name: "Railroad Stations",
+            Image: "images/RailStation.png",
             HasRendererImage: false,
-            ServiceUrl: "http://arcgis-tenone2012-1974758903.us-west-1.elb.amazonaws.com/arcgis/rest/services/GovernmentServices/MapServer/4",
+            ServiceUrl: "http://ec2-54-214-140-9.us-west-2.compute.amazonaws.com:6080/arcgis/rest/services/MyGovServicesPublicWorks/MapServer/0",
+            distance: 4,
+            FieldNames: [{
+                FieldName: "NAME"
+            }, {
+                FieldName: "FULLADDR"
+            }, {
+                FieldName: "PHONE"
+            }],
+            LayerVisibility: true,
+            ShowBeyondBuffer: true
+        },
+        RecyclingFacility: {
+            Name: "Recycling Facilities",
+            Image: "images/RecyclingFacility.png",
+            HasRendererImage: false,
+            ServiceUrl: "http://ec2-54-214-140-9.us-west-2.compute.amazonaws.com:6080/arcgis/rest/services/MyGovServicesPublicWorks/MapServer/1",
+            distance: 4,
+            FieldNames: [{
+                FieldName: "NAME"
+            }, {
+                FieldName: "FULLADDR"
+            }, {
+                FieldName: "PHONE"
+            }],
+            LayerVisibility: true,
+            ShowBeyondBuffer: true
+        },
+        DeptPublicWorks: {
+            Name: "Department of Public Works",
+            Image: "images/DeptPW.png",
+            HasRendererImage: false,
+            ServiceUrl: "http://ec2-54-214-140-9.us-west-2.compute.amazonaws.com:6080/arcgis/rest/services/MyGovServicesPublicWorks/MapServer/2",
+            distance: 4,
+            FieldNames: [{
+                FieldName: "NAME"
+            }, {
+                FieldName: "FULLADDR"
+            }, {
+                FieldName: "PHONE"
+            }],
+            LayerVisibility: true,
+            ShowBeyondBuffer: true
+        },
+        Museum: {
+            Name: "Museum",
+            Image: "images/Museum.png",
+            HasRendererImage: false,
+            ServiceUrl: "http://ec2-54-214-140-9.us-west-2.compute.amazonaws.com:6080/arcgis/rest/services/MyGovServicesPublicWorks/MapServer/3",
+            distance: 4,
+            FieldNames: [{
+                FieldName: "NAME"
+            }, {
+                FieldName: "FULLADDR"
+            }, {
+                FieldName: "PHONE"
+            }],
+            LayerVisibility: true,
+            ShowBeyondBuffer: true
+        },
+        CommunityCenter: {
+            Name: "Community Centers",
+            Image: "images/CommunityCenter.png",
+            HasRendererImage: false,
+            ServiceUrl: "http://ec2-54-214-140-9.us-west-2.compute.amazonaws.com:6080/arcgis/rest/services/MyGovServicesPublicWorks/MapServer/4",
             distance: 4,
             FieldNames: [{
                 FieldName: "NAME"
@@ -390,7 +454,7 @@ dojo.declare("js.Config", null, {
             Name: "Post Offices",
             Image: "images/postOffice.png",
             HasRendererImage: false,
-            ServiceUrl: "http://arcgis-tenone2012-1974758903.us-west-1.elb.amazonaws.com/arcgis/rest/services/GovernmentServices/MapServer/3",
+            ServiceUrl: "http://ec2-54-214-140-9.us-west-2.compute.amazonaws.com:6080/arcgis/rest/services/MyGovServicesPublicWorks/MapServer/5",
             distance: 4,
             FieldNames: [{
                 FieldName: "NAME"
@@ -402,11 +466,11 @@ dojo.declare("js.Config", null, {
             LayerVisibility: true,
             ShowBeyondBuffer: true
         },
-        PoliceStations: {
-            Name: "Police Stations",
-            Image: "images/policeStations.png",
+        Libraries: {
+            Name: "Libraries",
+            Image: "images/library.png",
             HasRendererImage: false,
-            ServiceUrl: "http://arcgis-tenone2012-1974758903.us-west-1.elb.amazonaws.com/arcgis/rest/services/GovernmentServices/MapServer/1",
+            ServiceUrl: "http://ec2-54-214-140-9.us-west-2.compute.amazonaws.com:6080/arcgis/rest/services/MyGovServicesPublicWorks/MapServer/6",
             distance: 4,
             FieldNames: [{
                 FieldName: "NAME"
@@ -418,38 +482,7 @@ dojo.declare("js.Config", null, {
             LayerVisibility: true,
             ShowBeyondBuffer: true
         },
-        FireStations: {
-            Name: "Fire Stations",
-            Image: "images/fireStations.png",
-            HasRendererImage: false,
-            ServiceUrl: "http://arcgis-tenone2012-1974758903.us-west-1.elb.amazonaws.com/arcgis/rest/services/GovernmentServices/MapServer/2",
-            distance: 4,
-            FieldNames: [{
-                FieldName: "NAME"
-            }, {
-                FieldName: "FULLADDR"
-            }, {
-                FieldName: "PHONE"
-            }],
-            LayerVisibility: true,
-            ShowBeyondBuffer: true
-        },
-        Hospitals: {
-            Name: "Hospitals",
-            Image: "images/hospital.png",
-            HasRendererImage: false,
-            ServiceUrl: "http://arcgis-tenone2012-1974758903.us-west-1.elb.amazonaws.com/arcgis/rest/services/GovernmentServices/MapServer/0",
-            distance: 4,
-            FieldNames: [{
-                FieldName: "NAME"
-            }, {
-                FieldName: "FULLADDR"
-            }, {
-                FieldName: "PHONE"
-            }],
-            LayerVisibility: true,
-            ShowBeyondBuffer: true
-        }
+
     },
 
     // ServiceUrl is the REST end point for the reference overlay layer
