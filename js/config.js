@@ -223,10 +223,12 @@ dojo.declare("js.Config", null, {
             }, {
                 Links: [{
                     DisplayText: "Website",
-                    FieldName: "AGENCYURL"
+                    FieldName: "AGENCYURL",
+                    type: "web"
                 }, {
                     DisplayText: "Email",
-                    FieldName: "EMAIL"
+                    FieldName: "EMAIL",
+                    type: "mail"
                 }]
             }
 
@@ -322,10 +324,12 @@ dojo.declare("js.Config", null, {
             }, {
                 Links: [{
                     DisplayText: "Website",
-                    FieldName: "AGENCYURL"
+                    FieldName: "AGENCYURL",
+                    type: "web"
                 }, {
                     DisplayText: "Email",
-                    FieldName: "EMAIL"
+                    FieldName: "EMAIL",
+                    type: "mail"
                 }]
             }],
             Color: "#250517",
@@ -360,10 +364,12 @@ dojo.declare("js.Config", null, {
             }, {
                 Links: [{
                     DisplayText: "Website",
-                    FieldName: "AGENCYURL"
+                    FieldName: "AGENCYURL",
+                    type: "web"
                 }, {
                     DisplayText: "Email",
-                    FieldName: "EMAIL"
+                    FieldName: "EMAIL",
+                    type: "mail"
                 }]
             }],
             Color: "#00FF00",
