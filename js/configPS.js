@@ -186,187 +186,32 @@ dojo.declare("js.Config", null, {
 
     //Operational layer collection.
     Services: {
-        TrashPickup: {
-            Name: "Trash Pickup",
-            Image: "images/trash.png",
+        EvacArea: {
+            Name: "Evacuation Areas",
+            Image: "images/EvacArea.png",
             HasRendererImage: false,
-            ServiceUrl: "http://arcgis-tenone2012-1974758903.us-west-1.elb.amazonaws.com/arcgis/rest/services/GovernmentServices/MapServer/5",
+            ServiceUrl: "http://ec2-54-214-140-9.us-west-2.compute.amazonaws.com:6080/arcgis/rest/services/MyGovServicesPublicSafety/MapServer/8",
             FieldNames: [{
-                ServiceAvailability: [{
-                    FieldName: "MONDAY",
-                    DisplayText: "Mon"
-                }, {
-                    FieldName: "TUESDAY",
-                    DisplayText: "Tue"
-                }, {
-                    FieldName: "WEDNESDAY",
-                    DisplayText: "Wed"
-                }, {
-                    FieldName: "THURSDAY",
-                    DisplayText: "Thu"
-                }, {
-                    FieldName: "FRIDAY",
-                    DisplayText: "Fri"
-                }, {
-                    FieldName: "SATURDAY",
-                    DisplayText: "Sat"
-                }, {
-                    FieldName: "SUNDAY",
-                    DisplayText: "Sun"
-                }]
-            }, {
-                Field: "Agency : ${AGENCY}"
-            }, {
-                Field: "Contact : ${CONTACT}"
-            }, {
-                Field: "Phone: ${PHONE}"
+                Field: "Evacuation Areas: ${DESCRIPTION}"
             }, {
                 Links: [{
                     DisplayText: "Website",
-                    FieldName: "AGENCYURL"
-                }, {
-                    DisplayText: "Email",
-                    FieldName: "EMAIL"
+                    FieldName: "EVACURL"
                 }]
-            }
-
-            ],
-
+            }],
             Color: "#FCD208",
             isRendererColor: true,
             LayerVisibility: true
         },
-        RecyclingPickup: {
-            Name: "Recycling Pickup",
-            Image: "images/recycling.png",
+        FloodZone: {
+            Name: "Flood Zones",
+            Image: "images/Flood.png",
             HasRendererImage: false,
-            ServiceUrl: "http://arcgis-tenone2012-1974758903.us-west-1.elb.amazonaws.com/arcgis/rest/services/GovernmentServices/MapServer/6",
+            ServiceUrl: "http://ec2-54-214-140-9.us-west-2.compute.amazonaws.com:6080/arcgis/rest/services/MyGovServicesPublicSafety/MapServer/9",
             FieldNames: [{
-                ServiceAvailability: [{
-                    FieldName: "MONDAY",
-                    DisplayText: "Mon"
-                }, {
-                    FieldName: "TUESDAY",
-                    DisplayText: "Tue"
-                }, {
-                    FieldName: "WEDNESDAY",
-                    DisplayText: "Wed"
-                }, {
-                    FieldName: "THURSDAY",
-                    DisplayText: "Thu"
-                }, {
-                    FieldName: "FRIDAY",
-                    DisplayText: "Fri"
-                }, {
-                    FieldName: "SATURDAY",
-                    DisplayText: "Sat"
-                }, {
-                    FieldName: "SUNDAY",
-                    DisplayText: "Sun"
-                }]
-            }, {
-                Field: "Agency : ${AGENCY}"
-            }, {
-                Field: "Contact : ${CONTACT}"
-            }, {
-                Field: "Phone: ${PHONE}"
-            }, {
-                Links: [{
-                    DisplayText: "Website",
-                    FieldName: "AGENCYURL",
-                    type: "web"
-                }, {
-                    DisplayText: "Email",
-                    FieldName: "EMAIL",
-                    type: "mail"
-                }]
+                Field: "Flood Zone: ${FLOODZONE}"
             }],
-            Color: "#0000FF",
-            isRendererColor: true,
-            LayerVisibility: true
-        },
-        YardWastePickup: {
-            Name: "Yard Waste Pickup",
-            Image: "images/yardWaste.png",
-            HasRendererImage: false,
-            ServiceUrl: "http://arcgis-tenone2012-1974758903.us-west-1.elb.amazonaws.com/arcgis/rest/services/GovernmentServices/MapServer/8",
-            FieldNames: [{
-                ServiceAvailability: [{
-                    FieldName: "MONDAY",
-                    DisplayText: "Mon"
-                }, {
-                    FieldName: "TUESDAY",
-                    DisplayText: "Tue"
-                }, {
-                    FieldName: "WEDNESDAY",
-                    DisplayText: "Wed"
-                }, {
-                    FieldName: "THURSDAY",
-                    DisplayText: "Thu"
-                }, {
-                    FieldName: "FRIDAY",
-                    DisplayText: "Fri"
-                }, {
-                    FieldName: "SATURDAY",
-                    DisplayText: "Sat"
-                }, {
-                    FieldName: "SUNDAY",
-                    DisplayText: "Sun"
-                }]
-            }, {
-                Field: "Agency : ${AGENCY}"
-            }, {
-                Field: "Contact : ${CONTACT}"
-            }, {
-                Field: "Phone: ${PHONE}"
-            }, {
-                Links: [{
-                    DisplayText: "Website",
-                    FieldName: "AGENCYURL"
-                }, {
-                    DisplayText: "Email",
-                    FieldName: "EMAIL"
-                }]
-            }],
-            Color: "#250517",
-            isRendererColor: true,
-            LayerVisibility: true
-        },
-        StreetCleaning: {
-            Name: "Street Cleaning",
-            Image: "images/streetCleaning.png",
-            HasRendererImage: false,
-            ServiceUrl: "http://arcgis-tenone2012-1974758903.us-west-1.elb.amazonaws.com/arcgis/rest/services/GovernmentServices/MapServer/7",
-            FieldNames: [{
-                ServiceAvailability: [{
-                    FieldName: "WEEKONE",
-                    DisplayText: "Week 1"
-                }, {
-                    FieldName: "WEEKTWO",
-                    DisplayText: "Week 2"
-                }, {
-                    FieldName: "WEEKTHREE",
-                    DisplayText: "Week 3"
-                }, {
-                    FieldName: "WEEKFOUR",
-                    DisplayText: "Week 4"
-                }]
-            }, {
-                Field: "Agency : ${AGENCY}"
-            }, {
-                Field: "Contact : ${CONTACT}"
-            }, {
-                Field: "Phone: ${PHONE}"
-            }, {
-                Links: [{
-                    DisplayText: "Website",
-                    FieldName: "AGENCYURL"
-                }, {
-                    DisplayText: "Email",
-                    FieldName: "EMAIL"
-                }]
-            }],
-            Color: "#00FF00",
+            Color: "#FCD208",
             isRendererColor: true,
             LayerVisibility: true
         },
