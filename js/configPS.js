@@ -196,7 +196,8 @@ dojo.declare("js.Config", null, {
             }, {
                 Links: [{
                     DisplayText: "Website",
-                    FieldName: "EVACURL"
+                    FieldName: "EVACURL",
+                    type: "web"
                 }]
             }],
             Color: "#FCD208",
