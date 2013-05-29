@@ -216,9 +216,9 @@ dojo.declare("js.Config", null, {
             isRendererColor: true,
             LayerVisibility: true
         },
-        CoolingCenter: {
-            Name: "Cooling Center",
-            Image: "images/CoolCenter.png",
+        WarmCenter: {
+            Name: "Warming Center",
+            Image: "images/WarmCenter.png",
             HasRendererImage: false,
             ServiceUrl: "http://ec2-54-214-140-9.us-west-2.compute.amazonaws.com:6080/arcgis/rest/services/MyGovServicesPublicSafety/MapServer/0",
             distance: 4,
@@ -232,9 +232,9 @@ dojo.declare("js.Config", null, {
             LayerVisibility: true,
             ShowBeyondBuffer: true
         },
-        WarmingCenter: {
-            Name: "Warming Center",
-            Image: "images/WarmCenter.png",
+        CoolCenter: {
+            Name: "Cooling Center",
+            Image: "images/CoolCenter.png",
             HasRendererImage: false,
             ServiceUrl: "http://ec2-54-214-140-9.us-west-2.compute.amazonaws.com:6080/arcgis/rest/services/MyGovServicesPublicSafety/MapServer/1",
             distance: 4,
