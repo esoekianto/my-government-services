@@ -411,7 +411,6 @@ function MapInitFunction() {
                 featureLayer = CreatePointFeatureLayer(services[i].ServiceUrl, i, '*', services[i].Image, services[i].HasRendererImage);
             }
             map.addLayer(featureLayer);
-            featureLayer.hide();
         }
     }
 }
