@@ -814,8 +814,7 @@ function ShowServiceLayer(layer) {
             } else {
                 map.setExtent(GetExtentFromPolygon(map.getLayer(layer).getSelectedFeatures()[0].geometry.getExtent().expand(3)));
             }
-            dojo.byId(layer + "_layer").style.visibility = "visible";
-            dojo.byId(layer + "_layer").style.display = "block";
+            map.getLayer(layer).show();
             if (isMobileDevice) {
                 var center = map.getLayer(layer).graphics[0].geometry.getExtent().getCenter();
                 selectedGraphic = center;
@@ -824,7 +823,7 @@ function ShowServiceLayer(layer) {
             }
         }
     } else {
-        dojo.byId(layer + "_layer").style.visibility = "visible";
+        map.getLayer(layer).show();
     }
 }
 
@@ -1092,7 +1091,7 @@ function QueryRecords(key, service, mapPoint) {
     query.outFields = ["*"];
     query.returnGeometry = true;
     map.getLayer(key).selectFeatures(query, esri.layers.FeatureLayer.SELECTION_NEW, function (features) {
-        dojo.byId(key + "_layer").style.visibility = "hidden";
+        map.getLayer(key).hide();
         counter--;
         if (features.length > 0) {
             if (!isMobileDevice) {
@@ -1142,9 +1141,7 @@ function BufferRadius(mapPoint, index, serviceInfo) {
         query.returnGeometry = true;
         map.getLayer(index).selectFeatures(query, esri.layers.FeatureLayer.SELECTION_NEW, function (featureset) {
             counter--;
-            if (dojo.byId(index + "_layer")) {
-                dojo.byId(index + "_layer").style.visibility = "hidden";
-            }
+            map.getLayer(index).hide();
             var featureSet = [];
             for (var i = 0; i < featureset.length; i++) {
                 for (var j in featureset[i].attributes) {
