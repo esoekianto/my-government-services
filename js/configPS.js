@@ -1,4 +1,5 @@
-﻿/** @license
+﻿/*global dojo */
+/** @license
   | Version 10.2
  | Copyright 2012 Esri
  |
@@ -82,8 +83,7 @@ dojo.declare("js.Config", null, {
         ThumbnailSource: "images/imageryHybrid.png",
         Name: "Imagery",
         MapURL: "http://arcgis-tenone2012-1974758903.us-west-1.elb.amazonaws.com/arcgis/rest/services/ImageryHybrid/MapServer"
-    }
-    ],
+    }],
 
     // Initial map extent. Use comma (,) to separate values and don t delete the last comma.
     DefaultExtent: "-9816010,5123000,-9809970,5129500",
@@ -119,9 +119,7 @@ dojo.declare("js.Config", null, {
     }, {
         DisplayText: "Hours of Operation:",
         FieldName: "OPERHOURS"
-    }
-
-    ],
+    }],
 
     // Set size of the info-Popup - select maximum height and width in pixels.
     //minimum height should be 200 for the info-popup in pixels
@@ -153,7 +151,7 @@ dojo.declare("js.Config", null, {
             DisplayField: "${Match_addr}",
             AddressMatchScore: 80,
             LocatorFieldName: 'Loc_name',
-            LocatorFieldValues: ["USA.StreetName" , "USA.PointAddress", "USA.StreetAddress"]
+            LocatorFieldValues: ["USA.StreetName", "USA.PointAddress", "USA.StreetAddress"]
         }]
     },
 
@@ -249,7 +247,7 @@ dojo.declare("js.Config", null, {
             ShowBeyondBuffer: true
         },
         Harzards: {
-            Name: "Harzardous Facilities",
+            Name: "Hazardous Facilities",
             Image: "images/HazardFacilities.png",
             HasRendererImage: false,
             ServiceUrl: "http://ec2-54-214-140-9.us-west-2.compute.amazonaws.com:6080/arcgis/rest/services/MyGovServicesPublicSafety/MapServer/2",
