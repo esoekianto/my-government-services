@@ -370,11 +370,27 @@ dojo.declare("js.Config", null, {
             isRendererColor: true,
             LayerVisibility: true
         },
-        Libraries: {
-            Name: "Libraries",
-            Image: "images/library.png",
+        CoolingCenter: {
+            Name: "Cooling Center",
+            Image: "images/CoolCenter.png",
             HasRendererImage: false,
-            ServiceUrl: "http://arcgis-tenone2012-1974758903.us-west-1.elb.amazonaws.com/arcgis/rest/services/GovernmentServices/MapServer/4",
+            ServiceUrl: "http://ec2-54-214-140-9.us-west-2.compute.amazonaws.com:6080/arcgis/rest/services/MyGovServicesPublicSafety/MapServer/0",
+            distance: 4,
+            FieldNames: [{
+                FieldName: "FACNAME"
+            }, {
+                FieldName: "HOURSOPER"
+            }, {
+                FieldName: "CAPACITY"
+            }],
+            LayerVisibility: true,
+            ShowBeyondBuffer: true
+        },
+        WarmingCenter: {
+            Name: "Warming Center",
+            Image: "images/WarmCenter.png",
+            HasRendererImage: false,
+            ServiceUrl: "http://ec2-54-214-140-9.us-west-2.compute.amazonaws.com:6080/arcgis/rest/services/MyGovServicesPublicSafety/MapServer/1",
             distance: 4,
             FieldNames: [{
                 FieldName: "NAME"
@@ -386,43 +402,11 @@ dojo.declare("js.Config", null, {
             LayerVisibility: true,
             ShowBeyondBuffer: true
         },
-        PostOffices: {
-            Name: "Post Offices",
-            Image: "images/postOffice.png",
+        Harzards: {
+            Name: "Harzardous Facilities",
+            Image: "images/HazardFacilities.png",
             HasRendererImage: false,
-            ServiceUrl: "http://arcgis-tenone2012-1974758903.us-west-1.elb.amazonaws.com/arcgis/rest/services/GovernmentServices/MapServer/3",
-            distance: 4,
-            FieldNames: [{
-                FieldName: "NAME"
-            }, {
-                FieldName: "FULLADDR"
-            }, {
-                FieldName: "PHONE"
-            }],
-            LayerVisibility: true,
-            ShowBeyondBuffer: true
-        },
-        PoliceStations: {
-            Name: "Police Stations",
-            Image: "images/policeStations.png",
-            HasRendererImage: false,
-            ServiceUrl: "http://arcgis-tenone2012-1974758903.us-west-1.elb.amazonaws.com/arcgis/rest/services/GovernmentServices/MapServer/1",
-            distance: 4,
-            FieldNames: [{
-                FieldName: "NAME"
-            }, {
-                FieldName: "FULLADDR"
-            }, {
-                FieldName: "PHONE"
-            }],
-            LayerVisibility: true,
-            ShowBeyondBuffer: true
-        },
-        FireStations: {
-            Name: "Fire Stations",
-            Image: "images/fireStations.png",
-            HasRendererImage: false,
-            ServiceUrl: "http://arcgis-tenone2012-1974758903.us-west-1.elb.amazonaws.com/arcgis/rest/services/GovernmentServices/MapServer/2",
+            ServiceUrl: "http://ec2-54-214-140-9.us-west-2.compute.amazonaws.com:6080/arcgis/rest/services/MyGovServicesPublicSafety/MapServer/2",
             distance: 4,
             FieldNames: [{
                 FieldName: "NAME"
@@ -438,7 +422,39 @@ dojo.declare("js.Config", null, {
             Name: "Hospitals",
             Image: "images/hospital.png",
             HasRendererImage: false,
-            ServiceUrl: "http://arcgis-tenone2012-1974758903.us-west-1.elb.amazonaws.com/arcgis/rest/services/GovernmentServices/MapServer/0",
+            ServiceUrl: "http://ec2-54-214-140-9.us-west-2.compute.amazonaws.com:6080/arcgis/rest/services/MyGovServicesPublicSafety/MapServer/3",
+            distance: 4,
+            FieldNames: [{
+                FieldName: "NAME"
+            }, {
+                FieldName: "FULLADDR"
+            }, {
+                FieldName: "PHONE"
+            }],
+            LayerVisibility: true,
+            ShowBeyondBuffer: true
+        },
+        PoliceStations: {
+            Name: "Police Stations",
+            Image: "images/policeStations.png",
+            HasRendererImage: false,
+            ServiceUrl: "http://ec2-54-214-140-9.us-west-2.compute.amazonaws.com:6080/arcgis/rest/services/MyGovServicesPublicSafety/MapServer/4",
+            distance: 4,
+            FieldNames: [{
+                FieldName: "NAME"
+            }, {
+                FieldName: "FULLADDR"
+            }, {
+                FieldName: "PHONE"
+            }],
+            LayerVisibility: true,
+            ShowBeyondBuffer: true
+        },
+        FireStations: {
+            Name: "Fire Stations",
+            Image: "images/fireStations.png",
+            HasRendererImage: false,
+            ServiceUrl: "http://ec2-54-214-140-9.us-west-2.compute.amazonaws.com:6080/arcgis/rest/services/MyGovServicesPublicSafety/MapServer/5",
             distance: 4,
             FieldNames: [{
                 FieldName: "NAME"
