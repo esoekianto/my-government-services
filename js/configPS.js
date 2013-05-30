@@ -309,7 +309,7 @@ dojo.declare("js.Config", null, {
             }],
             LayerVisibility: true,
             ShowBeyondBuffer: true
-        }  
+        }
     },
 
     // ServiceUrl is the REST end point for the reference overlay layer
