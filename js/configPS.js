@@ -278,6 +278,22 @@ dojo.declare("js.Config", null, {
             LayerVisibility: true,
             ShowBeyondBuffer: true
         },
+        CoolCenter: {
+            Name: "Cooling Center",
+            Image: "images/CoolCenter.png",
+            HasRendererImage: false,
+            ServiceUrl: "http://ec2-54-214-140-9.us-west-2.compute.amazonaws.com:6080/arcgis/rest/services/MyGovServicesPublicSafety/MapServer/4",
+            distance: 4,
+            FieldNames: [{
+                FieldName: "FACNAME"
+            }, {
+                FieldName: "HOURSOPER"
+            }, {
+                FieldName: "CAPACITY"
+            }],
+            LayerVisibility: true,
+            ShowBeyondBuffer: true
+        },
         WarmCenter: {
             Name: "Warming Center",
             Image: "images/WarmCenter.png",
@@ -293,23 +309,7 @@ dojo.declare("js.Config", null, {
             }],
             LayerVisibility: true,
             ShowBeyondBuffer: true
-        },
-        CoolCenter: {
-            Name: "Cooling Center",
-            Image: "images/CoolCenter.png",
-            HasRendererImage: false,
-            ServiceUrl: "http://ec2-54-214-140-9.us-west-2.compute.amazonaws.com:6080/arcgis/rest/services/MyGovServicesPublicSafety/MapServer/4",
-            distance: 4,
-            FieldNames: [{
-                FieldName: "NAME"
-            }, {
-                FieldName: "FULLADDR"
-            }, {
-                FieldName: "PHONE"
-            }],
-            LayerVisibility: true,
-            ShowBeyondBuffer: true
-        }
+        }  
     },
 
     // ServiceUrl is the REST end point for the reference overlay layer
