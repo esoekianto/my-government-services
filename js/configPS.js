@@ -214,38 +214,6 @@ dojo.declare("js.Config", null, {
             isRendererColor: true,
             LayerVisibility: true
         },
-        WarmCenter: {
-            Name: "Warming Center",
-            Image: "images/WarmCenter.png",
-            HasRendererImage: false,
-            ServiceUrl: "http://ec2-54-214-140-9.us-west-2.compute.amazonaws.com:6080/arcgis/rest/services/MyGovServicesPublicSafety/MapServer/5",
-            distance: 4,
-            FieldNames: [{
-                FieldName: "FACNAME"
-            }, {
-                FieldName: "HOURSOPER"
-            }, {
-                FieldName: "CAPACITY"
-            }],
-            LayerVisibility: true,
-            ShowBeyondBuffer: true
-        },
-        CoolCenter: {
-            Name: "Cooling Center",
-            Image: "images/CoolCenter.png",
-            HasRendererImage: false,
-            ServiceUrl: "http://ec2-54-214-140-9.us-west-2.compute.amazonaws.com:6080/arcgis/rest/services/MyGovServicesPublicSafety/MapServer/4",
-            distance: 4,
-            FieldNames: [{
-                FieldName: "NAME"
-            }, {
-                FieldName: "FULLADDR"
-            }, {
-                FieldName: "PHONE"
-            }],
-            LayerVisibility: true,
-            ShowBeyondBuffer: true
-        },
         Harzards: {
             Name: "Hazardous Facilities",
             Image: "images/HazardFacilities.png",
@@ -299,6 +267,38 @@ dojo.declare("js.Config", null, {
             Image: "images/fireStations.png",
             HasRendererImage: false,
             ServiceUrl: "http://ec2-54-214-140-9.us-west-2.compute.amazonaws.com:6080/arcgis/rest/services/MyGovServicesPublicSafety/MapServer/3",
+            distance: 4,
+            FieldNames: [{
+                FieldName: "NAME"
+            }, {
+                FieldName: "FULLADDR"
+            }, {
+                FieldName: "PHONE"
+            }],
+            LayerVisibility: true,
+            ShowBeyondBuffer: true
+        },
+        WarmCenter: {
+            Name: "Warming Center",
+            Image: "images/WarmCenter.png",
+            HasRendererImage: false,
+            ServiceUrl: "http://ec2-54-214-140-9.us-west-2.compute.amazonaws.com:6080/arcgis/rest/services/MyGovServicesPublicSafety/MapServer/5",
+            distance: 4,
+            FieldNames: [{
+                FieldName: "FACNAME"
+            }, {
+                FieldName: "HOURSOPER"
+            }, {
+                FieldName: "CAPACITY"
+            }],
+            LayerVisibility: true,
+            ShowBeyondBuffer: true
+        },
+        CoolCenter: {
+            Name: "Cooling Center",
+            Image: "images/CoolCenter.png",
+            HasRendererImage: false,
+            ServiceUrl: "http://ec2-54-214-140-9.us-west-2.compute.amazonaws.com:6080/arcgis/rest/services/MyGovServicesPublicSafety/MapServer/4",
             distance: 4,
             FieldNames: [{
                 FieldName: "NAME"
