@@ -188,7 +188,7 @@ dojo.declare("js.Config", null, {
             Name: "Trash Pickup",
             Image: "images/trash.png",
             HasRendererImage: false,
-            ServiceUrl: "http://ec2-54-214-140-9.us-west-2.compute.amazonaws.com:6080/arcgis/rest/services/MyGovServicesPublicWorks/MapServer/7",
+            ServiceUrl: "http://ec2-54-214-140-9.us-west-2.compute.amazonaws.com:6080/arcgis/rest/services/MyGovServicesPublicWorks/MapServer/9",
             FieldNames: [{
                 ServiceAvailability: [{
                     FieldName: "MONDAY",
@@ -238,7 +238,7 @@ dojo.declare("js.Config", null, {
             Name: "Recycling Pickup",
             Image: "images/recycling.png",
             HasRendererImage: false,
-            ServiceUrl: "http://ec2-54-214-140-9.us-west-2.compute.amazonaws.com:6080/arcgis/rest/services/MyGovServicesPublicWorks/MapServer/8",
+            ServiceUrl: "http://ec2-54-214-140-9.us-west-2.compute.amazonaws.com:6080/arcgis/rest/services/MyGovServicesPublicWorks/MapServer/10",
             FieldNames: [{
                 ServiceAvailability: [{
                     FieldName: "MONDAY",
@@ -287,7 +287,7 @@ dojo.declare("js.Config", null, {
             Name: "Yard Waste Pickup",
             Image: "images/yardWaste.png",
             HasRendererImage: false,
-            ServiceUrl: "http://ec2-54-214-140-9.us-west-2.compute.amazonaws.com:6080/arcgis/rest/services/MyGovServicesPublicWorks/MapServer/10",
+            ServiceUrl: "http://ec2-54-214-140-9.us-west-2.compute.amazonaws.com:6080/arcgis/rest/services/MyGovServicesPublicWorks/MapServer/12",
             FieldNames: [{
                 ServiceAvailability: [{
                     FieldName: "MONDAY",
@@ -336,7 +336,7 @@ dojo.declare("js.Config", null, {
             Name: "Street Cleaning",
             Image: "images/streetCleaning.png",
             HasRendererImage: false,
-            ServiceUrl: "http://ec2-54-214-140-9.us-west-2.compute.amazonaws.com:6080/arcgis/rest/services/MyGovServicesPublicWorks/MapServer/9",
+            ServiceUrl: "http://ec2-54-214-140-9.us-west-2.compute.amazonaws.com:6080/arcgis/rest/services/MyGovServicesPublicWorks/MapServer/11",
             FieldNames: [{
                 ServiceAvailability: [{
                     FieldName: "WEEKONE",
@@ -483,8 +483,39 @@ dojo.declare("js.Config", null, {
             }],
             LayerVisibility: true,
             ShowBeyondBuffer: true
+        },
+        PoliceStations: {
+            Name: "Police Stations",
+            Image: "images/policeStations.png",
+            HasRendererImage: false,
+            ServiceUrl: "http://ec2-54-214-140-9.us-west-2.compute.amazonaws.com:6080/arcgis/rest/services/MyGovServicesPublicWorks/MapServer/7",
+            distance: 4,
+            FieldNames: [{
+                FieldName: "NAME"
+            }, {
+                FieldName: "FULLADDR"
+            }, {
+                FieldName: "PHONE"
+            }],
+            LayerVisibility: true,
+            ShowBeyondBuffer: true
+        },
+        FireStations: {
+            Name: "Fire Stations",
+            Image: "images/fireStations.png",
+            HasRendererImage: false,
+            ServiceUrl: "http://ec2-54-214-140-9.us-west-2.compute.amazonaws.com:6080/arcgis/rest/services/MyGovServicesPublicWorks/MapServer/8",
+            distance: 4,
+            FieldNames: [{
+                FieldName: "NAME"
+            }, {
+                FieldName: "FULLADDR"
+            }, {
+                FieldName: "PHONE"
+            }],
+            LayerVisibility: true,
+            ShowBeyondBuffer: true
         }
-
     },
 
     // ServiceUrl is the REST end point for the reference overlay layer
