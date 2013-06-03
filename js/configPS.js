@@ -63,7 +63,7 @@ dojo.declare("js.Config", null, {
     ApplicationIcon: "images/appIcon.png",
 
     // Set splash window content - Message that appears when the application starts.
-    SplashScreenMessage: "<b>Welcome to My Government Services</b><br/><hr/><br/>The <b>My Government Services</b> application helps residents locate a government facility and obtain information about curbside and dropoff services provided by a government agency.<br/> <br/>To locate a service, simply enter an address or activity in the search box, or use your current location.  Your location will then be highlighted on the map and relevant information about available curbside and dropoff services will be presented to the user.<br/><br/>",
+    SplashScreenMessage: "The <b>My Hazard Information</b> application helps residents discover hazards that exist in their community and obtain information about evacuation routes and shelters provided by a government agency.<br/> <br/>To locate an area of interest, simply enter an address in the search box, or use your current location. Your location will then be highlighted on the map and relevant evacuation and facility information will be presented to the user.<br/><br/>",
 
     // Set URL of help page/portal.
     HelpURL: "help.htm",
