@@ -1,5 +1,5 @@
 ﻿/** @license
-  | Version 10.2
+ | Version 10.2
  | Copyright 2012 Esri
  |
  | Licensed under the Apache License, Version 2.0 (the "License");
@@ -517,6 +517,14 @@ function CreateServicePolygonInfo(service, feature, key) {
             var trLink = dojo.create("tr");
             tbodyLink.appendChild(trLink);
             for (var m = 0; m < service.FieldNames[i].Links.length; m++) {
+                // Insert separator from previous cell at end of current row
+                if(m > 0) {
+                    var span = trLink.insertCell(-1);
+                    span.style.borderLeft = "1px solid white";
+                    span.style.paddingRight = "5px";
+                }
+
+                // Create cell for link
                 var tdHref = dojo.create("td");
                 tdHref.style.paddingRight = "5px";
                 tdHref.style.cursor = "pointer";
@@ -533,9 +541,6 @@ function CreateServicePolygonInfo(service, feature, key) {
                 trLink.appendChild(tdHref);
                 tdHref.innerHTML = service.FieldNames[i].Links[m].DisplayText;
             }
-            var span = trLink.insertCell(1);
-            span.style.borderLeft = "1px solid white";
-            span.style.paddingRight = "5px";
         } else {
             var attribute_switch;
             var tdDisplayText = dojo.create("td");
