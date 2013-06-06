@@ -202,7 +202,7 @@ dojo.declare("js.Config", null, {
             isRendererColor: true,
             LayerVisibility: true
         },
-        FloodHarzards: {
+        FloodHazards: {
             Name: "Flood Harzards",
             Image: "images/Flood.png",
             HasRendererImage: false,
@@ -214,7 +214,7 @@ dojo.declare("js.Config", null, {
             isRendererColor: true,
             LayerVisibility: true
         },
-        Harzards: {
+        Hazards: {
             Name: "Hazardous Facilities",
             Image: "images/HazardFacilities.png",
             HasRendererImage: false,
