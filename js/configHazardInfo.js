@@ -203,7 +203,7 @@ dojo.declare("js.Config", null, {
             LayerVisibility: true
         },
         FloodHazards: {
-            Name: "Flood Harzards",
+            Name: "Flood Hazards",
             Image: "images/Flood.png",
             HasRendererImage: false,
             ServiceUrl: "http://services.arcgis.com/b6gLrKHqgkQb393u/arcgis/rest/services/HazardServices/FeatureServer/9",
