@@ -315,7 +315,7 @@ dojo.declare("js.Config", null, {
     // ServiceUrl is the REST end point for the reference overlay layer
     // DisplayOnLoad setting this will show the reference overlay layer on load
     ReferenceOverlayLayer: {
-        ServiceUrl: "http://tiles.arcgis.com/tiles/b6gLrKHqgkQb393u/arcgis/rest/services/HazardServices/MapServer",
+        ServiceUrl: "http://ec2-54-214-140-9.us-west-2.compute.amazonaws.com:6080/arcgis/rest/services/HazardReference/MapServer",
         DisplayOnLoad: false
     },
 
