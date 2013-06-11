@@ -144,7 +144,7 @@ dojo.declare("js.Config", null, {
         },
         Locators: [{
             DisplayText: "Search Address",
-            DefaultValue: "139 W Porter Ave Naperville IL 60540", // Set default address to search.
+            DefaultValue: "7S610 Carriage Way Ct Naperville IL", // Set default address to search.
             LocatorParamaters: ["SingleLine"], // Set Locator fields (fields to be used for searching).
             LocatorURL: "http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer",
             CandidateFields: "Loc_name, Score, Match_addr",
