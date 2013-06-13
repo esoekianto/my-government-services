@@ -900,7 +900,7 @@ function HideRipple() {
 
 function ClearAllIntervals() {
     for (var i = 0; i < intervalIDs.length; i++) {
-        clearTimeout(intervalIDs[i]);
+        clearInterval(intervalIDs[i]);
         delete intervalIDs[i];
     }
     intervalIDs.length = 0;
