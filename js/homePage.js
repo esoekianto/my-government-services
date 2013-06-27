@@ -255,6 +255,10 @@ function Initialize(responseObject) {
         var startExtent = new esri.geometry.Extent(parseFloat(zoomExtent[0]), parseFloat(zoomExtent[1]), parseFloat(zoomExtent[2]), parseFloat(zoomExtent[3]), map.spatialReference);
         map.setExtent(startExtent);
         MapInitFunction();
+
+        dojo.connect(dojo.byId("zoom"), "onclick", function () {
+            map.setExtent(startExtent);  //here set your extent you wish to zoom back to, either calling the xmin, ymin, xmax, ymax or by calling the original extent variable
+        });
     });
     dojo.connect(map, "onExtentChange", function (evt) {
         if (dojo.coords("divAppContainer").h > 0) {
