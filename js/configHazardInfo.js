@@ -77,12 +77,12 @@ dojo.declare("js.Config", null, {
         Key: "parcelMap",
         ThumbnailSource: "images/parcelMap.png",
         Name: "Streets",
-        MapURL: "http://arcgis-tenone2012-1974758903.us-west-1.elb.amazonaws.com/arcgis/rest/services/ParcelPublicAccess/MapServer"
+        MapURL: "http://tryitlive.arcgis.com/arcgis/rest/services/GeneralPurpose/MapServer"
     }, {
         Key: "hybridMap",
         ThumbnailSource: "images/imageryHybrid.png",
         Name: "Imagery",
-        MapURL: "http://arcgis-tenone2012-1974758903.us-west-1.elb.amazonaws.com/arcgis/rest/services/ImageryHybrid/MapServer"
+        MapURL: "http://tryitlive.arcgis.com/arcgis/rest/services/ImageryHybrid/MapServer"
     }],
 
     // Initial map extent. Use comma (,) to separate values and don t delete the last comma.
@@ -159,7 +159,7 @@ dojo.declare("js.Config", null, {
     // GEOMETRY SERVICE SETTINGS
     // ------------------------------------------------------------------------------------------------------------------------
     // Set geometry service URL.
-    GeometryService: "http://arcgis-tenone2012-1974758903.us-west-1.elb.amazonaws.com/arcgis/rest/services/Utilities/Geometry/GeometryServer",
+    GeometryService: "http://tasks.arcgisonline.com/ArcGIS/rest/services/Geometry/GeometryServer",
 
     // ------------------------------------------------------------------------------------------------------------------------
     // DRIVING DIRECTIONS SETTINGS
@@ -188,7 +188,7 @@ dojo.declare("js.Config", null, {
             Name: "Evacuation Areas",
             Image: "images/EvacArea.png",
             HasRendererImage: false,
-            ServiceUrl: "http://ec2-54-214-140-9.us-west-2.compute.amazonaws.com:6080/arcgis/rest/services/HazardServices/MapServer/6",
+            ServiceUrl: "http://tryitlive.arcgis.com/arcgis/rest/services/HazardServices/MapServer/6",
             FieldNames: [{
                 Field: "Evacuation Areas: ${DESCRIPTION}"
             }, {
@@ -206,7 +206,7 @@ dojo.declare("js.Config", null, {
             Name: "Flood Hazards",
             Image: "images/Flood.png",
             HasRendererImage: false,
-            ServiceUrl: "http://ec2-54-214-140-9.us-west-2.compute.amazonaws.com:6080/arcgis/rest/services/HazardServices/MapServer/7",
+            ServiceUrl: "http://tryitlive.arcgis.com/arcgis/rest/services/HazardServices/MapServer/7",
             FieldNames: [{
                 Field: "Flood Zone: ${FLOODZONE}"
             }],
@@ -218,7 +218,7 @@ dojo.declare("js.Config", null, {
             Name: "Hazardous Facilities",
             Image: "images/HazardFacilities.png",
             HasRendererImage: false,
-            ServiceUrl: "http://ec2-54-214-140-9.us-west-2.compute.amazonaws.com:6080/arcgis/rest/services/HazardServices/MapServer/0",
+            ServiceUrl: "http://tryitlive.arcgis.com/arcgis/rest/services/HazardServices/MapServer/0",
             distance: 4,
             FieldNames: [{
                 FieldName: "NAME"
@@ -234,7 +234,7 @@ dojo.declare("js.Config", null, {
             Name: "Hospitals",
             Image: "images/hospital.png",
             HasRendererImage: false,
-            ServiceUrl: "http://ec2-54-214-140-9.us-west-2.compute.amazonaws.com:6080/arcgis/rest/services/HazardServices/MapServer/1",
+            ServiceUrl: "http://tryitlive.arcgis.com/arcgis/rest/services/HazardServices/MapServer/1",
             distance: 4,
             FieldNames: [{
                 FieldName: "NAME"
@@ -250,7 +250,7 @@ dojo.declare("js.Config", null, {
             Name: "Police Stations",
             Image: "images/policeStations.png",
             HasRendererImage: false,
-            ServiceUrl: "http://ec2-54-214-140-9.us-west-2.compute.amazonaws.com:6080/arcgis/rest/services/HazardServices/MapServer/2",
+            ServiceUrl: "http://tryitlive.arcgis.com/arcgis/rest/services/HazardServices/MapServer/2",
             distance: 4,
             FieldNames: [{
                 FieldName: "NAME"
@@ -266,7 +266,7 @@ dojo.declare("js.Config", null, {
             Name: "Fire Stations",
             Image: "images/fireStations.png",
             HasRendererImage: false,
-            ServiceUrl: "http://ec2-54-214-140-9.us-west-2.compute.amazonaws.com:6080/arcgis/rest/services/HazardServices/MapServer/3",
+            ServiceUrl: "http://tryitlive.arcgis.com/arcgis/rest/services/HazardServices/MapServer/3",
             distance: 4,
             FieldNames: [{
                 FieldName: "NAME"
@@ -282,7 +282,7 @@ dojo.declare("js.Config", null, {
             Name: "Cooling Center",
             Image: "images/CoolCenter.png",
             HasRendererImage: false,
-            ServiceUrl: "http://ec2-54-214-140-9.us-west-2.compute.amazonaws.com:6080/arcgis/rest/services/HazardServices/MapServer/4",
+            ServiceUrl: "http://tryitlive.arcgis.com/arcgis/rest/services/HazardServices/MapServer/4",
             distance: 4,
             FieldNames: [{
                 FieldName: "FACNAME"
@@ -298,7 +298,7 @@ dojo.declare("js.Config", null, {
             Name: "Warming Center",
             Image: "images/WarmCenter.png",
             HasRendererImage: false,
-            ServiceUrl: "http://ec2-54-214-140-9.us-west-2.compute.amazonaws.com:6080/arcgis/rest/services/HazardServices/MapServer/5",
+            ServiceUrl: "http://tryitlive.arcgis.com/arcgis/rest/services/HazardServices/MapServer/5",
             distance: 4,
             FieldNames: [{
                 FieldName: "FACNAME"
@@ -315,8 +315,8 @@ dojo.declare("js.Config", null, {
     // ServiceUrl is the REST end point for the reference overlay layer
     // DisplayOnLoad setting this will show the reference overlay layer on load
     ReferenceOverlayLayer: {
-        ServiceUrl: "http://ec2-54-214-140-9.us-west-2.compute.amazonaws.com:6080/arcgis/rest/services/HazardReference/MapServer",
-        DisplayOnLoad: false
+        ServiceUrl: "http://tryitlive.arcgis.com/arcgis/rest/services/HazardReference/MapServer",
+        DisplayOnLoad: true
     },
 
     //Set required zoom level.
