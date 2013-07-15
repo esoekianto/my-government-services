@@ -143,15 +143,15 @@ dojo.declare("js.Config", null, {
             height: 25
         },
         Locators: [{
-            DisplayText: "Search Address",
+            DisplayText: "Search Address", //Set placeholder text
             DefaultValue: "139 W Porter Ave Naperville IL 60540", // Set default address to search.
-            LocatorParamaters: ["SingleLine"], // Set Locator fields (fields to be used for searching).
+            LocatorParameters: ["SingleLine"], // Set Locator fields (fields to be used for searching).
             LocatorURL: "http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer",
-            CandidateFields: "Loc_name, Score, Match_addr",
-            DisplayField: "${Match_addr}",
-            AddressMatchScore: 80,
-            LocatorFieldName: 'Loc_name',
-            LocatorFieldValues: ["USA.StreetName", "USA.PointAddress", "USA.StreetAddress"]
+            CandidateFields: "Loc_name, Score, Match_addr", //Set which fields are returned in results
+            DisplayField: "${Match_addr}", //Set which field from results is displayed
+            AddressMatchScore: 80, //Set minimum score to be considered a match
+            LocatorFieldName: 'Loc_name', //The returned field which specifies match type (specific locator within composite)
+            LocatorFieldValues: ["USA.StreetName", "USA.PointAddress", "USA.StreetAddress"] //List of acceptable individual locators (within composite)
         }]
     },
 
