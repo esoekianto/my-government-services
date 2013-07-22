@@ -72,19 +72,32 @@ function ShowLocatedAddress(candidates) {
             if (candidates[i].score > locatorSettings.Locators[0].AddressMatchScore) {
                 var candidate = candidates[i];
                 var tempMapPoint;
-                var bmap;
+                var bmap = null;
                 tempMapPoint = new esri.geometry.Point(candidate.location.x, candidate.location.y, map.spatialReference);
-                for (var bMap = 0; bMap < baseMapLayers.length; bMap++) {
-                    if (map.getLayer(baseMapLayers[bMap].Key).visible) {
-                        bmap = baseMapLayers[bMap].Key;
+
+                // Use the first visible basemap layer as our extents bounds
+                dojo.some(baseMapLayers, function(aBmap) {
+                    var layer;
+                    if (aBmap.Key) {
+                        layer = map.getLayer(aBmap.Key);
+                        if (layer && layer.visible) {
+                            bmap = layer;
+                            return true;
+                        }
                     }
-                }
-                if (!map.getLayer(bmap).fullExtent.contains(tempMapPoint)) {
+                    return false;
+                });
+
+                // If there's a visible basemap, use it for the extents check
+                if (bmap && !bmap.fullExtent.contains(tempMapPoint)) {
                     tempMapPoint = null;
                     candidatesLength++;
+
                 } else {
+                    // Screen by the list of accepted locators
                     for (var j in locatorSettings.Locators[0].LocatorFieldValues) {
                         if (candidates[i].attributes[locatorSettings.Locators[0].LocatorFieldName] === locatorSettings.Locators[0].LocatorFieldValues[j]) {
+                            // Add the result to the display
                             counter++;
                             var tr = document.createElement("tr");
                             tBody.appendChild(tr);
