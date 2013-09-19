@@ -143,15 +143,15 @@ dojo.declare("js.Config", null, {
             height: 25
         },
         Locators: [{
-            DisplayText: "Search Address",
+            DisplayText: "Search Address", //Set placeholder text
             DefaultValue: "7S610 Carriage Way Ct Naperville IL", // Set default address to search.
             LocatorParameters: ["SingleLine"], // Set Locator fields (fields to be used for searching).
             LocatorURL: "http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer",
-            CandidateFields: "Loc_name, Score, Match_addr",
-            DisplayField: "${Match_addr}",
-            AddressMatchScore: 80,
-            LocatorFieldName: 'Loc_name',
-            LocatorFieldValues: ["USA.StreetName", "USA.PointAddress", "USA.StreetAddress"]
+            CandidateFields: "Loc_name, Score, Match_addr", //Set which fields are returned in results
+            DisplayField: "${Match_addr}", //Set which field from results is displayed
+            AddressMatchScore: 80, //Set minimum score to be considered a match
+            LocatorFieldName: 'Loc_name', //The returned field which specifies match type (specific locator within composite)
+            LocatorFieldValues: ["USA.StreetName", "USA.PointAddress", "USA.StreetAddress"] //List of acceptable individual locators (within composite)
         }]
     },
 
@@ -340,6 +340,6 @@ dojo.declare("js.Config", null, {
         TinyURLResponseAttribute: "data.url",
         FacebookShareURL: "http://www.facebook.com/sharer.php?u=${0}&t=My%20Government%20Services",
         TwitterShareURL: "http://mobile.twitter.com/compose/tweet?status=My%20Government%20Services ${0}",
-        ShareByMailLink: "mailto:%20?subject=Checkout%20this%20map!&body=${0}"
+        ShareByMailLink: "mailto:%20?subject=Check%20out%20this%20map!&body=${0}"
     }
 });
