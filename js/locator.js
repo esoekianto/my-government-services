@@ -32,7 +32,7 @@ function LocateAddress() {
     }
     var address = [];
     //Set text from search box as input parameter for request
-	address[locatorSettings.Locators[0].LocatorParameters] = dojo.byId('txtAddress').value;
+    address[locatorSettings.Locators[0].LocatorParameters] = dojo.byId('txtAddress').value;
     var locator = new esri.tasks.Locator(locatorSettings.Locators[0].LocatorURL);
     locator.outSpatialReference = map.spatialReference;
     locator.addressToLocations(address, [locatorSettings.Locators[0].CandidateFields], function (candidates) {
@@ -41,7 +41,7 @@ function LocateAddress() {
             return;
         }
         //Callback function to fire when candidates are returned
-		ShowLocatedAddress(candidates);
+        ShowLocatedAddress(candidates);
     },
 
     function (err) {
@@ -55,7 +55,7 @@ function LocateAddress() {
 
 function ShowLocatedAddress(candidates) {
     //Clear previous results
-	RemoveChildren(dojo.byId('tblAddressResults'));
+    RemoveChildren(dojo.byId('tblAddressResults'));
     RemoveScrollBar(dojo.byId('divAddressScrollContainer'));
     if (dojo.byId("txtAddress").value.trim() === '') {
         dojo.byId("imgSearchLoader").style.display = "none";
@@ -73,25 +73,25 @@ function ShowLocatedAddress(candidates) {
         counter = 0;
         for (var i = 0; i < candidates.length; i++) {
             //Make sure the minimum match score was met
-			if (candidates[i].score > locatorSettings.Locators[0].AddressMatchScore) {
+            if (candidates[i].score > locatorSettings.Locators[0].AddressMatchScore) {
                 var candidate = candidates[i];
                 var tempMapPoint;
                 var bmap;
                 //Create a new point geometry from candidate verticies
-				tempMapPoint = new esri.geometry.Point(candidate.location.x, candidate.location.y, map.spatialReference);
+                tempMapPoint = new esri.geometry.Point(candidate.location.x, candidate.location.y, map.spatialReference);
                 for (var bMap = 0; bMap < baseMapLayers.length; bMap++) {
                     if (map.getLayer(baseMapLayers[bMap].Key).visible) {
                         bmap = baseMapLayers[bMap].Key;
                     }
                 }
                 //if the current basemap full extent doesn't include the point, abort
-				if (!map.getLayer(bmap).fullExtent.contains(tempMapPoint)) {
+                if (!map.getLayer(bmap).fullExtent.contains(tempMapPoint)) {
                     tempMapPoint = null;
                     candidatesLength++;
                 } else {
                     for (var j in locatorSettings.Locators[0].LocatorFieldValues) {
                         //Test to make sure matched address was returned by a desired locator
-						if (candidates[i].attributes[locatorSettings.Locators[0].LocatorFieldName] === locatorSettings.Locators[0].LocatorFieldValues[j]) {
+                        if (candidates[i].attributes[locatorSettings.Locators[0].LocatorFieldName] === locatorSettings.Locators[0].LocatorFieldValues[j]) {
                             counter++;
                             var tr = document.createElement("tr");
                             tBody.appendChild(tr);
@@ -105,14 +105,14 @@ function ShowLocatedAddress(candidates) {
                             td1.setAttribute("y", candidate.location.y);
                             td1.setAttribute("address", dojo.string.substitute(locatorSettings.Locators[0].DisplayField, candidate.attributes));
                             //Don't start working with geometry of candidates until someone clicks on an address
-							td1.onclick = function () {
+                            td1.onclick = function () {
                                 dojo.byId("txtAddress").value = this.innerHTML;
                                 dojo.byId('txtAddress').setAttribute("defaultAddress", this.innerHTML);
                                 mapPoint = new esri.geometry.Point(this.getAttribute("x"), this.getAttribute("y"), map.spatialReference);
                                 dojo.byId("txtAddress").setAttribute("defaultAddressTitle", this.innerHTML);
                                 lastSearchString = dojo.byId("txtAddress").value.trim();
                                 //Call external function for drawing the graphic
-								LocateAddressOnMap();
+                                LocateAddressOnMap();
                             };
                             tr.appendChild(td1);
                         }
@@ -152,7 +152,7 @@ function ShowLocatedAddress(candidates) {
 
 function LocateAddressOnMap() {
     //Clear old graphics
-	map.getLayer(tempGraphicsLayerId).clear();
+    map.getLayer(tempGraphicsLayerId).clear();
     HideServiceLayers();
     map.infoWindow.hide();
     selectedGraphic = null;
@@ -162,13 +162,13 @@ function LocateAddressOnMap() {
         ResetSlideControls();
     }
     //Set symbology from configuration file
-	var symbol = new esri.symbol.PictureMarkerSymbol(locatorSettings.LocatorMarkupSymbolPath, locatorSettings.MarkupSymbolSize.width, locatorSettings.MarkupSymbolSize.height, locatorSettings.MarkupSymbolSize.width, locatorSettings.MarkupSymbolSize.height);
+    var symbol = new esri.symbol.PictureMarkerSymbol(locatorSettings.LocatorMarkupSymbolPath, locatorSettings.MarkupSymbolSize.width, locatorSettings.MarkupSymbolSize.height, locatorSettings.MarkupSymbolSize.width, locatorSettings.MarkupSymbolSize.height);
     //mapPoint was defined with candidate geometry in ShowLocatedAddress() function above
-	var graphic = new esri.Graphic(mapPoint, symbol, null, null);
+    var graphic = new esri.Graphic(mapPoint, symbol, null, null);
     map.getLayer(tempGraphicsLayerId).add(graphic);
     HideAddressContainer();
     //Center and zoom on the new point
-	map.setLevel(zoomLevel);
+    map.setLevel(zoomLevel);
     map.centerAt(mapPoint);
     if (!isMobileDevice) {
         WipeInResults();

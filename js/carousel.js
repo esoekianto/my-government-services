@@ -1136,11 +1136,11 @@ function BufferRadius(mapPoint, index, serviceInfo) {
     params.distances = [serviceInfo.distance];
     params.unit = esri.tasks.GeometryService.UNIT_STATUTE_MILE;
     //if map is Web Mercator, use WGS84 to buffer instead
-	if (map.spatialReference.wkid == 102100) {	    
-        params.bufferSpatialReference = new esri.SpatialReference({"wkid":4326});	
+    if (map.spatialReference.wkid == 102100) {
+        params.bufferSpatialReference = new esri.SpatialReference({"wkid":4326});
     }
-	else
-	    params.bufferSpatialReference = map.spatialReference;	
+    else
+        params.bufferSpatialReference = map.spatialReference;
     params.outSpatialReference = map.spatialReference;
     geometryService.buffer(params, function (geometry) {
         var query = new esri.tasks.Query();
