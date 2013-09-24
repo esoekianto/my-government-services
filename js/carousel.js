@@ -1137,8 +1137,8 @@ function BufferRadius(mapPoint, index, serviceInfo) {
     params.unit = esri.tasks.GeometryService.UNIT_STATUTE_MILE;
     //if map is Web Mercator, use WGS84 to buffer instead
     if (map.spatialReference.wkid == 102100) {
-	    params.bufferSpatialReference = new esri.SpatialReference({"wkid":4326});
-	    params.geodesic = true;
+		params.bufferSpatialReference = new esri.SpatialReference({"wkid":4326});
+		params.geodesic = true;
     }
     else
     params.bufferSpatialReference = map.spatialReference;
