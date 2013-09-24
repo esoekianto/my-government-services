@@ -1141,7 +1141,7 @@ function BufferRadius(mapPoint, index, serviceInfo) {
 	    params.geodesic = true;
     }
     else
-        params.bufferSpatialReference = map.spatialReference;
+    params.bufferSpatialReference = map.spatialReference;
     params.outSpatialReference = map.spatialReference;
     geometryService.buffer(params, function (geometry) {
         var query = new esri.tasks.Query();
