@@ -163,6 +163,11 @@ function orientationChanged() {
                     orientationChange = false;
                 }, 500);
                 FixBottomPanelWidth(); //function to set width of shortcut links in ipad orientation change
+                if ((dojo.byId("imgToggleResults").getAttribute("state") == "maximized") && isAndroidTablet && isTablet && window.matchMedia("(orientation: landscape)").matches) {
+                    if (document.activeElement.id == "txtAddress") {
+                        WipeOutResults();
+                    }
+                }
             }
         }, timeout);
     }
