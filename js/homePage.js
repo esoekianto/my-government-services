@@ -35,6 +35,7 @@ var isBrowser = false; //This variable is set to true when the app is running on
 var isiOS = false; //flag set for ios devices(ipad, iphone)
 var isMobileDevice = false; //This variable is set to true when the app is running on mobile device
 var isTablet = false; //This variable is set to true when the app is running on tablets
+var isAndroidTablet = false; //This variable will be set to 'true' when application is accessed from android tablet device
 var baseMapLayers; //Variable for storing base map layers
 var fontSize; //variable for storing font sizes for all devices.
 var infoBoxWidth; //variable to store the width of the carousel pod
@@ -85,11 +86,12 @@ function Init() {
     if (userAgent.indexOf("iPhone") >= 0 || userAgent.indexOf("iPad") >= 0) {
         isiOS = true;
     }
-    if (userAgent.indexOf("Android") >= 0 || userAgent.indexOf("iPhone") >= 0) {
+    if ((userAgent.indexOf("Android") >= 0 && userAgent.indexOf("Mobile") >= 0) || userAgent.indexOf("iPhone") >= 0) {
         fontSize = 15;
         isMobileDevice = true;
         dojo.byId('dynamicStyleSheet').href = "styles/mobile.css";
-    } else if (userAgent.indexOf("iPad") >= 0) {
+    } else if ((userAgent.indexOf("iPad") >= 0) || (userAgent.indexOf("Android") >= 0)) {
+        isAndroidTablet = navigator.userAgent.indexOf("Android") >= 0;
         fontSize = 14;
         isTablet = true;
         dojo.byId('dynamicStyleSheet').href = "styles/tablet.css";
@@ -101,7 +103,8 @@ function Init() {
     ShowProgressIndicator();
     dojo.byId("divSplashContent").style.fontSize = fontSize + "px";
     var eventFired = false;
-
+    var responseObject = new js.Config();
+    Initialize(responseObject);
     // Identify the key presses while implementing auto-complete and assign appropriate actions
     dojo.connect(dojo.byId("txtAddress"), 'onkeyup', function (evt) {
         if (evt) {
@@ -145,6 +148,11 @@ function Init() {
             }
         }
     });
+    dojo.connect(dojo.byId("txtAddress"), 'onfocus', function (evt) {
+        if ((dojo.byId("imgToggleResults").getAttribute("state") == "maximized") && isAndroidTablet && isTablet && window.matchMedia("(orientation: landscape)").matches) {
+            WipeOutResults();
+        }
+    });
 
     dojo.connect(dojo.byId("imgLocate"), 'onclick', function (evt) {
 
@@ -160,8 +168,7 @@ function Init() {
     if (!Modernizr.geolocation) {
         dojo.byId("tdGeolocation").style.display = "none"; //geo location icon is made invisible for the non supported browsers
     }
-    var responseObject = new js.Config();
-    Initialize(responseObject);
+
 }
 
 //This function is called at the initialize state
@@ -452,6 +459,7 @@ function GetServices(evt, share) {
     }
     ShowProgressIndicator();
     QueryService(mapPoint);
+
     if (isMobileDevice) {
         CallOutAddressDisplay(evt);
         CreateListLayOut();

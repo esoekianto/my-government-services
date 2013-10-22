@@ -125,6 +125,7 @@ function ShowLocatedAddress(candidates) {
                                 lastSearchString = dojo.byId("txtAddress").value.trim();
                                 //Call external function for drawing the graphic
                                 LocateAddressOnMap();
+                                HideProgressIndicator();
                             };
                             tr.appendChild(td1);
                         }
