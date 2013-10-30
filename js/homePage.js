@@ -80,7 +80,7 @@ var selectedFieldName;
 
 function Init() {
     esri.config.defaults.io.proxyUrl = "proxy.ashx"; //Setting to use proxy file
-    esriConfig.defaults.io.alwaysUseProxy = false;
+    esriConfig.defaults.io.alwaysUseProxy = true;
     esriConfig.defaults.io.timeout = 180000; //esri request timeout value
     var userAgent = window.navigator.userAgent; //used to detect the type of devices
     if (userAgent.indexOf("iPhone") >= 0 || userAgent.indexOf("iPad") >= 0) {

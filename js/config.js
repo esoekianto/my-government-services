@@ -165,7 +165,7 @@ dojo.declare("js.Config", null, {
     // DRIVING DIRECTIONS SETTINGS
     // ------------------------------------------------------------------------------------------------------------------------
     // Set URL for routing service (network analyst).
-    RouteServiceURL: "http://tasks.arcgisonline.com/ArcGIS/rest/services/NetworkAnalysis/ESRI_Route_NA/NAServer/Route",
+    RouteServiceURL: "http://route.arcgis.com/arcgis/rest/services/World/Route/NAServer/Route_World",
 
     // Set color for the route symbol.
     RouteColor: "#CC6633",
