@@ -174,7 +174,7 @@ dojo.declare("js.Config", null, {
     RouteWidth: 4,
 
     // Set this to true to show directions on map
-    SearchforDirections: true,
+    SearchforDirections: false,
 
     // ------------------------------------------------------------------------------------------------------------------------
     // SETTINGS FOR INFO-PODS ON THE BOTTOM PANEL
