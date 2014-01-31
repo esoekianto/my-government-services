@@ -4,7 +4,7 @@ My Government Services is a configuration of ArcGIS Server and a JavaScript appl
 
 [Try the My Government Services application](http://localgovtemplates2.esri.com/mygovernmentservices/)
 
-[![Image of My Government Services application](https://raw.github.com/Esri/my-government-services/master/my-government-services.png "My Government Services application")](http://localgovtemplates2.esri.com/mygovernmentservices/)
+[![Image of My Government Services application](my-government-services.png "My Government Services application")](http://localgovtemplates2.esri.com/mygovernmentservices/)
 
 ## Features
 
@@ -79,7 +79,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
 A copy of the license is available in the repository's
-[LICENSE.txt](https://raw.github.com/Esri/my-government-services/master/LICENSE.txt) file.
+[LICENSE.txt](LICENSE.txt) file.
 
 [](Esri Tags: Local-Government Local Government My Government Services)
 [](Esri Language: JavaScript)
