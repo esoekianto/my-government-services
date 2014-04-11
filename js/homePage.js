@@ -79,7 +79,7 @@ var selectedFieldName;
 //This initialization function is called when the DOM elements are ready
 
 function Init() {
-    esri.config.defaults.io.proxyUrl = "proxy.ashx"; //Setting to use proxy file
+    esri.config.defaults.io.proxyUrl = "proxy/proxy.ashx"; //Setting to use proxy file
     esriConfig.defaults.io.alwaysUseProxy = true;
     esriConfig.defaults.io.timeout = 180000; //esri request timeout value
     var userAgent = window.navigator.userAgent; //used to detect the type of devices
