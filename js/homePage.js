@@ -173,7 +173,15 @@ function Init() {
 
 function Initialize(responseObject) {
     esri.config.defaults.io.proxyUrl = responseObject.ProxyURL;
-    esriConfig.defaults.io.alwaysUseProxy = true;
+    esriConfig.defaults.io.alwaysUseProxy = false;
+    esri.addProxyRule({
+        urlPrefix: responseObject.RouteServiceURL,
+        proxyUrl: responseObject.ProxyURL
+    });
+    esri.addProxyRule({
+        urlPrefix: responseObject.GeometryService,
+        proxyUrl: responseObject.ProxyURL
+    });
 
     if (isMobileDevice) {
         dojo.replaceClass("divAddressHolder", "hideContainer", "hideContainerHeight");
