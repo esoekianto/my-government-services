@@ -1,6 +1,6 @@
 ﻿/*global dojo */
-/** @license
- | Version 10.2
+/*jslint browser:true,sloppy:true,nomen:true,unparam:true,plusplus:true */
+/*
  | Copyright 2012 Esri
  |
  | Licensed under the Apache License, Version 2.0 (the "License");
@@ -67,6 +67,9 @@ dojo.declare("js.Config", null, {
 
     // Set URL of help page/portal.
     HelpURL: "help.htm",
+
+    // URL to proxy program
+    ProxyURL: "proxy/proxy.ashx",
 
     // ------------------------------------------------------------------------------------------------------------------------
     // BASEMAP SETTINGS
