@@ -173,6 +173,8 @@ dojo.declare("js.Config", null, {
     // Set width of the route.
     RouteWidth: 4,
 
+    //Enabling the "SearchforDirections" parameter will draw routes and provide directions using the ArcGIS Online World Route Service.
+    //The World Route Service is an ArcGIS Online for organizations subscription service that uses credits when routes are generated.
     // Set this to true to show directions on map
     SearchforDirections: false,
 
