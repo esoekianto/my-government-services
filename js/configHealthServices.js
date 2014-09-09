@@ -156,7 +156,7 @@ dojo.declare("js.Config", null, {
     // GEOMETRY SERVICE SETTINGS
     // ------------------------------------------------------------------------------------------------------------------------
     // Set geometry service URL.
-    GeometryService: "http://yourserver/arcgis/rest/services/Utilities/Geometry/GeometryServer",
+    GeometryService: "http://tasks.arcgisonline.com/ArcGIS/rest/services/Geometry/GeometryServer",
 
     // ------------------------------------------------------------------------------------------------------------------------
     // DRIVING DIRECTIONS SETTINGS
@@ -171,7 +171,7 @@ dojo.declare("js.Config", null, {
     RouteWidth: 4,
 
     // Set this to true to show directions on map
-    SearchforDirections: false,
+    SearchforDirections: true,
 
     // ------------------------------------------------------------------------------------------------------------------------
     // SETTINGS FOR INFO-PODS ON THE BOTTOM PANEL
@@ -185,7 +185,7 @@ dojo.declare("js.Config", null, {
             Name: "State Health Clinics",
             Image: "images/StateClinic.png",
             HasRendererImage: false,
-            ServiceUrl: "http://yourserver/arcgis/rest/services/HealthFacility/MapServer/11",
+            ServiceUrl: "http://tryitlive.arcgis.com/arcgis/rest/services/HealthFacility/MapServer/11",
             distance: 4,
             FieldNames: [{
                 FieldName: "FACNAME"
@@ -201,7 +201,7 @@ dojo.declare("js.Config", null, {
             Name: "Hospitals and Clinics",
             Image: "images/hospital.png",
             HasRendererImage: false,
-            ServiceUrl: "http://yourserver/arcgis/rest/services/HealthFacility/MapServer/10",
+            ServiceUrl: "http://tryitlive.arcgis.com/arcgis/rest/services/HealthFacility/MapServer/10",
             distance: 4,
             FieldNames: [{
                 FieldName: "FACNAME"
@@ -217,7 +217,7 @@ dojo.declare("js.Config", null, {
             Name: "Hospice Care",
             Image: "images/Hospice.png",
             HasRendererImage: false,
-            ServiceUrl: "http://yourserver/arcgis/rest/services/HealthFacility/MapServer/6",
+            ServiceUrl: "http://tryitlive.arcgis.com/arcgis/rest/services/HealthFacility/MapServer/6",
             distance: 4,
             FieldNames: [{
                 FieldName: "FACNAME"
@@ -233,7 +233,7 @@ dojo.declare("js.Config", null, {
             Name: "Dialysis Center",
             Image: "images/Dialysis.png",
             HasRendererImage: false,
-            ServiceUrl: "http://yourserver/arcgis/rest/services/HealthFacility/MapServer/2",
+            ServiceUrl: "http://tryitlive.arcgis.com/arcgis/rest/services/HealthFacility/MapServer/2",
             distance: 4,
             FieldNames: [{
                 FieldName: "FACNAME"
@@ -249,7 +249,7 @@ dojo.declare("js.Config", null, {
             Name: "Habilitation",
             Image: "images/Habilitation.png",
             HasRendererImage: false,
-            ServiceUrl: "http://yourserver/arcgis/rest/services/HealthFacility/MapServer/3",
+            ServiceUrl: "http://tryitlive.arcgis.com/arcgis/rest/services/HealthFacility/MapServer/3",
             distance: 4,
             FieldNames: [{
                 FieldName: "FACNAME"
@@ -265,7 +265,7 @@ dojo.declare("js.Config", null, {
             Name: "Hearing",
             Image: "images/Hearing.png",
             HasRendererImage: false,
-            ServiceUrl: "http://yourserver/arcgis/rest/services/HealthFacility/MapServer/4",
+            ServiceUrl: "http://tryitlive.arcgis.com/arcgis/rest/services/HealthFacility/MapServer/4",
             distance: 4,
             FieldNames: [{
                 FieldName: "FACNAME"
@@ -281,7 +281,7 @@ dojo.declare("js.Config", null, {
             Name: "Home Health Services",
             Image: "images/HomeHealth.png",
             HasRendererImage: false,
-            ServiceUrl: "http://yourserver/arcgis/rest/services/HealthFacility/MapServer/6",
+            ServiceUrl: "http://tryitlive.arcgis.com/arcgis/rest/services/HealthFacility/MapServer/6",
             distance: 4,
             FieldNames: [{
                 FieldName: "FACNAME"
@@ -297,7 +297,7 @@ dojo.declare("js.Config", null, {
             Name: "Birth Services",
             Image: "images/Birth.png",
             HasRendererImage: false,
-            ServiceUrl: "http://yourserver/arcgis/rest/services/HealthFacility/MapServer/1",
+            ServiceUrl: "http://tryitlive.arcgis.com/arcgis/rest/services/HealthFacility/MapServer/1",
             distance: 4,
             FieldNames: [{
                 FieldName: "FACNAME"
@@ -313,7 +313,7 @@ dojo.declare("js.Config", null, {
             Name: "Adult Care",
             Image: "images/AdultCare.png",
             HasRendererImage: false,
-            ServiceUrl: "http://yourserver/arcgis/rest/services/HealthFacility/MapServer/0",
+            ServiceUrl: "http://tryitlive.arcgis.com/arcgis/rest/services/HealthFacility/MapServer/0",
             distance: 4,
             FieldNames: [{
                 FieldName: "FACNAME"
@@ -329,7 +329,7 @@ dojo.declare("js.Config", null, {
             Name: "Substance Abuse",
             Image: "images/Substance.png",
             HasRendererImage: false,
-            ServiceUrl: "http://yourserver/arcgis/rest/services/HealthFacility/MapServer/10",
+            ServiceUrl: "http://tryitlive.arcgis.com/arcgis/rest/services/HealthFacility/MapServer/10",
             distance: 4,
             FieldNames: [{
                 FieldName: "FACNAME"
@@ -345,7 +345,7 @@ dojo.declare("js.Config", null, {
             Name: "Residential Care",
             Image: "images/ResidentialCare.png",
             HasRendererImage: false,
-            ServiceUrl: "http://yourserver/arcgis/rest/services/HealthFacility/MapServer/8",
+            ServiceUrl: "http://tryitlive.arcgis.com/arcgis/rest/services/HealthFacility/MapServer/8",
             distance: 4,
             FieldNames: [{
                 FieldName: "FACNAME"
@@ -362,7 +362,7 @@ dojo.declare("js.Config", null, {
     // ServiceUrl is the REST end point for the reference overlay layer
     // DisplayOnLoad setting this will show the reference overlay layer on load
     ReferenceOverlayLayer: {
-        ServiceUrl: "http://yourserver/arcgis/rest/services/CountyLayer/MapServer",
+        ServiceUrl: "http://tryitlive.arcgis.com/arcgis/rest/services/CountyLayer/MapServer",
         DisplayOnLoad: false
     },
 
