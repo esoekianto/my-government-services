@@ -1,5 +1,6 @@
-﻿/** @license
- | Version 10.2
+﻿/*global */
+/*jslint browser:true,sloppy:true,nomen:true,unparam:true,plusplus:true */
+/*
  | Copyright 2012 Esri
  |
  | Licensed under the Apache License, Version 2.0 (the "License");
@@ -79,8 +80,6 @@ var selectedFieldName;
 //This initialization function is called when the DOM elements are ready
 
 function Init() {
-    esri.config.defaults.io.proxyUrl = "proxy.ashx"; //Setting to use proxy file
-    esriConfig.defaults.io.alwaysUseProxy = true;
     esriConfig.defaults.io.timeout = 180000; //esri request timeout value
     var userAgent = window.navigator.userAgent; //used to detect the type of devices
     if (userAgent.indexOf("iPhone") >= 0 || userAgent.indexOf("iPad") >= 0) {
@@ -174,6 +173,17 @@ function Init() {
 //This function is called at the initialize state
 
 function Initialize(responseObject) {
+    esri.config.defaults.io.proxyUrl = responseObject.ProxyURL;
+    esriConfig.defaults.io.alwaysUseProxy = false;
+    esri.addProxyRule({
+        urlPrefix: responseObject.RouteServiceURL,
+        proxyUrl: responseObject.ProxyURL
+    });
+    esri.addProxyRule({
+        urlPrefix: responseObject.GeometryService,
+        proxyUrl: responseObject.ProxyURL
+    });
+
     if (isMobileDevice) {
         dojo.replaceClass("divAddressHolder", "hideContainer", "hideContainerHeight");
         dojo.byId('divAddressContainer').style.display = "none";
