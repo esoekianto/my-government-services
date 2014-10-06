@@ -572,8 +572,12 @@ function CreateScrollbar(container, content) {
         touchMoveHandler(evt);
     });
 
-    dojo.connect(container, "touchend", function (evt) {
-        touchEndHandler(evt);
+    dojo.connect(content, "touchstart", function (evt) {
+        // Needed for iOS 8
+    });
+
+    dojo.connect(content, "touchmove", function (evt) {
+        // Needed for iOS 8
     });
 
     //Handlers for Touch Events
@@ -584,37 +588,26 @@ function CreateScrollbar(container, content) {
 
     function touchMoveHandler(e) {
         var touch = e.touches[0];
-        e.cancelBubble = true;
+        if (e.cancelBubble) e.cancelBubble = true;
         if (e.stopPropagation) e.stopPropagation();
         e.preventDefault();
 
-        pxTop = scrollbar_handle.offsetTop;
-        var y;
-        if (startPos > touch.pageY) {
-            y = pxTop + 10;
-        } else {
-            y = pxTop - 10;
+        var change = startPos - touch.pageY;
+        if (change !== 0) {
+            pxTop = scrollbar_handle.offsetTop;
+            var y = pxTop + change;
+
+            //setting scrollbar handle
+            if (y > yMax) y = yMax // Limit vertical movement
+            if (y < 0) y = 0 // Limit vertical movement
+            scrollbar_handle.style.top = y + "px";
+
+            //setting content position
+            content.scrollTop = Math.round(scrollbar_handle.offsetTop / yMax * (content.scrollHeight - content.offsetHeight));
+
+            startPos = touch.pageY;
         }
-
-        //setting scrollbar Handel
-        if (y > yMax) y = yMax // Limit vertical movement
-        if (y < 0) y = 0 // Limit vertical movement
-        scrollbar_handle.style.top = y + "px";
-
-        //setting content position
-        content.scrollTop = Math.round(scrollbar_handle.offsetTop / yMax * (content.scrollHeight - content.offsetHeight));
-
-        scrolling = true;
-        startPos = touch.pageY;
     }
-
-    function touchEndHandler(e) {
-        scrollingTimer = setTimeout(function () {
-            clearTimeout(scrollingTimer);
-            scrolling = false;
-        }, 100);
-    }
-    //touch scrollbar end
 }
 
 //Clear default value
