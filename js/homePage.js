@@ -18,8 +18,6 @@
 dojo.require("dojo.date.locale");
 dojo.require("dojo.window");
 dojo.require("dojo.number");
-dojo.require("dojox.mobile");
-dojo.require("dojox.mobile.parser");
 dojo.require("esri.map");
 dojo.require("esri.tasks.geometry");
 dojo.require("esri.layers.FeatureLayer");
@@ -193,6 +191,15 @@ function Initialize(responseObject) {
         dojo.byId("divLogo").style.display = "none";
         dojo.byId("lblAppName").style.display = "none";
         dojo.byId("lblAppName").style.width = "80%";
+
+        // Create the mobile list programmatically because info windows won't
+        // work in IE 11 if dojox.mobile is included
+        require(["dojox/mobile", "dojox/mobile/parser"], function () {
+            new dojox.mobile.EdgeToEdgeList({
+                id: "listContainer",
+                select: "single"
+            }, "listContainer").startup();
+        });
     } else {
         var imgBasemap = dojo.create('img');
         imgBasemap.src = "images/imgBaseMap.png";
