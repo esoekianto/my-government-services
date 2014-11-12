@@ -73,14 +73,14 @@ public class proxy : IHttpHandler {
         //if url is encoded, decode it.
         if (uri.StartsWith("http%3a%2f%2f") || uri.StartsWith("https%3a%2f%2f"))
             uri = HttpUtility.UrlDecode(uri);
-
+        
         log(TraceLevel.Info, uri);
         ServerUrl serverUrl;
         bool passThrough = false;
         try {
             serverUrl = getConfig().GetConfigServerUrl(uri);
             passThrough = serverUrl == null;
-        }
+        } 
         //if XML couldn't be parsed
         catch (InvalidOperationException ex) {
 
@@ -88,7 +88,7 @@ public class proxy : IHttpHandler {
             log(TraceLevel.Error, errorMsg);
             sendErrorResponse(context.Response, null, errorMsg, System.Net.HttpStatusCode.InternalServerError);
             return;
-        }
+        }  
         //if mustMatch was set to true and URL wasn't in the list
         catch (ArgumentException ex) {
             string errorMsg = ex.Message + " " + uri;
@@ -206,7 +206,7 @@ public class proxy : IHttpHandler {
         try {
             serverResponse = forwardToServer(context, addTokenToUri(uri, token, tokenParamName), postBody);
         } catch (System.Net.WebException webExc) {
-
+            
             string errorMsg = webExc.Message + " " + uri;
             log(TraceLevel.Error, errorMsg);
 
@@ -214,7 +214,7 @@ public class proxy : IHttpHandler {
             {
                 string contentEncoding = (webExc.Response as System.Net.HttpWebResponse).ContentEncoding;
                 context.Response.AddHeader("Content-Encoding", contentEncoding);
-
+                
                 using (Stream responseStream = webExc.Response.GetResponseStream())
                 {
                     byte[] bytes = new byte[32768];
@@ -401,12 +401,12 @@ public class proxy : IHttpHandler {
                     string tokenResponse = webResponseToString(doHTTPRequest(reqUrl, "POST"));
                     token = extractToken(tokenResponse, "token");
                     return token;
-                }
-
+                }           
+                
                 //lets look for '/rest/' in the requested URL (could be 'rest/services', 'rest/community'...)
                 if (reqUrl.ToLower().Contains("/rest/"))
                     infoUrl = reqUrl.Substring(0, reqUrl.IndexOf("/rest/", StringComparison.OrdinalIgnoreCase));
-
+                
                 //if we don't find 'rest', lets look for the portal specific 'sharing' instead
                 else if (reqUrl.ToLower().Contains("/sharing/")) {
                     infoUrl = reqUrl.Substring(0, reqUrl.IndexOf("/sharing/", StringComparison.OrdinalIgnoreCase));
@@ -414,7 +414,7 @@ public class proxy : IHttpHandler {
                 }
                 else
                     throw new ApplicationException("Unable to determine the correct URL to request a token to access private resources");
-
+                    
                 if (infoUrl != "") {
                     log(TraceLevel.Info," Querying security endpoint...");
                     infoUrl += "/rest/info?f=json";
@@ -629,36 +629,36 @@ public class ProxyConfig
         }
     }
 
-    public ServerUrl GetConfigServerUrl(string uri) {
+    public ServerUrl GetConfigServerUrl(string uri) {                       
         //split both request and proxy.config urls and compare them
-        string[] uriParts = uri.Split(new char[] {'/','?'}, StringSplitOptions.RemoveEmptyEntries);
+        string[] uriParts = uri.Split(new char[] {'/','?'}, StringSplitOptions.RemoveEmptyEntries); 
         string[] configUriParts = new string[] {};
-
+                
         foreach (ServerUrl su in serverUrls) {
             //if a relative path is specified in the proxy.config, append what's in the request itself
             if (!su.Url.StartsWith("http"))
                 su.Url = su.Url.Insert(0, uriParts[0]);
 
             configUriParts = su.Url.Split(new char[] { '/','?' }, StringSplitOptions.RemoveEmptyEntries);
-
+            
             //if the request has less parts than the config, don't allow
             if (configUriParts.Length > uriParts.Length) continue;
-
+            
             int i = 0;
             for (i = 0; i < configUriParts.Length; i++) {
-
+                
                 if (!configUriParts[i].ToLower().Equals(uriParts[i].ToLower())) break;
             }
             if (i == configUriParts.Length) {
                 //if the urls don't match exactly, and the individual matchAll tag is 'false', don't allow
                 if (configUriParts.Length == uriParts.Length || su.MatchAll)
                     return su;
-            }
-        }
-
+            }                  
+        }       
+        
         if (mustMatch)
             throw new ArgumentException("Proxy is being used for an unsupported service:");
-
+        
         return null;
     }
 
@@ -677,7 +677,7 @@ public class ServerUrl {
     string tokenParamName;
     string rateLimit;
     string rateLimitPeriod;
-
+    
     [XmlAttribute("url")]
     public string Url {
         get { return url; }
