@@ -262,43 +262,26 @@ function Initialize(responseObject) {
     dojo.connect(map, "onLoad", function () {
         dojo.byId("divInfowindowContent").style.display = "block";
         var zoomExtent;
-        var extent = GetQuerystring('extent');
-
-        if (extent !== "") {
-            zoomExtent = decodeURIComponent(extent).split(',');
-        } else {
+        var url = esri.urlToObject(window.location.toString().replace(/\$/g, "&"));
+        if (url.query && url.query.extent){
+           zoomExtent = url.query.extent.split(',');
+        } else { 
             zoomExtent = responseObject.DefaultExtent.split(",");
         }
-
-        if (zoomExtent[3].split("$point=").length > 0) {
-            zoomExtent[3] = zoomExtent[3].split("$point=")[0];
-        }
         MapInitFunction();
-        var url = esri.urlToObject(window.location.toString());
-        if (extent !== "") {
-            if (window.location.toString().split("$point=").length > 1) {
-                if (window.location.toString().split("$point=")[1].split("$selectedPod=").length >= 1) {
-                    if (window.location.toString().split("$point=")[1].split("$selectedPod=")[1]) {
-                        mapPoint = new esri.geometry.Point(window.location.toString().split("$point=")[1].split(",")[0], window.location.toString().split("$point=")[1].split("$selectedPod=")[0].split(",")[1], map.spatialReference);
-                        if (isMobileDevice) {
-                            shareFlag = true;
-                            CreateCarousel();
-                            GetServices(mapPoint, true);
-                        }
-                        else {
-                            shareFlag = true;
-                            GetServices(mapPoint, true);
-                        }
-                    } else {
-                        mapPoint = new esri.geometry.Point(Number(window.location.toString().split("$point=")[1].split(",")[0]), Number(window.location.toString().split("$point=")[1].split(",")[1]), map.spatialReference);
-                        if (isMobileDevice) {
-                            CreateCarousel();
-                        }
-                        GetServices(mapPoint, true);
-                    }
-                }
-            }
+        if (url.query && url.query.point){
+            var wlDecodePoint = url.query.point.split(',');
+            mapPoint = new esri.geometry.Point(wlDecodePoint[0], wlDecodePoint[1], map.spatialReference);
+        
+            if (url.query && url.query.selectedPod){
+                shareFlag = true;
+            }  
+            if (isMobileDevice) {
+                CreateCarousel();
+            }            
+            GetServices(mapPoint, true);
         }
+      
         startExtent = new esri.geometry.Extent(parseFloat(zoomExtent[0]), parseFloat(zoomExtent[1]), parseFloat(zoomExtent[2]), parseFloat(zoomExtent[3]), map.spatialReference);
         map.setExtent(startExtent);
 
