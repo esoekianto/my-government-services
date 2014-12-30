@@ -636,16 +636,57 @@ function CreateServicePointInfo(service, feature, key, distance, featureGeometry
     for (var i = 0; i < service.FieldNames.length; i++) {
         var trData = dojo.create("tr");
         tableDataBody.appendChild(trData);
-        tdData = dojo.create("td");
-        tdData.align = "left";
-        trData.appendChild(tdData);
-        if (feature[service.FieldNames[i].FieldName] === null) {
-            tdData.innerHTML = showNullValueAs;
+
+        // Set of links
+        if (service.FieldNames[i].Links) {
+            var tdLink = dojo.create("td");
+            trData.appendChild(tdLink);
+            var tableLink = dojo.create("table");
+            tableLink.cellSpacing = "0";
+            tableLink.cellPadding = "0";
+            tdLink.appendChild(tableLink);
+            var tbodyLink = dojo.create("tbody");
+            tableLink.appendChild(tbodyLink);
+            var trLink = dojo.create("tr");
+            tbodyLink.appendChild(trLink);
+            for (var m = 0; m < service.FieldNames[i].Links.length; m++) {
+                // Insert separator from previous cell at end of current row
+                if(m > 0) {
+                    var span = trLink.insertCell(-1);
+                    span.style.borderLeft = "1px solid white";
+                    span.style.paddingRight = "5px";
+                }
+
+                // Create cell for link
+                var tdHref = dojo.create("td");
+                tdHref.style.paddingRight = "5px";
+                tdHref.style.cursor = "pointer";
+                tdHref.setAttribute("web", service.FieldNames[i].Links[m].FieldName);
+                tdHref.setAttribute("type", service.FieldNames[i].Links[m].DisplayText);
+                tdHref.style.textDecoration = "underline";
+                tdHref.onclick = function () {
+                    if (this.getAttribute("type") == "Website") {
+                        OpenWebSite(feature[this.getAttribute("web")]);
+                    } else {
+                        OpenServiceMail(feature[this.getAttribute("web")]);
+                    }
+                };
+                trLink.appendChild(tdHref);
+                tdHref.innerHTML = service.FieldNames[i].Links[m].DisplayText;
+            }
+        // Field by name
         } else {
-            if (i == 0) {
-                tdData.innerHTML = feature[service.FieldNames[i].FieldName] + " (" + FormatDistance(distance, "miles)");
+            tdData = dojo.create("td");
+            tdData.align = "left";
+            trData.appendChild(tdData);
+            if (feature[service.FieldNames[i].FieldName] === null) {
+                tdData.innerHTML = showNullValueAs;
             } else {
-                tdData.innerHTML = feature[service.FieldNames[i].FieldName];
+                if (i == 0) {
+                    tdData.innerHTML = feature[service.FieldNames[i].FieldName] + " (" + FormatDistance(distance, "miles)");
+                } else {
+                    tdData.innerHTML = feature[service.FieldNames[i].FieldName];
+                }
             }
         }
     }
