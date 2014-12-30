@@ -1059,7 +1059,8 @@ function DisplayDirections(evt) {
 function OpenWebSite(webURL) {
     var url = (webURL === null) ? "" : webURL;
     if (url !== "") {
-        if (url.indexOf('http://') == -1) {
+        // Add the protocol if missing
+        if (url.indexOf('http://') == -1 && url.indexOf('https://') == -1) {
             url = "http://" + url;
         }
         window.open(url);
