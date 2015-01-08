@@ -1,57 +1,51 @@
 # my-government-services
 
-My Government Services is a configuration of ArcGIS Server and a JavaScript application that helps residents locate a government facility and obtain information about curbside and drop-off services provided by a government agency. This application is typically used by residents in a community, but can be used by visitors to locate a library or post office near them.
+The my-government-services repo contains three unique configurations of the application My Health Services, My Hazard Information and, My Government Services. 
 
-[Try the My Government Services application](http://localgovtemplates2.esri.com/mygovernmentservices/)
+My Government Services is a configuration of ArcGIS and a JavaScript application that helps residents locate a government facility and obtain information about curbside and drop-off services provided by a government agency. This application is typically used by residents in a community, but can be used by visitors to locate a library or post office near them.
+My Hazard Information is a configuration of ArcGIS and a JavaScript application that helps residents discover hazards that exist in their community and obtain information about evacuation routes and government facilities provided by a government agency. 
+My Health Services is a configuration of ArcGIS and a JavaScript application that helps residents locate a health facility and obtain information about services provided within their community.
 
-[![Image of My Government Services application](my-government-services.png "My Government Services application")](http://localgovtemplates2.esri.com/mygovernmentservices/)
+[Try the My Government Services application](http://links.esri.com/localgovernment/tryit/MyGovernmentServices/)
+[Try the My Hazard Information application](http://links.esri.com/localgovernment/tryit/MyHazardInformation/)
+[Try the My Health Services application](http://links.esri.com/stategovernment/tryit/MyHealthServices/)
+
+[![Image of My Government Services application](my-government-services.png "My Government Services application")](http://links.esri.com/localgovernment/tryit/MyGovernmentServices/)
 
 ## Features
 
 * Search for an address
-* Locate a government facility
-* Obtain information about curbside and drop-off services
+* Locate a facility
+* Obtain information about services
 * Share information using social media
-
-## Instructions
-
-### Esri Sample Services
-
-Esri's sample services can be used with this repository to extend the application.
-
-### Your Services
-
-[Detailed help](http://resources.arcgis.com/en/help/localgovernment/10.1/index.html#/What_is_My_Government_Services/028s0000000m000000/)
-on the ArcGIS Resource Center can guide you in the setup and configuration of the app with your services.
-
-### General Help
-[New to Github? Get started here.](http://htmlpreview.github.com/?https://github.com/Esri/esri.github.com/blob/master/help/esri-getting-to-know-github.html)
 
 ## Requirements
 
-### Esri Sample Services
+**Start now using Esri-supplied sample services**
 
-* Microsoft ASP.NET Framework 4.0 available from the [Microsoft website](http://www.microsoft.com/en-us/download/details.aspx?id=17851)
+You can start using the application now by setting it up on a web server running Microsoft Internet Information Services (IIS) and using sample services supplied by Esri.
+You'll need to convert to an application in IIS and use the ASP .NET 4.0. application pool.
 
-### Your Services
+**Start now using your own services**
 
-* ArcGIS for Desktop 10.2 - Standard or Advanced - [About](http://www.esri.com/software/arcgis/arcgis-for-desktop)
-* ArcGIS for Server 10.2 - Standard or Advanced - [About](http://www.esri.com/software/arcgis/arcgisserver)
-* Local Government Information Model - [About](http://www.arcgis.com/home/item.html?id=ae175b36c4154dda987127dff879350d)
-* Microsoft ASP.NET Framework 4.0 available from the [Microsoft website](http://www.microsoft.com/en-us/download/details.aspx?id=17851)
+For more information on requirements and publication steps, see [My Government Services](http://links.esri.com/localgovernment/help/10.2/MyGovernmentServices) help or [My Hazard Information](http://links.esri.com/localgovernment/help/10.2/MyHazardInformation) help or [My Health Services](http://links.esri.com/stategovernment/help/10.2/MyHealthServices) help
 
 ## Resources
 
-Learn more about Esri's [ArcGIS for Local Government maps and apps](http://solutions.arcgis.com/local-government/).
+Learn more about Esri's [ArcGIS for State and Local Government maps and apps](http://solutions.arcgis.com).
 
-Show me a list of other [Local Government GitHub repositories](http://esri.github.io/#Local-Government).
+Show me a list of other [State and Local Government GitHub repositories](http://esri.github.io/#Government).
 
 Additional [information and sample data](http://www.arcgis.com/home/item.html?id=23c7fd011b64434d87fb0aa607f2c049)
 are available for the application.
 
-This application uses the 3.5 version of
+This application uses the 3.11 version of
 [Esri's ArcGIS API for JavaScript](http://help.arcgis.com/en/webapi/javascript/arcgis/);
 see the site for concepts, samples, and a reference for using the API to create mapping web sites.
+
+## Developer Notes
+The my-government-services repo contains three unique configurations of the application My Health Services, My Hazard Information and, My Government Services. 
+Using the default files you will get the My Government Services configuration of the application (config.js and default.htm). To get the My Health Services configuration rename configHealthServices.js to config.js and rename defaultMyHealth.htm to default.htm. To get the My Hazard Information configuration rename configHazardInfo.js to config.js and rename defaultMyHazard.htm to default.htm. 
 
 ## Issues
 
