@@ -47,8 +47,9 @@ This application uses the 3.11 version of
 [Esri's ArcGIS API for JavaScript](http://help.arcgis.com/en/webapi/javascript/arcgis/);
 see the site for concepts, samples, and a reference for using the API to create mapping web sites.
 
-## Developer Notes
-The my-government-services repo contains three unique configurations of the application My Health Services, My Hazard Information and, My Government Services. 
+## Selecting Your Configuration 
+The my-government-services repo contains three unique application configurations: My Health Services, My Hazard Information and, My Government Services. 
+
 Using the default files you will get the My Government Services configuration of the application (config.js and default.htm). To get the My Health Services configuration rename configHealthServices.js to config.js and rename defaultMyHealth.htm to default.htm. To get the My Hazard Information configuration rename configHazardInfo.js to config.js and rename defaultMyHazard.htm to default.htm. 
 
 ## Issues
