@@ -1,6 +1,6 @@
 # my-government-services
 
-The my-government-services repo contains three unique application configurations: My Health Services, My Hazard Information and, My Government Services. 
+The my-government-services repo contains three unique application configurations: **My Health Services, My Hazard Information and, My Government Services.** 
 
 My Government Services is a configuration of ArcGIS and a JavaScript application that helps residents locate a government facility and obtain information about curbside and drop-off services provided by a government agency. This application is typically used by residents in a community, but can be used by visitors to locate a library or post office near them.
 
