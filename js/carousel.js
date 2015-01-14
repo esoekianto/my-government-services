@@ -530,10 +530,10 @@ function CreateServicePolygonInfo(service, feature, key) {
                 tdHref.style.paddingRight = "5px";
                 tdHref.style.cursor = "pointer";
                 tdHref.setAttribute("web", service.FieldNames[i].Links[m].FieldName);
-                tdHref.setAttribute("type", service.FieldNames[i].Links[m].DisplayText);
+                tdHref.setAttribute("type", service.FieldNames[i].Links[m].type);
                 tdHref.style.textDecoration = "underline";
                 tdHref.onclick = function () {
-                    if (this.getAttribute("type") == "Website") {
+                    if (this.getAttribute("type") == "web") {
                         OpenWebSite(feature.attributes[this.getAttribute("web")]);
                     } else {
                         OpenServiceMail(feature.attributes[this.getAttribute("web")]);
@@ -1098,13 +1098,12 @@ function DisplayDirections(evt) {
 //Open website on click of URL link
 
 function OpenWebSite(webURL) {
-    var url = (webURL === null) ? "" : webURL;
-    if (url !== "") {
+    if (webURL) {
         // Add the protocol if missing
-        if (url.indexOf('http://') == -1 && url.indexOf('https://') == -1) {
-            url = "http://" + url;
+        if (webURL.indexOf('http://') == -1 && webURL.indexOf('https://') == -1) {
+            webURL = "http://" + webURL;
         }
-        window.open(url);
+        window.open(webURL);
     }
 }
 
