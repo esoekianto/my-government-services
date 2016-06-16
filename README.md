@@ -1,5 +1,15 @@
 # my-government-services
 
+***This my government services repo has been updated to use Web AppBuilder and the Near Me widget, applications built from this repo are in mature support.***
+
+***My Government Services, My Hazard Information, and My Health Services solutions are now a configuration of the [Web appBuilder ](http://doc.arcgis.com/en/web-appbuilder/) and can be configured in ArcGIS Online without downloading the application. However, if you want to host the application on your own server or customize the Near Me widget then download the Web AppBuilder [(Developer Edition)](https://developers.arcgis.com/web-appbuilder/)***
+
+   ***Check out the new [My Government Services](http://solutions.arcgis.com/local-government/help/my-gov-services/) solution***
+   
+   ***Check out the new [My Health Services](http://solutions.arcgis.com/state-government/help/health-services/) solution***
+   
+   ***Check out the new [My Hazard Information](http://solutions.arcgis.com/state-government/help/my-hazard-info/) solution***
+
 The my-government-services repo contains three unique application configurations: **My Health Services, My Hazard Information, and My Government Services.**
 
 **My Government Services** is a configuration of ArcGIS and a JavaScript application that helps residents locate a government facility and obtain information about curbside and drop-off services provided by a government agency. This application is typically used by residents in a community, but can be used by visitors to locate a library or post office near them. [Try the My Government Services application](http://links.esri.com/localgovernment/tryit/MyGovernmentServices/)
