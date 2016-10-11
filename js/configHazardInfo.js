@@ -80,12 +80,12 @@ dojo.declare("js.Config", null, {
         Key: "parcelMap",
         ThumbnailSource: "images/parcelMap.png",
         Name: "Streets",
-        MapURL: "http://tryitlive.arcgis.com/arcgis/rest/services/GeneralPurpose/MapServer"
+        MapURL: "http://tiles.arcgis.com/tiles/Pu6Fai10JE2L2xUd/arcgis/rest/services/GeneralPurposeBasemap/MapServer"
     }, {
         Key: "hybridMap",
         ThumbnailSource: "images/imageryHybrid.png",
         Name: "Imagery",
-        MapURL: "http://tryitlive.arcgis.com/arcgis/rest/services/ImageryHybrid/MapServer"
+        MapURL: "http://tiles.arcgis.com/tiles/Pu6Fai10JE2L2xUd/arcgis/rest/services/ImageryHybridBasemap/MapServer"
     }],
 
     // Initial map extent. Use comma (,) to separate values and don t delete the last comma.
