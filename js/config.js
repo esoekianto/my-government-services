@@ -154,7 +154,7 @@ dojo.declare("js.Config", null, {
             DisplayField: "${Match_addr}", //Set which field from results is displayed
             AddressMatchScore: 80, //Set minimum score to be considered a match
             LocatorFieldName: 'Loc_name', //The returned field which specifies match type (specific locator within composite)
-            LocatorFieldValues: ["USA.StreetName", "USA.PointAddress", "USA.StreetAddress"] //List of acceptable individual locators (within composite)
+            LocatorFieldValues: ["USA.StreetName", "USA.PointAddress", "USA.StreetAddress", "World"] //List of acceptable individual locators (within composite)
         }]
     },
 
